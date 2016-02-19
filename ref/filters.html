@@ -1,0 +1,617 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Filter Reference &mdash; django-filter 0.12.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.12.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="django-filter 0.12.0 documentation" href="../index.html" />
+    <link rel="next" title="Fields Reference" href="fields.html" />
+    <link rel="prev" title="FilterSet Guide" href="filterset.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="fields.html" title="Fields Reference"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="filterset.html" title="FilterSet Guide"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">django-filter 0.12.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="filter-reference">
+<h1>Filter Reference<a class="headerlink" href="#filter-reference" title="Permalink to this headline">¶</a></h1>
+<p>This is a reference document with a list of the filters and their arguments.</p>
+<div class="section" id="core-arguments">
+<span id="id1"></span><h2>Core Arguments<a class="headerlink" href="#core-arguments" title="Permalink to this headline">¶</a></h2>
+<p>The following are the core arguments that apply to all filters.</p>
+<div class="section" id="name">
+<h3><code class="docutils literal"><span class="pre">name</span></code><a class="headerlink" href="#name" title="Permalink to this headline">¶</a></h3>
+<p>The name of the field this filter is supposed to filter on, if this is not
+provided it automatically becomes the filter&#8217;s name on the <code class="docutils literal"><span class="pre">FilterSet</span></code>.
+You can traverse &#8220;relationship paths&#8221; using Django&#8217;s <code class="docutils literal"><span class="pre">__</span></code> syntax to filter
+fields on a related model. eg, <code class="docutils literal"><span class="pre">manufacturer__name</span></code>.</p>
+</div>
+<div class="section" id="label">
+<h3><code class="docutils literal"><span class="pre">label</span></code><a class="headerlink" href="#label" title="Permalink to this headline">¶</a></h3>
+<p>The label as it will apear in the HTML, analogous to a form field&#8217;s label
+argument.</p>
+</div>
+<div class="section" id="widget">
+<h3><code class="docutils literal"><span class="pre">widget</span></code><a class="headerlink" href="#widget" title="Permalink to this headline">¶</a></h3>
+<p>The django.form Widget class which will represent the <code class="docutils literal"><span class="pre">Filter</span></code>.  In addition
+to the widgets that are included with Django that you can use there are
+additional ones that django-filter provides which may be useful:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">django_filters.widgets.LinkWidget</span></code> &#8211; this displays the options in a
+manner similar to the way the Django Admin does, as a series of links.
+The link for the selected option will have <code class="docutils literal"><span class="pre">class=&quot;selected&quot;</span></code>.</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="action">
+<h3><code class="docutils literal"><span class="pre">action</span></code><a class="headerlink" href="#action" title="Permalink to this headline">¶</a></h3>
+<p>An optional callable that tells the filter how to handle the queryset.  It
+recieves a <code class="docutils literal"><span class="pre">QuerySet</span></code> and the value to filter on and should return a
+<code class="docutils literal"><span class="pre">Queryset</span></code> that is filtered appropriately. <cite>action</cite> will default to
+<code class="docutils literal"><span class="pre">filter_{value-of-name-attribute}</span></code></p>
+</div>
+<div class="section" id="lookup-expr">
+<h3><code class="docutils literal"><span class="pre">lookup_expr</span></code><a class="headerlink" href="#lookup-expr" title="Permalink to this headline">¶</a></h3>
+<p>The lookup expression that should be performed using <a class="reference external" href="https://docs.djangoproject.com/en/dev/ref/models/querysets/#field-lookups">Django&#8217;s ORM</a>.</p>
+<p>A <code class="docutils literal"><span class="pre">list</span></code> or <code class="docutils literal"><span class="pre">tuple</span></code> of lookup types is also accepted, allowing the user to
+select the lookup from a dropdown. The list of lookup types are filtered against
+<code class="docutils literal"><span class="pre">filters.LOOKUP_TYPES</span></code>. If no lookups are passed, then a list of all lookup
+types will be generated:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">CharFilter</span><span class="p">(</span><span class="n">lookup_expr</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;exact&#39;</span><span class="p">,</span> <span class="s">&#39;iexact&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>You can enable custom lookups by adding them to <code class="docutils literal"><span class="pre">LOOKUP_TYPES</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">django_filters</span> <span class="kn">import</span> <span class="n">filters</span>
+
+<span class="n">filters</span><span class="o">.</span><span class="n">LOOKUP_TYPES</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;gt&#39;</span><span class="p">,</span> <span class="s">&#39;gte&#39;</span><span class="p">,</span> <span class="s">&#39;lt&#39;</span><span class="p">,</span> <span class="s">&#39;lte&#39;</span><span class="p">,</span> <span class="s">&#39;custom_lookup_type&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Additionally, you can provide human-friendly help text by overriding <code class="docutils literal"><span class="pre">LOOKUP_TYPES</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># filters.py</span>
+<span class="kn">from</span> <span class="nn">django_filters</span> <span class="kn">import</span> <span class="n">filters</span>
+
+<span class="n">filters</span><span class="o">.</span><span class="n">LOOKUP_TYPES</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;---------&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s">&#39;exact&#39;</span><span class="p">,</span> <span class="s">&#39;Is equal to&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s">&#39;not_exact&#39;</span><span class="p">,</span> <span class="s">&#39;Is not equal to&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s">&#39;lt&#39;</span><span class="p">,</span> <span class="s">&#39;Lesser than&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s">&#39;gt&#39;</span><span class="p">,</span> <span class="s">&#39;Greater than&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s">&#39;gte&#39;</span><span class="p">,</span> <span class="s">&#39;Greater than or equal to&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s">&#39;lte&#39;</span><span class="p">,</span> <span class="s">&#39;Lesser than or equal to&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s">&#39;startswith&#39;</span><span class="p">,</span> <span class="s">&#39;Starts with&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s">&#39;endswith&#39;</span><span class="p">,</span> <span class="s">&#39;Ends with&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s">&#39;contains&#39;</span><span class="p">,</span> <span class="s">&#39;Contains&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s">&#39;not_contains&#39;</span><span class="p">,</span> <span class="s">&#39;Does not contain&#39;</span><span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="distinct">
+<h3><code class="docutils literal"><span class="pre">distinct</span></code><a class="headerlink" href="#distinct" title="Permalink to this headline">¶</a></h3>
+<p>A boolean value that specifies whether the Filter will use distinct on the
+queryset. This option can be used to eliminate duplicate results when using filters that span related models. Defaults to <code class="docutils literal"><span class="pre">False</span></code>.</p>
+</div>
+<div class="section" id="exclude">
+<h3><code class="docutils literal"><span class="pre">exclude</span></code><a class="headerlink" href="#exclude" title="Permalink to this headline">¶</a></h3>
+<p>A boolean value that specifies whether the Filter should use <code class="docutils literal"><span class="pre">filter</span></code> or <code class="docutils literal"><span class="pre">exclude</span></code> on the queryset.
+Defaults to <code class="docutils literal"><span class="pre">False</span></code>.</p>
+</div>
+<div class="section" id="kwargs">
+<h3><code class="docutils literal"><span class="pre">**kwargs</span></code><a class="headerlink" href="#kwargs" title="Permalink to this headline">¶</a></h3>
+<p>Any additional keyword arguments are stored as the <code class="docutils literal"><span class="pre">extra</span></code> parameter on the filter. They are provided to the accompanying form Field and can be used to provide arguments like <code class="docutils literal"><span class="pre">choices</span></code>.</p>
+</div>
+</div>
+<div class="section" id="modelchoicefilter-and-modelmultiplechoicefilter-arguments">
+<h2>ModelChoiceFilter and ModelMultipleChoiceFilter arguments<a class="headerlink" href="#modelchoicefilter-and-modelmultiplechoicefilter-arguments" title="Permalink to this headline">¶</a></h2>
+<p>These arguments apply specifically to ModelChoiceFiler and
+ModelMultipleChoiceFilter only.</p>
+<div class="section" id="queryset">
+<h3><code class="docutils literal"><span class="pre">queryset</span></code><a class="headerlink" href="#queryset" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">ModelChoiceFilter</span></code> and <code class="docutils literal"><span class="pre">ModelMultipleChoiceFilter</span></code> require a queryset to operate on which must be passed as a kwarg.</p>
+</div>
+</div>
+<div class="section" id="filters">
+<h2>Filters<a class="headerlink" href="#filters" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="charfilter">
+<h3><code class="docutils literal"><span class="pre">CharFilter</span></code><a class="headerlink" href="#charfilter" title="Permalink to this headline">¶</a></h3>
+<p>This filter does simple character matches, used with <code class="docutils literal"><span class="pre">CharField</span></code> and
+<code class="docutils literal"><span class="pre">TextField</span></code> by default.</p>
+</div>
+<div class="section" id="uuidfilter">
+<h3><code class="docutils literal"><span class="pre">UUIDFilter</span></code><a class="headerlink" href="#uuidfilter" title="Permalink to this headline">¶</a></h3>
+<p>This filter matches UUID values, used with <code class="docutils literal"><span class="pre">models.UUIDField</span></code> by default.</p>
+</div>
+<div class="section" id="booleanfilter">
+<h3><code class="docutils literal"><span class="pre">BooleanFilter</span></code><a class="headerlink" href="#booleanfilter" title="Permalink to this headline">¶</a></h3>
+<p>This filter matches a boolean, either <code class="docutils literal"><span class="pre">True</span></code> or <code class="docutils literal"><span class="pre">False</span></code>, used with
+<code class="docutils literal"><span class="pre">BooleanField</span></code> and <code class="docutils literal"><span class="pre">NullBooleanField</span></code> by default.</p>
+</div>
+<div class="section" id="choicefilter">
+<h3><code class="docutils literal"><span class="pre">ChoiceFilter</span></code><a class="headerlink" href="#choicefilter" title="Permalink to this headline">¶</a></h3>
+<p>This filter matches an item of any type by choices, used with any field that
+has <code class="docutils literal"><span class="pre">choices</span></code>.</p>
+<p>Requires <code class="docutils literal"><span class="pre">choices</span></code> <code class="docutils literal"><span class="pre">kwarg</span></code> to be passed if explicitly declared on the <code class="docutils literal"><span class="pre">FilterSet</span></code>. For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">username</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>
+    <span class="n">first_name</span> <span class="o">=</span> <span class="n">SubCharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">last_name</span> <span class="o">=</span> <span class="n">SubSubCharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+    <span class="n">status</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">choices</span><span class="o">=</span><span class="n">STATUS_CHOICES</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">STATUS_CHOICES</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s">&#39;Regular&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;Manager&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">&#39;Admin&#39;</span><span class="p">),</span>
+<span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">F</span><span class="p">(</span><span class="n">FilterSet</span><span class="p">):</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="n">ChoiceFilter</span><span class="p">(</span><span class="n">choices</span><span class="o">=</span><span class="n">STATUS_CHOICES</span><span class="p">)</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">User</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;status&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="typedchoicefilter">
+<h3><code class="docutils literal"><span class="pre">TypedChoiceFilter</span></code><a class="headerlink" href="#typedchoicefilter" title="Permalink to this headline">¶</a></h3>
+<p>The same as <code class="docutils literal"><span class="pre">ChoiceFilter</span></code> with the added possibility to convert value to
+match against. This could be done by using <cite>coerce</cite> parameter.
+An example use-case is limiting boolean choices to match against so only
+some predefined strings could be used as input of a boolean filter:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">django_filters</span>
+<span class="kn">from</span> <span class="nn">distutils.util</span> <span class="kn">import</span> <span class="n">strtobool</span>
+
+<span class="n">BOOLEAN_CHOICES</span> <span class="o">=</span> <span class="p">((</span><span class="s">&#39;false&#39;</span><span class="p">,</span> <span class="s">&#39;False&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;true&#39;</span><span class="p">,</span> <span class="s">&#39;True&#39;</span><span class="p">),)</span>
+
+<span class="k">class</span> <span class="nc">YourFilterSet</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
+    <span class="o">...</span>
+    <span class="n">flag</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">TypedChoiceFilter</span><span class="p">(</span><span class="n">choices</span><span class="o">=</span><span class="n">BOOLEAN_CHOICES</span><span class="p">,</span>
+                                            <span class="nb">coerce</span><span class="o">=</span><span class="n">strtobool</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="multiplechoicefilter">
+<h3><code class="docutils literal"><span class="pre">MultipleChoiceFilter</span></code><a class="headerlink" href="#multiplechoicefilter" title="Permalink to this headline">¶</a></h3>
+<p>The same as <code class="docutils literal"><span class="pre">ChoiceFilter</span></code> except the user can select multiple choices
+and the filter will form the OR of these choices by default to match items.
+The filter will form the AND of the selected choices when the <code class="docutils literal"><span class="pre">conjoined=True</span></code>
+argument is passed to this class.</p>
+<p>Multiple choices are represented in the query string by reusing the same key with
+different values (e.g. &#8216;&#8217;?status=Regular&amp;status=Admin&#8217;&#8216;).</p>
+<p>Advanced Use: Depending on your application logic, when all or no choices are
+selected, filtering may be a noop. In this case you may wish to avoid the
+filtering overhead, particularly of the <cite>distinct</cite> call.</p>
+<p>Set <cite>always_filter</cite> to False after instantiation to enable the default <cite>is_noop</cite>
+test.</p>
+<p>Override <cite>is_noop</cite> if you require a different test for your application.</p>
+</div>
+<div class="section" id="datefilter">
+<h3><code class="docutils literal"><span class="pre">DateFilter</span></code><a class="headerlink" href="#datefilter" title="Permalink to this headline">¶</a></h3>
+<p>Matches on a date.  Used with <code class="docutils literal"><span class="pre">DateField</span></code> by default.</p>
+</div>
+<div class="section" id="timefilter">
+<h3><code class="docutils literal"><span class="pre">TimeFilter</span></code><a class="headerlink" href="#timefilter" title="Permalink to this headline">¶</a></h3>
+<p>Matches on a time.  Used with <code class="docutils literal"><span class="pre">TimeField</span></code> by default.</p>
+</div>
+<div class="section" id="datetimefilter">
+<h3><code class="docutils literal"><span class="pre">DateTimeFilter</span></code><a class="headerlink" href="#datetimefilter" title="Permalink to this headline">¶</a></h3>
+<p>Matches on a date and time.  Used with <code class="docutils literal"><span class="pre">DateTimeField</span></code> by default.</p>
+</div>
+<div class="section" id="isodatetimefilter">
+<h3><code class="docutils literal"><span class="pre">IsoDateTimeFilter</span></code><a class="headerlink" href="#isodatetimefilter" title="Permalink to this headline">¶</a></h3>
+<p>Uses <code class="docutils literal"><span class="pre">IsoDateTimeField</span></code> to support filtering on ISO 8601 formatted dates, as are often used in APIs, and are employed by default by Django REST Framework.</p>
+<p>Example.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">F</span><span class="p">(</span><span class="n">FilterSet</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Filter for Books by date published, using ISO 8601 formatted dates&quot;&quot;&quot;</span>
+    <span class="n">published</span> <span class="o">=</span> <span class="n">IsoDateTimeFilter</span><span class="p">()</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">Book</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;published&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="modelchoicefilter">
+<h3><code class="docutils literal"><span class="pre">ModelChoiceFilter</span></code><a class="headerlink" href="#modelchoicefilter" title="Permalink to this headline">¶</a></h3>
+<p>Similar to a <code class="docutils literal"><span class="pre">ChoiceFilter</span></code> except it works with related models, used for
+<code class="docutils literal"><span class="pre">ForeignKey</span></code> by default.</p>
+<p>If automatically instantiated <code class="docutils literal"><span class="pre">ModelChoiceFilter</span></code> will use the default <code class="docutils literal"><span class="pre">QuerySet</span></code> for the
+related field. If manually instantiated you <strong>must</strong> provide the <code class="docutils literal"><span class="pre">queryset</span></code> kwarg.</p>
+<p>Example.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">F</span><span class="p">(</span><span class="n">FilterSet</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Filter for books by author&quot;&quot;&quot;</span>
+    <span class="n">author</span> <span class="o">=</span> <span class="n">ModelChoiceFilter</span><span class="p">(</span><span class="n">queryset</span><span class="o">=</span><span class="n">Author</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">())</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">Book</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;author&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="modelmultiplechoicefilter">
+<h3><code class="docutils literal"><span class="pre">ModelMultipleChoiceFilter</span></code><a class="headerlink" href="#modelmultiplechoicefilter" title="Permalink to this headline">¶</a></h3>
+<p>Similar to a <code class="docutils literal"><span class="pre">MultipleChoiceFilter</span></code> except it works with related models, used
+for <code class="docutils literal"><span class="pre">ManyToManyField</span></code> by default.</p>
+<p>As with <code class="docutils literal"><span class="pre">ModelChoiceFilter</span></code>, if automatically instantiated <code class="docutils literal"><span class="pre">ModelMultipleChoiceFilter</span></code> will use
+the default <code class="docutils literal"><span class="pre">QuerySet</span></code> for the related field. If manually instantiated you <strong>must</strong> provide the
+<code class="docutils literal"><span class="pre">queryset</span></code> kwarg.</p>
+</div>
+<div class="section" id="numberfilter">
+<h3><code class="docutils literal"><span class="pre">NumberFilter</span></code><a class="headerlink" href="#numberfilter" title="Permalink to this headline">¶</a></h3>
+<p>Filters based on a numerical value, used with <code class="docutils literal"><span class="pre">IntegerField</span></code>, <code class="docutils literal"><span class="pre">FloatField</span></code>,
+and <code class="docutils literal"><span class="pre">DecimalField</span></code> by default.</p>
+</div>
+<div class="section" id="numericrangefilter">
+<h3><code class="docutils literal"><span class="pre">NumericRangeFilter</span></code><a class="headerlink" href="#numericrangefilter" title="Permalink to this headline">¶</a></h3>
+<p>Filters where a value is between two numerical values, or greater than a minimum or less
+than a maximum where only one limit value is provided. This filter is designed to work with
+the Postgres Numerical Range Fields, including <cite>IntegerRangeField</cite>, <cite>BigIntegerRangeField</cite> and <cite>FloatRangeField</cite>,
+available since Django 1.8. The default widget used is the <cite>RangeField</cite>.</p>
+<p>RangeField lookup_exprs can be used, including <cite>overlap</cite>, <cite>contains</cite>, and <cite>contained_by</cite>. More lookups can be
+found in the Django docs ([<a class="reference external" href="https://docs.djangoproject.com/en/1.8/ref/contrib/postgres/fields/#querying-range-fields](https://docs.djangoproject.com/en/1.8/ref/contrib/postgres/fields">https://docs.djangoproject.com/en/1.8/ref/contrib/postgres/fields/#querying-range-fields](https://docs.djangoproject.com/en/1.8/ref/contrib/postgres/fields</a>/#querying-range-fields)).</p>
+<p>If the lower limit value is provided, the filter automatically defaults to <cite>__startswith</cite> as the lookup
+type and if only the upper limit value is provided, the filter uses <cite>__endswith</cite>.</p>
+</div>
+<div class="section" id="rangefilter">
+<h3><code class="docutils literal"><span class="pre">RangeFilter</span></code><a class="headerlink" href="#rangefilter" title="Permalink to this headline">¶</a></h3>
+<p>Filters where a value is between two numerical values, or greater than a minimum or less than a maximum where only one limit value is provided.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">F</span><span class="p">(</span><span class="n">FilterSet</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Filter for Books by Price&quot;&quot;&quot;</span>
+    <span class="n">price</span> <span class="o">=</span> <span class="n">RangeFilter</span><span class="p">()</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">Book</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;price&#39;</span><span class="p">]</span>
+
+<span class="n">qs</span> <span class="o">=</span> <span class="n">Book</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s">&#39;title&#39;</span><span class="p">)</span>
+
+<span class="c"># Range: Books between 5€ and 15€</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">F</span><span class="p">({</span><span class="s">&#39;price_0&#39;</span><span class="p">:</span> <span class="s">&#39;5&#39;</span><span class="p">,</span> <span class="s">&#39;price_1&#39;</span><span class="p">:</span> <span class="s">&#39;15&#39;</span><span class="p">},</span> <span class="n">queryset</span><span class="o">=</span><span class="n">qs</span><span class="p">)</span>
+
+<span class="c"># Min-Only: Books costing more the 11€</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">F</span><span class="p">({</span><span class="s">&#39;price_0&#39;</span><span class="p">:</span> <span class="s">&#39;11&#39;</span><span class="p">},</span> <span class="n">queryset</span><span class="o">=</span><span class="n">qs</span><span class="p">)</span>
+
+<span class="c"># Max-Only: Books costing less than 19€</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">F</span><span class="p">({</span><span class="s">&#39;price_1&#39;</span><span class="p">:</span> <span class="s">&#39;19&#39;</span><span class="p">},</span> <span class="n">queryset</span><span class="o">=</span><span class="n">qs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="daterangefilter">
+<h3><code class="docutils literal"><span class="pre">DateRangeFilter</span></code><a class="headerlink" href="#daterangefilter" title="Permalink to this headline">¶</a></h3>
+<p>Filter similar to the admin changelist date one, it has a number of common
+selections for working with date fields.</p>
+</div>
+<div class="section" id="datefromtorangefilter">
+<h3><code class="docutils literal"><span class="pre">DateFromToRangeFilter</span></code><a class="headerlink" href="#datefromtorangefilter" title="Permalink to this headline">¶</a></h3>
+<p>Similar to a <code class="docutils literal"><span class="pre">RangeFilter</span></code> except it uses dates instead of numerical values. It can be used with <code class="docutils literal"><span class="pre">DateField</span></code>. It also works with <code class="docutils literal"><span class="pre">DateTimeField</span></code>, but takes into consideration only the date.</p>
+<p>Example of using the <code class="docutils literal"><span class="pre">DateField</span></code> field:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Comment</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">date</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateField</span><span class="p">()</span>
+    <span class="n">time</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TimeField</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">F</span><span class="p">(</span><span class="n">FilterSet</span><span class="p">):</span>
+    <span class="n">date</span> <span class="o">=</span> <span class="n">DateFromToRangeFilter</span><span class="p">()</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">Comment</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;date&#39;</span><span class="p">]</span>
+
+<span class="c"># Range: Comments added between 2016-01-01 and 2016-02-01</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">F</span><span class="p">({</span><span class="s">&#39;date_0&#39;</span><span class="p">:</span> <span class="s">&#39;2016-01-01&#39;</span><span class="p">,</span> <span class="s">&#39;date_1&#39;</span><span class="p">:</span> <span class="s">&#39;2016-02-01&#39;</span><span class="p">})</span>
+
+<span class="c"># Min-Only: Comments added after 2016-01-01</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">F</span><span class="p">({</span><span class="s">&#39;date_0&#39;</span><span class="p">:</span> <span class="s">&#39;2016-01-01&#39;</span><span class="p">})</span>
+
+<span class="c"># Max-Only: Comments added before 2016-02-01</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">F</span><span class="p">({</span><span class="s">&#39;date_1&#39;</span><span class="p">:</span> <span class="s">&#39;2016-02-01&#39;</span><span class="p">})</span>
+</pre></div>
+</div>
+<p>Example of using the <code class="docutils literal"><span class="pre">DateTimeField</span></code> field:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Article</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">published</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">F</span><span class="p">(</span><span class="n">FilterSet</span><span class="p">):</span>
+    <span class="n">published</span> <span class="o">=</span> <span class="n">DateFromToRangeFilter</span><span class="p">()</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">Article</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;published&#39;</span><span class="p">]</span>
+
+<span class="n">Article</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">published</span><span class="o">=</span><span class="s">&#39;2016-01-01 8:00&#39;</span><span class="p">)</span>
+<span class="n">Article</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">published</span><span class="o">=</span><span class="s">&#39;2016-01-20 10:00&#39;</span><span class="p">)</span>
+<span class="n">Article</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">published</span><span class="o">=</span><span class="s">&#39;2016-02-10 12:00&#39;</span><span class="p">)</span>
+
+<span class="c"># Range: Articles published between 2016-01-01 and 2016-02-01</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">F</span><span class="p">({</span><span class="s">&#39;published_0&#39;</span><span class="p">:</span> <span class="s">&#39;2016-01-01&#39;</span><span class="p">,</span> <span class="s">&#39;published_1&#39;</span><span class="p">:</span> <span class="s">&#39;2016-02-01&#39;</span><span class="p">})</span>
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">qs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+
+<span class="c"># Min-Only: Articles published after 2016-01-01</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">F</span><span class="p">({</span><span class="s">&#39;published_0&#39;</span><span class="p">:</span> <span class="s">&#39;2016-01-01&#39;</span><span class="p">})</span>
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">qs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span>
+
+<span class="c"># Max-Only: Articles published before 2016-02-01</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">F</span><span class="p">({</span><span class="s">&#39;published_1&#39;</span><span class="p">:</span> <span class="s">&#39;2016-02-01&#39;</span><span class="p">})</span>
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">qs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="datetimefromtorangefilter">
+<h3><code class="docutils literal"><span class="pre">DateTimeFromToRangeFilter</span></code><a class="headerlink" href="#datetimefromtorangefilter" title="Permalink to this headline">¶</a></h3>
+<p>Similar to a <code class="docutils literal"><span class="pre">RangeFilter</span></code> except it uses datetime format values instead of numerical values. It can be used with <code class="docutils literal"><span class="pre">DateTimeField</span></code>.</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Article</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">published</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">F</span><span class="p">(</span><span class="n">FilterSet</span><span class="p">):</span>
+    <span class="n">published</span> <span class="o">=</span> <span class="n">DateTimeFromToRangeFilter</span><span class="p">()</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">Article</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;published&#39;</span><span class="p">]</span>
+
+<span class="n">Article</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">published</span><span class="o">=</span><span class="s">&#39;2016-01-01 8:00&#39;</span><span class="p">)</span>
+<span class="n">Article</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">published</span><span class="o">=</span><span class="s">&#39;2016-01-01 9:30&#39;</span><span class="p">)</span>
+<span class="n">Article</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">published</span><span class="o">=</span><span class="s">&#39;2016-01-02 8:00&#39;</span><span class="p">)</span>
+
+<span class="c"># Range: Articles published 2016-01-01 between 8:00 and 10:00</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">F</span><span class="p">({</span><span class="s">&#39;published_0&#39;</span><span class="p">:</span> <span class="s">&#39;2016-01-01 8:00&#39;</span><span class="p">,</span> <span class="s">&#39;published_1&#39;</span><span class="p">:</span> <span class="s">&#39;2016-01-01 10:00&#39;</span><span class="p">})</span>
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">qs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+
+<span class="c"># Min-Only: Articles published after 2016-01-01 8:00</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">F</span><span class="p">({</span><span class="s">&#39;published_0&#39;</span><span class="p">:</span> <span class="s">&#39;2016-01-01 8:00&#39;</span><span class="p">})</span>
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">qs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span>
+
+<span class="c"># Max-Only: Articles published before 2016-01-01 10:00</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">F</span><span class="p">({</span><span class="s">&#39;published_1&#39;</span><span class="p">:</span> <span class="s">&#39;2016-01-01 10:00&#39;</span><span class="p">})</span>
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">qs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="timerangefilter">
+<h3><code class="docutils literal"><span class="pre">TimeRangeFilter</span></code><a class="headerlink" href="#timerangefilter" title="Permalink to this headline">¶</a></h3>
+<p>Similar to a <code class="docutils literal"><span class="pre">RangeFilter</span></code> except it uses time format values instead of numerical values. It can be used with <code class="docutils literal"><span class="pre">TimeField</span></code>.</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Comment</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">date</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateField</span><span class="p">()</span>
+    <span class="n">time</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TimeField</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">F</span><span class="p">(</span><span class="n">FilterSet</span><span class="p">):</span>
+    <span class="n">time</span> <span class="o">=</span> <span class="n">TimeRangeFilter</span><span class="p">()</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">Comment</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;time&#39;</span><span class="p">]</span>
+
+<span class="c"># Range: Comments added between 8:00 and 10:00</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">F</span><span class="p">({</span><span class="s">&#39;time_0&#39;</span><span class="p">:</span> <span class="s">&#39;8:00&#39;</span><span class="p">,</span> <span class="s">&#39;time_1&#39;</span><span class="p">:</span> <span class="s">&#39;10:00&#39;</span><span class="p">})</span>
+
+<span class="c"># Min-Only: Comments added after 8:00</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">F</span><span class="p">({</span><span class="s">&#39;time_0&#39;</span><span class="p">:</span> <span class="s">&#39;8:00&#39;</span><span class="p">})</span>
+
+<span class="c"># Max-Only: Comments added before 10:00</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">F</span><span class="p">({</span><span class="s">&#39;time_1&#39;</span><span class="p">:</span> <span class="s">&#39;10:00&#39;</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="allvaluesfilter">
+<h3><code class="docutils literal"><span class="pre">AllValuesFilter</span></code><a class="headerlink" href="#allvaluesfilter" title="Permalink to this headline">¶</a></h3>
+<p>This is a <code class="docutils literal"><span class="pre">ChoiceFilter</span></code> whose choices are the current values in the
+database.  So if in the DB for the given field you have values of 5, 7, and 9
+each of those is present as an option.  This is similar to the default behavior
+of the admin.</p>
+</div>
+<div class="section" id="baseinfilter">
+<h3><code class="docutils literal"><span class="pre">BaseInFilter</span></code><a class="headerlink" href="#baseinfilter" title="Permalink to this headline">¶</a></h3>
+<p>This is a base class used for generating IN lookup filters. Values are expected to be comma separated.</p>
+<p>Example.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">NumberInFilter</span><span class="p">(</span><span class="n">BaseInFilter</span><span class="p">,</span> <span class="n">NumericFilter</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">F</span><span class="p">(</span><span class="n">FilterSet</span><span class="p">):</span>
+    <span class="n">id__in</span> <span class="o">=</span> <span class="n">NumberInFilter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="nb">id</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">)</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">User</span>
+
+<span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s">&#39;alex&#39;</span><span class="p">)</span>
+<span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s">&#39;jacob&#39;</span><span class="p">)</span>
+<span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s">&#39;aaron&#39;</span><span class="p">)</span>
+<span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s">&#39;carl&#39;</span><span class="p">)</span>
+
+<span class="c"># In: User with IDs 1 and 3.</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">F</span><span class="p">({</span><span class="s">&#39;id__in&#39;</span><span class="p">:</span> <span class="s">&#39;1,3&#39;</span><span class="p">})</span>
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">qs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="baserangefilter">
+<h3><code class="docutils literal"><span class="pre">BaseRangeFilter</span></code><a class="headerlink" href="#baserangefilter" title="Permalink to this headline">¶</a></h3>
+<p>This is a base class used for generating RANGE lookup filters. The base class expects two values two, separated by a comma.</p>
+<p>Example.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">NumberRangeFilter</span><span class="p">(</span><span class="n">BaseInFilter</span><span class="p">,</span> <span class="n">NumericFilter</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">F</span><span class="p">(</span><span class="n">FilterSet</span><span class="p">):</span>
+    <span class="n">id__range</span> <span class="o">=</span> <span class="n">NumberRangeFilter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="nb">id</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s">&#39;range&#39;</span><span class="p">)</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">User</span>
+
+<span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s">&#39;alex&#39;</span><span class="p">)</span>
+<span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s">&#39;jacob&#39;</span><span class="p">)</span>
+<span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s">&#39;aaron&#39;</span><span class="p">)</span>
+<span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s">&#39;carl&#39;</span><span class="p">)</span>
+
+<span class="c"># Range: User with IDs between 1 and 3.</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">F</span><span class="p">({</span><span class="s">&#39;id__range&#39;</span><span class="p">:</span> <span class="s">&#39;1,3&#39;</span><span class="p">})</span>
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">qs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="methodfilter">
+<h3><code class="docutils literal"><span class="pre">MethodFilter</span></code><a class="headerlink" href="#methodfilter" title="Permalink to this headline">¶</a></h3>
+<p>This is a <code class="docutils literal"><span class="pre">Filter</span></code> that will allow you to run a method that exists on the filter set that
+this filter is a property of. Set the <cite>action</cite> to a string that will map to a method on the
+filter set class. <cite>action</cite> will default to <code class="docutils literal"><span class="pre">filter_{value-of-name-attribute}</span></code></p>
+<p>Example.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">F</span><span class="p">(</span><span class="n">FilterSet</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Filter for Books by if books are published or not&quot;&quot;&quot;</span>
+    <span class="n">published</span> <span class="o">=</span> <span class="n">MethodFilter</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">filter_published</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">queryset</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">value</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">queryset</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">published__isnull</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">queryset</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">Book</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;published&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Filter Reference</a><ul>
+<li><a class="reference internal" href="#core-arguments">Core Arguments</a><ul>
+<li><a class="reference internal" href="#name"><code class="docutils literal"><span class="pre">name</span></code></a></li>
+<li><a class="reference internal" href="#label"><code class="docutils literal"><span class="pre">label</span></code></a></li>
+<li><a class="reference internal" href="#widget"><code class="docutils literal"><span class="pre">widget</span></code></a></li>
+<li><a class="reference internal" href="#action"><code class="docutils literal"><span class="pre">action</span></code></a></li>
+<li><a class="reference internal" href="#lookup-expr"><code class="docutils literal"><span class="pre">lookup_expr</span></code></a></li>
+<li><a class="reference internal" href="#distinct"><code class="docutils literal"><span class="pre">distinct</span></code></a></li>
+<li><a class="reference internal" href="#exclude"><code class="docutils literal"><span class="pre">exclude</span></code></a></li>
+<li><a class="reference internal" href="#kwargs"><code class="docutils literal"><span class="pre">**kwargs</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#modelchoicefilter-and-modelmultiplechoicefilter-arguments">ModelChoiceFilter and ModelMultipleChoiceFilter arguments</a><ul>
+<li><a class="reference internal" href="#queryset"><code class="docutils literal"><span class="pre">queryset</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#filters">Filters</a><ul>
+<li><a class="reference internal" href="#charfilter"><code class="docutils literal"><span class="pre">CharFilter</span></code></a></li>
+<li><a class="reference internal" href="#uuidfilter"><code class="docutils literal"><span class="pre">UUIDFilter</span></code></a></li>
+<li><a class="reference internal" href="#booleanfilter"><code class="docutils literal"><span class="pre">BooleanFilter</span></code></a></li>
+<li><a class="reference internal" href="#choicefilter"><code class="docutils literal"><span class="pre">ChoiceFilter</span></code></a></li>
+<li><a class="reference internal" href="#typedchoicefilter"><code class="docutils literal"><span class="pre">TypedChoiceFilter</span></code></a></li>
+<li><a class="reference internal" href="#multiplechoicefilter"><code class="docutils literal"><span class="pre">MultipleChoiceFilter</span></code></a></li>
+<li><a class="reference internal" href="#datefilter"><code class="docutils literal"><span class="pre">DateFilter</span></code></a></li>
+<li><a class="reference internal" href="#timefilter"><code class="docutils literal"><span class="pre">TimeFilter</span></code></a></li>
+<li><a class="reference internal" href="#datetimefilter"><code class="docutils literal"><span class="pre">DateTimeFilter</span></code></a></li>
+<li><a class="reference internal" href="#isodatetimefilter"><code class="docutils literal"><span class="pre">IsoDateTimeFilter</span></code></a></li>
+<li><a class="reference internal" href="#modelchoicefilter"><code class="docutils literal"><span class="pre">ModelChoiceFilter</span></code></a></li>
+<li><a class="reference internal" href="#modelmultiplechoicefilter"><code class="docutils literal"><span class="pre">ModelMultipleChoiceFilter</span></code></a></li>
+<li><a class="reference internal" href="#numberfilter"><code class="docutils literal"><span class="pre">NumberFilter</span></code></a></li>
+<li><a class="reference internal" href="#numericrangefilter"><code class="docutils literal"><span class="pre">NumericRangeFilter</span></code></a></li>
+<li><a class="reference internal" href="#rangefilter"><code class="docutils literal"><span class="pre">RangeFilter</span></code></a></li>
+<li><a class="reference internal" href="#daterangefilter"><code class="docutils literal"><span class="pre">DateRangeFilter</span></code></a></li>
+<li><a class="reference internal" href="#datefromtorangefilter"><code class="docutils literal"><span class="pre">DateFromToRangeFilter</span></code></a></li>
+<li><a class="reference internal" href="#datetimefromtorangefilter"><code class="docutils literal"><span class="pre">DateTimeFromToRangeFilter</span></code></a></li>
+<li><a class="reference internal" href="#timerangefilter"><code class="docutils literal"><span class="pre">TimeRangeFilter</span></code></a></li>
+<li><a class="reference internal" href="#allvaluesfilter"><code class="docutils literal"><span class="pre">AllValuesFilter</span></code></a></li>
+<li><a class="reference internal" href="#baseinfilter"><code class="docutils literal"><span class="pre">BaseInFilter</span></code></a></li>
+<li><a class="reference internal" href="#baserangefilter"><code class="docutils literal"><span class="pre">BaseRangeFilter</span></code></a></li>
+<li><a class="reference internal" href="#methodfilter"><code class="docutils literal"><span class="pre">MethodFilter</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="filterset.html"
+                        title="previous chapter">FilterSet Guide</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="fields.html"
+                        title="next chapter">Fields Reference</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/ref/filters.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="fields.html" title="Fields Reference"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="filterset.html" title="FilterSet Guide"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">django-filter 0.12.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2013, Alex Gaynor and others..
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

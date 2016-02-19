@@ -1,0 +1,246 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>FilterSet Guide &mdash; django-filter 0.12.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.12.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="django-filter 0.12.0 documentation" href="../index.html" />
+    <link rel="next" title="Filter Reference" href="filters.html" />
+    <link rel="prev" title="Using django-filter" href="../usage.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="filters.html" title="Filter Reference"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../usage.html" title="Using django-filter"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">django-filter 0.12.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="filterset-guide">
+<h1>FilterSet Guide<a class="headerlink" href="#filterset-guide" title="Permalink to this headline">¶</a></h1>
+<p>This document provides a guide on using additional FilterSet features.</p>
+<div class="section" id="meta-options">
+<h2>Meta options<a class="headerlink" href="#meta-options" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>model</li>
+<li>fields</li>
+<li>exclude</li>
+<li><a class="reference internal" href="#order-by"><span>order_by</span></a></li>
+<li><a class="reference internal" href="#form"><span>form</span></a></li>
+<li><a class="reference internal" href="#together"><span>together</span></a></li>
+</ul>
+<div class="section" id="ordering-using-order-by">
+<span id="order-by"></span><h3>Ordering using <code class="docutils literal"><span class="pre">order_by</span></code><a class="headerlink" href="#ordering-using-order-by" title="Permalink to this headline">¶</a></h3>
+<p>You can allow the user to control ordering by providing the
+<code class="docutils literal"><span class="pre">order_by</span></code> argument in the Filter&#8217;s Meta class.  <code class="docutils literal"><span class="pre">order_by</span></code> can be either a
+<code class="docutils literal"><span class="pre">list</span></code> or <code class="docutils literal"><span class="pre">tuple</span></code> of field names, in which case those are the options, or
+it can be a <code class="docutils literal"><span class="pre">bool</span></code> which, if True, indicates that all fields that
+the user can filter on can also be sorted on. An example or ordering using a list:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">django_filters</span>
+
+<span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
+    <span class="n">price</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">NumberFilter</span><span class="p">(</span><span class="n">lookup_expr</span><span class="o">=</span><span class="s">&#39;lt&#39;</span><span class="p">)</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">Product</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;price&#39;</span><span class="p">,</span> <span class="s">&#39;release_date&#39;</span><span class="p">]</span>
+        <span class="n">order_by</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;price&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>If you want to control the display of items in <code class="docutils literal"><span class="pre">order_by</span></code>, you can set it to
+a list or tuple of 2-tuples in the format <code class="docutils literal"><span class="pre">(field_name,</span> <span class="pre">display_name)</span></code>.
+This lets you override the displayed names for your ordering fields:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">order_by</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">,</span> <span class="s">&#39;Company Name&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s">&#39;average_rating&#39;</span><span class="p">,</span> <span class="s">&#39;Stars&#39;</span><span class="p">),</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Note that the default query parameter name used for ordering is <code class="docutils literal"><span class="pre">o</span></code>.  You
+can override this by setting an <code class="docutils literal"><span class="pre">order_by_field</span></code> attribute on the
+<code class="docutils literal"><span class="pre">FilterSet</span></code> class to the string value you would like to use.</p>
+</div>
+<div class="section" id="custom-forms-using-form">
+<span id="form"></span><h3>Custom Forms using <code class="docutils literal"><span class="pre">form</span></code><a class="headerlink" href="#custom-forms-using-form" title="Permalink to this headline">¶</a></h3>
+<p>The inner <code class="docutils literal"><span class="pre">Meta</span></code> class also takes an optional <code class="docutils literal"><span class="pre">form</span></code> argument.  This is a
+form class from which <code class="docutils literal"><span class="pre">FilterSet.form</span></code> will subclass.  This works similar to
+the <code class="docutils literal"><span class="pre">form</span></code> option on a <code class="docutils literal"><span class="pre">ModelAdmin.</span></code></p>
+</div>
+<div class="section" id="group-fields-with-together">
+<span id="together"></span><h3>Group fields with <code class="docutils literal"><span class="pre">together</span></code><a class="headerlink" href="#group-fields-with-together" title="Permalink to this headline">¶</a></h3>
+<p>The inner <code class="docutils literal"><span class="pre">Meta</span></code> class also takes an optional <code class="docutils literal"><span class="pre">together</span></code> argument.  This
+is a list of lists, each containing field names. For convenience can be a
+single list/tuple when dealing with a single set of fields. Fields within a
+field set must either be all or none present in the request for
+<code class="docutils literal"><span class="pre">FilterSet.form</span></code> to be valid:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">django_filters</span>
+
+<span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">Product</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;price&#39;</span><span class="p">,</span> <span class="s">&#39;release_date&#39;</span><span class="p">,</span> <span class="s">&#39;rating&#39;</span><span class="p">]</span>
+        <span class="n">together</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;rating&#39;</span><span class="p">,</span> <span class="s">&#39;price&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="non-meta-options">
+<h2>Non-Meta options<a class="headerlink" href="#non-meta-options" title="Permalink to this headline">¶</a></h2>
+<p>Note that these options do not go in the Meta class, they are specified directly
+in your FilterSet class.</p>
+<ul class="simple">
+<li>filter_overrides</li>
+<li>order_by_field</li>
+<li><a class="reference internal" href="#strict"><span>strict</span></a></li>
+</ul>
+<div class="section" id="strict">
+<span id="id1"></span><h3><code class="docutils literal"><span class="pre">strict</span></code><a class="headerlink" href="#strict" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal"><span class="pre">strict</span></code> option controls whether results are returned when an invalid
+value is specified by the user for any filter field. By default, <code class="docutils literal"><span class="pre">strict</span></code> is
+set to <code class="docutils literal"><span class="pre">STRICTNESS.RETURN_NO_RESULTS</span></code> meaning that an empty queryset is
+returned if any field contains an invalid value. You can loosen this behavior
+by setting <code class="docutils literal"><span class="pre">strict</span></code> to <code class="docutils literal"><span class="pre">STRICTNESS.IGNORE</span></code> which will effectively ignore a
+filter field if its value is invalid. A third option of
+<code class="docutils literal"><span class="pre">STRICTNESS.RAISE_VALIDATION_ERROR</span></code> will cause a <code class="docutils literal"><span class="pre">ValidationError</span></code> to be
+raised if any field contains an invalid value.</p>
+</div>
+</div>
+<div class="section" id="overriding-filterset-methods">
+<h2>Overriding <code class="docutils literal"><span class="pre">FilterSet</span></code> methods<a class="headerlink" href="#overriding-filterset-methods" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="get-ordering-field">
+<h3><code class="docutils literal"><span class="pre">get_ordering_field()</span></code><a class="headerlink" href="#get-ordering-field" title="Permalink to this headline">¶</a></h3>
+<p>If you want to use a custom widget, or in any other way override the ordering
+field you can override the <code class="docutils literal"><span class="pre">get_ordering_field()</span></code> method on a <code class="docutils literal"><span class="pre">FilterSet</span></code>.
+This method just needs to return a Form Field.</p>
+<p>Ordering on multiple fields, or other complex orderings can be achieved by
+overriding the <code class="docutils literal"><span class="pre">FilterSet.get_order_by()</span></code> method. This is passed the selected
+<code class="docutils literal"><span class="pre">order_by</span></code> value, and is expected to return an iterable of values to pass to
+<code class="docutils literal"><span class="pre">QuerySet.order_by</span></code>. For example, to sort a <code class="docutils literal"><span class="pre">User</span></code> table by last name, then
+first name:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">UserFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">order_by</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="p">(</span><span class="s">&#39;username&#39;</span><span class="p">,</span> <span class="s">&#39;Username&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s">&#39;last_name&#39;</span><span class="p">,</span> <span class="s">&#39;Last Name&#39;</span><span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_order_by</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">order_value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">order_value</span> <span class="o">==</span> <span class="s">&#39;last_name&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="s">&#39;last_name&#39;</span><span class="p">,</span> <span class="s">&#39;first_name&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">UserFilter</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_order_by</span><span class="p">(</span><span class="n">order_value</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">FilterSet Guide</a><ul>
+<li><a class="reference internal" href="#meta-options">Meta options</a><ul>
+<li><a class="reference internal" href="#ordering-using-order-by">Ordering using <code class="docutils literal"><span class="pre">order_by</span></code></a></li>
+<li><a class="reference internal" href="#custom-forms-using-form">Custom Forms using <code class="docutils literal"><span class="pre">form</span></code></a></li>
+<li><a class="reference internal" href="#group-fields-with-together">Group fields with <code class="docutils literal"><span class="pre">together</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#non-meta-options">Non-Meta options</a><ul>
+<li><a class="reference internal" href="#strict"><code class="docutils literal"><span class="pre">strict</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#overriding-filterset-methods">Overriding <code class="docutils literal"><span class="pre">FilterSet</span></code> methods</a><ul>
+<li><a class="reference internal" href="#get-ordering-field"><code class="docutils literal"><span class="pre">get_ordering_field()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../usage.html"
+                        title="previous chapter">Using django-filter</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="filters.html"
+                        title="next chapter">Filter Reference</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/ref/filterset.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="filters.html" title="Filter Reference"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../usage.html" title="Using django-filter"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">django-filter 0.12.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2013, Alex Gaynor and others..
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>
