@@ -96,6 +96,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#overriding-filterset-methods">Overriding <code class="docutils literal"><span class="pre">FilterSet</span></code> methods</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#filter-for-lookup"><code class="docutils literal"><span class="pre">filter_for_lookup()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#get-ordering-field"><code class="docutils literal"><span class="pre">get_ordering_field()</span></code></a></li>
 </ul>
 </li>
@@ -239,6 +240,37 @@ raised if any field contains an invalid value.</p>
 </div>
 <div class="section" id="overriding-filterset-methods">
 <h2>Overriding <code class="docutils literal"><span class="pre">FilterSet</span></code> methods<a class="headerlink" href="#overriding-filterset-methods" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="filter-for-lookup">
+<h3><code class="docutils literal"><span class="pre">filter_for_lookup()</span></code><a class="headerlink" href="#filter-for-lookup" title="Permalink to this headline">¶</a></h3>
+<p>Prior to version 0.13.0, filter generation did not take into account the
+<code class="docutils literal"><span class="pre">lookup_expr</span></code> used. This commonly caused malformed filters to be generated
+for &#8216;isnull&#8217;, &#8216;in&#8217;, and &#8216;range&#8217; lookups (as well as transformed lookups). The
+current implementation provides the following behavior:</p>
+<ul class="simple">
+<li>&#8216;isnull&#8217; lookups return a <code class="docutils literal"><span class="pre">BooleanFilter</span></code></li>
+<li>&#8216;in&#8217; lookups return a filter derived from the CSV-based <code class="docutils literal"><span class="pre">BaseInFilter</span></code>.</li>
+<li>&#8216;range&#8217; lookups return a filter derived from the CSV-based <code class="docutils literal"><span class="pre">BaseRangeFilter</span></code>.</li>
+</ul>
+<p>If you want to override the <code class="docutils literal"><span class="pre">filter_class</span></code> and <code class="docutils literal"><span class="pre">params</span></code> used to instantiate
+filters for a model field, you can override <code class="docutils literal"><span class="pre">filter_for_lookup()</span></code>. Ex:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">Product</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">&#39;release_date&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;exact&#39;</span><span class="p">,</span> <span class="s">&#39;range&#39;</span><span class="p">],</span>
+        <span class="p">}</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">filter_for_lookup</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">lookup_type</span><span class="p">):</span>
+        <span class="c"># override date range lookups</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">models</span><span class="o">.</span><span class="n">DateField</span><span class="p">)</span> <span class="ow">and</span> <span class="n">lookup_type</span> <span class="o">==</span> <span class="s">&#39;range&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">DateRangeFiler</span><span class="p">,</span> <span class="p">{}</span>
+
+        <span class="c"># use default behavior otherwise</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">ProductFilter</span><span class="p">,</span> <span class="n">cls</span><span class="p">)</span><span class="o">.</span><span class="n">filter_for_lookup</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">lookup_type</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="get-ordering-field">
 <h3><code class="docutils literal"><span class="pre">get_ordering_field()</span></code><a class="headerlink" href="#get-ordering-field" title="Permalink to this headline">¶</a></h3>
 <p>If you want to use a custom widget, or in any other way override the ordering
