@@ -201,9 +201,15 @@ to the widgets that are included with Django that you can use there are
 additional ones that django-filter provides which may be useful:</p>
 <blockquote>
 <div><ul class="simple">
-<li><code class="docutils literal"><span class="pre">django_filters.widgets.LinkWidget</span></code> &#8211; this displays the options in a
-manner similar to the way the Django Admin does, as a series of links.
-The link for the selected option will have <code class="docutils literal"><span class="pre">class=&quot;selected&quot;</span></code>.</li>
+<li><a class="reference internal" href="widgets.html#link-widget"><span>LinkWidget</span></a> &#8211; this displays the options in a manner
+similar to the way the Django Admin does, as a series of links. The link
+for the selected option will have <code class="docutils literal"><span class="pre">class=&quot;selected&quot;</span></code>.</li>
+<li><a class="reference internal" href="widgets.html#boolean-widget"><span>BooleanWidget</span></a> &#8211; this widget converts its input
+into Python&#8217;s True/False values. It will convert all case variations of
+<code class="docutils literal"><span class="pre">True</span></code> and <code class="docutils literal"><span class="pre">False</span></code> into the internal Python values.</li>
+<li><a class="reference internal" href="widgets.html#csv-widget"><span>CSVWidget</span></a> &#8211; this widget expects a comma separated
+value and converts it into a list of string values. It is expected that
+the field class handle a list of values as well as type conversion.</li>
 </ul>
 </div></blockquote>
 </div>
@@ -219,7 +225,7 @@ recieves a <code class="docutils literal"><span class="pre">QuerySet</span></cod
 <p>The lookup expression that should be performed using <a class="reference external" href="https://docs.djangoproject.com/en/dev/ref/models/querysets/#field-lookups">Django&#8217;s ORM</a>.</p>
 <p>A <code class="docutils literal"><span class="pre">list</span></code> or <code class="docutils literal"><span class="pre">tuple</span></code> of lookup types is also accepted, allowing the user to
 select the lookup from a dropdown. The list of lookup types are filtered against
-<code class="docutils literal"><span class="pre">filters.LOOKUP_TYPES</span></code>. If no lookups are passed, then a list of all lookup
+<code class="docutils literal"><span class="pre">filters.LOOKUP_TYPES</span></code>. If <cite>lookup_expr=None</cite> is passed, then a list of all lookup
 types will be generated:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
     <span class="n">name</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">CharFilter</span><span class="p">(</span><span class="n">lookup_expr</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;exact&#39;</span><span class="p">,</span> <span class="s">&#39;iexact&#39;</span><span class="p">])</span>

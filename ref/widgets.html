@@ -90,6 +90,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="">Widget Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#linkwidget"><code class="docutils literal"><span class="pre">LinkWidget</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#booleanwidget"><code class="docutils literal"><span class="pre">BooleanWidget</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#csvwidget"><code class="docutils literal"><span class="pre">CSVWidget</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../tests.html">Running the django-filter tests</a></li>
@@ -142,7 +143,7 @@
 <p>This is a reference document with a list of the provided widgets and their
 arguments.</p>
 <div class="section" id="linkwidget">
-<h2><code class="docutils literal"><span class="pre">LinkWidget</span></code><a class="headerlink" href="#linkwidget" title="Permalink to this headline">¶</a></h2>
+<span id="link-widget"></span><h2><code class="docutils literal"><span class="pre">LinkWidget</span></code><a class="headerlink" href="#linkwidget" title="Permalink to this headline">¶</a></h2>
 <p>This widget renders each option as a link, instead of an actual &lt;input&gt;.  It has
 one method that you can override for additional customizability.
 <code class="docutils literal"><span class="pre">option_string()</span></code> should return a string with 3 Python keyword argument
@@ -156,13 +157,19 @@ option on the <code class="docutils literal"><span class="pre">&lt;a&gt;</span><
 </ol>
 </div>
 <div class="section" id="booleanwidget">
-<h2><code class="docutils literal"><span class="pre">BooleanWidget</span></code><a class="headerlink" href="#booleanwidget" title="Permalink to this headline">¶</a></h2>
+<span id="boolean-widget"></span><h2><code class="docutils literal"><span class="pre">BooleanWidget</span></code><a class="headerlink" href="#booleanwidget" title="Permalink to this headline">¶</a></h2>
 <p>This widget converts its input into Python&#8217;s True/False values. It will convert
 all case variations of <code class="docutils literal"><span class="pre">True</span></code> and <code class="docutils literal"><span class="pre">False</span></code> into the internal Python values.
 To use it, pass this into the <code class="docutils literal"><span class="pre">widgets</span></code> argument of the <code class="docutils literal"><span class="pre">BooleanFilter</span></code>:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">active</span> <span class="o">=</span> <span class="n">BooleanFilter</span><span class="p">(</span><span class="n">widget</span><span class="o">=</span><span class="n">BooleanWidget</span><span class="p">())</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="csvwidget">
+<span id="csv-widget"></span><h2><code class="docutils literal"><span class="pre">CSVWidget</span></code><a class="headerlink" href="#csvwidget" title="Permalink to this headline">¶</a></h2>
+<p>This widget expects a comma separated value and converts it into a list of
+string values. It is expected that the field class handle a list of values as
+well as type conversion.</p>
 </div>
 </div>
 
