@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Fields Reference &mdash; django-filter 0.12.0 documentation</title>
+    <title>Available Settings &mdash; django-filter 0.12.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -24,8 +24,8 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="top" title="django-filter 0.12.0 documentation" href="../index.html" />
-    <link rel="next" title="Widget Reference" href="widgets.html" />
-    <link rel="prev" title="Filter Reference" href="filters.html" /> 
+    <link rel="next" title="Running the django-filter tests" href="../tests.html" />
+    <link rel="prev" title="Widget Reference" href="widgets.html" /> 
   </head>
   <body role="document">
     <div class="related" role="navigation" aria-label="related navigation">
@@ -35,10 +35,10 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="widgets.html" title="Widget Reference"
+          <a href="../tests.html" title="Running the django-filter tests"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="filters.html" title="Filter Reference"
+          <a href="widgets.html" title="Widget Reference"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">django-filter 0.12.0 documentation</a> &raquo;</li> 
       </ul>
@@ -49,18 +49,20 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="fields-reference">
-<h1>Fields Reference<a class="headerlink" href="#fields-reference" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="isodatetimefield">
-<h2><code class="docutils literal"><span class="pre">IsoDateTimeField</span></code><a class="headerlink" href="#isodatetimefield" title="Permalink to this headline">¶</a></h2>
-<p>Extends <code class="docutils literal"><span class="pre">django.forms.DateTimeField</span></code> to allow parsing ISO 8601 formated dates, in addition to existing formats</p>
-<p>Defines a class level attribute <code class="docutils literal"><span class="pre">ISO_8601</span></code> as constant for the format.</p>
-<p>Sets <code class="docutils literal"><span class="pre">input_formats</span> <span class="pre">=</span> <span class="pre">[ISO_8601]</span></code> — this means that by default <code class="docutils literal"><span class="pre">IsoDateTimeField</span></code> will <strong>only</strong> parse ISO 8601 formated dates.</p>
-<p>You may set <code class="docutils literal"><span class="pre">input_formats</span></code> to your list of required formats as per the <a class="reference external" href="https://docs.djangoproject.com/en/1.8/ref/forms/fields/#django.forms.DateTimeField.input_formats">DateTimeField Docs</a>, using the <code class="docutils literal"><span class="pre">ISO_8601</span></code> class level attribute to specify the  ISO 8601 format.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">f</span> <span class="o">=</span> <span class="n">IsoDateTimeField</span><span class="p">()</span>
-<span class="n">f</span><span class="o">.</span><span class="n">input_formats</span> <span class="o">=</span> <span class="p">[</span><span class="n">IsoDateTimeField</span><span class="o">.</span><span class="n">ISO_8601</span><span class="p">]</span> <span class="o">+</span> <span class="n">DateTimeField</span><span class="o">.</span><span class="n">input_formats</span>
-</pre></div>
+  <div class="section" id="available-settings">
+<span id="ref-settings"></span><h1>Available Settings<a class="headerlink" href="#available-settings" title="Permalink to this headline">¶</a></h1>
+<p>Here is a list of all available settings of django-filters and their
+default values. All settings are prefixed with <code class="docutils literal"><span class="pre">FILTERS_</span></code>, although this
+is a bit verbose it helps to make it easy to identify these settings.</p>
+<div class="section" id="filters-help-text-exclude">
+<h2>FILTERS_HELP_TEXT_EXCLUDE<a class="headerlink" href="#filters-help-text-exclude" title="Permalink to this headline">¶</a></h2>
+<p>Default: <code class="docutils literal"><span class="pre">True</span></code></p>
+<p>The settings for turn on / off default <code class="docutils literal"><span class="pre">help_text</span></code> fields of filters which <code class="docutils literal"><span class="pre">exclude=True</span></code> (see <a class="reference internal" href="filters.html"><em>Filter Reference</em></a>.). It doesn&#8217;t affect on fields which defined <code class="docutils literal"><span class="pre">help_text</span></code> explicte.</p>
 </div>
+<div class="section" id="filters-help-text-filter">
+<h2>FILTERS_HELP_TEXT_FILTER<a class="headerlink" href="#filters-help-text-filter" title="Permalink to this headline">¶</a></h2>
+<p>Default: <code class="docutils literal"><span class="pre">True</span></code></p>
+<p>The settings for turn on / off default <code class="docutils literal"><span class="pre">help_text</span></code> fields of filters which <code class="docutils literal"><span class="pre">exclude=False</span></code> (default; see <a class="reference internal" href="filters.html"><em>Filter Reference</em></a>). It doesn&#8217;t affect on fields which defined <code class="docutils literal"><span class="pre">help_text</span></code> explicte.</p>
 </div>
 </div>
 
@@ -72,22 +74,23 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Fields Reference</a><ul>
-<li><a class="reference internal" href="#isodatetimefield"><code class="docutils literal"><span class="pre">IsoDateTimeField</span></code></a></li>
+<li><a class="reference internal" href="#">Available Settings</a><ul>
+<li><a class="reference internal" href="#filters-help-text-exclude">FILTERS_HELP_TEXT_EXCLUDE</a></li>
+<li><a class="reference internal" href="#filters-help-text-filter">FILTERS_HELP_TEXT_FILTER</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="filters.html"
-                        title="previous chapter">Filter Reference</a></p>
-  <h4>Next topic</h4>
   <p class="topless"><a href="widgets.html"
-                        title="next chapter">Widget Reference</a></p>
+                        title="previous chapter">Widget Reference</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../tests.html"
+                        title="next chapter">Running the django-filter tests</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="../_sources/ref/fields.txt"
+      <li><a href="../_sources/ref/settings.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -115,10 +118,10 @@
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="widgets.html" title="Widget Reference"
+          <a href="../tests.html" title="Running the django-filter tests"
              >next</a> |</li>
         <li class="right" >
-          <a href="filters.html" title="Filter Reference"
+          <a href="widgets.html" title="Widget Reference"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">django-filter 0.12.0 documentation</a> &raquo;</li> 
       </ul>
