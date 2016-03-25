@@ -14,11 +14,11 @@ FILTERS_HELP_TEXT_EXCLUDE
 
 Default: ``True``
 
-Enabling / disable the default field ``help_text`` on filters where ``exclude=True`` (:doc:`/ref/filters`). This does not affect fields which explicitly define ``help_text``.
+Enable / disable the default field ``help_text`` on filters where ``exclude=True`` (:doc:`/ref/filters`). This does not affect fields which explicitly define ``help_text``.
 
 FILTERS_HELP_TEXT_FILTER
 ------------------------
 
 Default: ``True``
 
-Enabling / disable the default field ``help_text`` on filters where ``exclude=False`` (:doc:`/ref/filters`). This does not affect fields which explicitly define ``help_text``.
+Enable / disable the default field ``help_text`` on filters where ``exclude=False`` (:doc:`/ref/filters`). This does not affect fields which explicitly define ``help_text``.

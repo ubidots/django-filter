@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Filter Reference &mdash; django-filter 0.12.0 documentation</title>
+    <title>Filter Reference &mdash; django-filter 0.13.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.12.0',
+        VERSION:     '0.13.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="django-filter 0.12.0 documentation" href="../index.html" />
+    <link rel="top" title="django-filter 0.13.0 documentation" href="../index.html" />
     <link rel="next" title="Fields Reference" href="fields.html" />
     <link rel="prev" title="FilterSet Guide" href="filterset.html" /> 
   </head>
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="filterset.html" title="FilterSet Guide"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">django-filter 0.12.0 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">django-filter 0.13.0 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -255,6 +255,13 @@ test.</p>
 </pre></div>
 </div>
 </div>
+<div class="section" id="durationfilter">
+<h3><code class="docutils literal"><span class="pre">DurationFilter</span></code><a class="headerlink" href="#durationfilter" title="Permalink to this headline">¶</a></h3>
+<p>Matches on a duration.  Used with <code class="docutils literal"><span class="pre">DurationField</span></code> by default.</p>
+<p>Supports both Django (&#8216;%d %H:%M:%S.%f&#8217;) and ISO 8601 formatted durations (but
+only the sections that are accepted by Python&#8217;s timedelta, so no year, month,
+and week designators, e.g. &#8216;P3DT10H22M&#8217;).</p>
+</div>
 <div class="section" id="modelchoicefilter">
 <h3><code class="docutils literal"><span class="pre">ModelChoiceFilter</span></code><a class="headerlink" href="#modelchoicefilter" title="Permalink to this headline">¶</a></h3>
 <p>Similar to a <code class="docutils literal"><span class="pre">ChoiceFilter</span></code> except it works with related models, used for
@@ -292,7 +299,7 @@ than a maximum where only one limit value is provided. This filter is designed t
 the Postgres Numerical Range Fields, including <cite>IntegerRangeField</cite>, <cite>BigIntegerRangeField</cite> and <cite>FloatRangeField</cite>,
 available since Django 1.8. The default widget used is the <cite>RangeField</cite>.</p>
 <p>RangeField lookup_exprs can be used, including <cite>overlap</cite>, <cite>contains</cite>, and <cite>contained_by</cite>. More lookups can be
-found in the Django docs ([<a class="reference external" href="https://docs.djangoproject.com/en/1.8/ref/contrib/postgres/fields/#querying-range-fields](https://docs.djangoproject.com/en/1.8/ref/contrib/postgres/fields">https://docs.djangoproject.com/en/1.8/ref/contrib/postgres/fields/#querying-range-fields](https://docs.djangoproject.com/en/1.8/ref/contrib/postgres/fields</a>/#querying-range-fields)).</p>
+found in the Django docs (<a class="reference external" href="https://docs.djangoproject.com/en/1.8/ref/contrib/postgres/fields/#querying-range-fields">https://docs.djangoproject.com/en/1.8/ref/contrib/postgres/fields/#querying-range-fields</a>).</p>
 <p>If the lower limit value is provided, the filter automatically defaults to <cite>__startswith</cite> as the lookup
 type and if only the upper limit value is provided, the filter uses <cite>__endswith</cite>.</p>
 </div>
@@ -551,6 +558,7 @@ filter set class. <cite>action</cite> will default to <code class="docutils lite
 <li><a class="reference internal" href="#timefilter"><code class="docutils literal"><span class="pre">TimeFilter</span></code></a></li>
 <li><a class="reference internal" href="#datetimefilter"><code class="docutils literal"><span class="pre">DateTimeFilter</span></code></a></li>
 <li><a class="reference internal" href="#isodatetimefilter"><code class="docutils literal"><span class="pre">IsoDateTimeFilter</span></code></a></li>
+<li><a class="reference internal" href="#durationfilter"><code class="docutils literal"><span class="pre">DurationFilter</span></code></a></li>
 <li><a class="reference internal" href="#modelchoicefilter"><code class="docutils literal"><span class="pre">ModelChoiceFilter</span></code></a></li>
 <li><a class="reference internal" href="#modelmultiplechoicefilter"><code class="docutils literal"><span class="pre">ModelMultipleChoiceFilter</span></code></a></li>
 <li><a class="reference internal" href="#numberfilter"><code class="docutils literal"><span class="pre">NumberFilter</span></code></a></li>
@@ -612,7 +620,7 @@ filter set class. <cite>action</cite> will default to <code class="docutils lite
         <li class="right" >
           <a href="filterset.html" title="FilterSet Guide"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">django-filter 0.12.0 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">django-filter 0.13.0 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
