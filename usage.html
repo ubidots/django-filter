@@ -247,7 +247,7 @@ lookup type. Under the hood, this will incorrectly be resolved as:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Produce</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">price__gt__exact</span><span class="o">=</span><span class="n">value</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>This will mostly likely generate a <code class="docutils literal"><span class="pre">FieldError</span></code>. The correct configuration
+<p>The above will most likely generate a <code class="docutils literal"><span class="pre">FieldError</span></code>. The correct configuration
 would be:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
     <span class="n">price__gt</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">NumberFilter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;price&#39;</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s1">&#39;gt&#39;</span><span class="p">)</span>
@@ -264,8 +264,8 @@ probably want to perform  an <code class="docutils literal"><span class="pre">ic
 <div class="section" id="filter-and-lookup-expression-mismatch-in-range-isnull">
 <h4>Filter and lookup expression mismatch (in, range, isnull)<a class="headerlink" href="#filter-and-lookup-expression-mismatch-in-range-isnull" title="Permalink to this headline">¶</a></h4>
 <p>It&#8217;s not always appropriate to directly match a filter to its model field&#8217;s
-type as some lookups change the expected type of value for the query. This is a
-commonly found issue with <code class="docutils literal"><span class="pre">in</span></code>, <code class="docutils literal"><span class="pre">range</span></code>, and <code class="docutils literal"><span class="pre">isnull</span></code> lookups. Let&#8217;s look
+type, as some lookups expect different types of values. This is a commonly
+found issue with <code class="docutils literal"><span class="pre">in</span></code>, <code class="docutils literal"><span class="pre">range</span></code>, and <code class="docutils literal"><span class="pre">isnull</span></code> lookups. Let&#8217;s look
 at the following product model:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Product</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="n">category</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Category</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -293,7 +293,7 @@ products and products for a set of categories:</p>
     <span class="n">uncategorized</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">BooleanFilter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s1">&#39;isnull&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>More info on constructing IN <a class="reference internal" href="ref/filters.html#base-in-filter"><span class="std std-ref">filters</span></a>.</p>
+<p>More info on constructing IN and RANGE csv <a class="reference internal" href="ref/filters.html#base-in-filter"><span class="std std-ref">filters</span></a>.</p>
 </div>
 </div>
 <div class="section" id="generating-filters-with-meta-fields">
