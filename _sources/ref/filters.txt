@@ -466,9 +466,9 @@ of the admin.
 ~~~~~~~~~~~~~~~~
 
 This is a base class used for creating IN lookup filters. It is expected that
-this filter class is used in conjunction with another filter, as this class
-**only** validates that the incoming value is comma-separated. The secondary
-filter then validates individual values.
+this filter class is used in conjunction with another filter class, as this
+class **only** validates that the incoming value is comma-separated. The secondary
+filter is then used to validate the individual values.
 
 Example. ::
 

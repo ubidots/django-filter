@@ -86,8 +86,11 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Using django-filter</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#the-model">The model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#the-filter">The filter</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#declaring-filters">Declaring filters</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#common-problems">Common problems</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#declaring-filters">Declaring filters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#common-declarative-problems">Common declarative problems</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#filter-name-and-lookup-expr-not-configured">Filter <code class="docutils literal"><span class="pre">name</span></code> and <code class="docutils literal"><span class="pre">lookup_expr</span></code> not configured</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#missing-lookup-expr-for-text-search-filters">Missing <code class="docutils literal"><span class="pre">lookup_expr</span></code> for text search filters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#filter-and-lookup-expression-mismatch-in-range-isnull">Filter and lookup expression mismatch (in, range, isnull)</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#generating-filters-with-meta-fields">Generating filters with Meta.fields</a><ul>
@@ -223,10 +226,14 @@ lookup expression. A detailed explanation of lookup expressions is provided in
 Django&#8217;s <a class="reference external" href="https://docs.djangoproject.com/en/dev/ref/models/lookups/#module-django.db.models.lookups">lookup reference</a>. django-filter supports expressions containing
 both transforms and a final lookup for version 1.9 of Django and above.
 For Django version 1.8, transformed expressions are not supported.</p>
-<div class="section" id="common-problems">
-<h4>Common problems<a class="headerlink" href="#common-problems" title="Permalink to this headline">¶</a></h4>
-<p>Below are some of the common problem that occur when declaring filters.</p>
-<p><strong>name and lookup_expr not configured</strong></p>
+</div>
+<div class="section" id="common-declarative-problems">
+<h3>Common declarative problems<a class="headerlink" href="#common-declarative-problems" title="Permalink to this headline">¶</a></h3>
+<p>Below are some of the common problem that occur when declaring filters. It is
+recommended that you do read this as it provides a more complete understanding
+on how filters work.</p>
+<div class="section" id="filter-name-and-lookup-expr-not-configured">
+<h4>Filter <code class="docutils literal"><span class="pre">name</span></code> and <code class="docutils literal"><span class="pre">lookup_expr</span></code> not configured<a class="headerlink" href="#filter-name-and-lookup-expr-not-configured" title="Permalink to this headline">¶</a></h4>
 <p>While <code class="docutils literal"><span class="pre">name</span></code> and <code class="docutils literal"><span class="pre">lookup_expr</span></code> are optional, it is recommended that you specify
 them. By default, if <code class="docutils literal"><span class="pre">name</span></code> is not specified, the filter&#8217;s name on the
 filterset class will be used. Additionally, <code class="docutils literal"><span class="pre">lookup_expr</span></code> defaults to
@@ -246,12 +253,16 @@ would be:</p>
     <span class="n">price__gt</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">NumberFilter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;price&#39;</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s1">&#39;gt&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><strong>Missing lookup_expr for text search filters</strong></p>
+</div>
+<div class="section" id="missing-lookup-expr-for-text-search-filters">
+<h4>Missing <code class="docutils literal"><span class="pre">lookup_expr</span></code> for text search filters<a class="headerlink" href="#missing-lookup-expr-for-text-search-filters" title="Permalink to this headline">¶</a></h4>
 <p>It&#8217;s quite common to forget to set the lookup expression for <code class="code docutils literal"><span class="pre">CharField</span></code>
 and <code class="code docutils literal"><span class="pre">TextField</span></code> and wonder why a search for &#8220;foo&#8221; does not return results
-for &#8220;foobar&#8221;. This is because the default lookup type is <cite>exact</cite>, but you
-probably want to perform  an <cite>icontains</cite> lookup.</p>
-<p><strong>Filter and lookup expression mismatch (in, range, isnull)</strong></p>
+for &#8220;foobar&#8221;. This is because the default lookup type is <code class="docutils literal"><span class="pre">exact</span></code>, but you
+probably want to perform  an <code class="docutils literal"><span class="pre">icontains</span></code> lookup.</p>
+</div>
+<div class="section" id="filter-and-lookup-expression-mismatch-in-range-isnull">
+<h4>Filter and lookup expression mismatch (in, range, isnull)<a class="headerlink" href="#filter-and-lookup-expression-mismatch-in-range-isnull" title="Permalink to this headline">¶</a></h4>
 <p>It&#8217;s not always appropriate to directly match a filter to its model field&#8217;s
 type as some lookups change the expected type of value for the query. This is a
 commonly found issue with <code class="docutils literal"><span class="pre">in</span></code>, <code class="docutils literal"><span class="pre">range</span></code>, and <code class="docutils literal"><span class="pre">isnull</span></code> lookups. Let&#8217;s look
@@ -261,18 +272,19 @@ at the following product model:</p>
 </pre></div>
 </div>
 <p>Given that <code class="docutils literal"><span class="pre">category</span></code> is optional, it&#8217;s reasonable to want to enable a search
-for uncategorized products. The following is an incorrectly configured filter:</p>
+for uncategorized products. The following is an incorrectly configured
+<code class="docutils literal"><span class="pre">isnull</span></code> filter:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
     <span class="n">uncategorized</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">NumberFilter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s1">&#39;isnull&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>So what&#8217;s the issue? While the underlying column type for <code class="docutils literal"><span class="pre">category</span></code> is an
 integer, <code class="docutils literal"><span class="pre">isnull</span></code> lookups expect a boolean value. A <code class="docutils literal"><span class="pre">NumberFilter</span></code> however
-only validates numbers. Filters are not &#8216;expression aware&#8217; and won&#8217;t change
+only validates numbers. Filters are not <cite>&#8216;expression aware&#8217;</cite> and won&#8217;t change
 behavior based on their <code class="docutils literal"><span class="pre">lookup_expr</span></code>. You should use filters that match the
-data type of the query expression instead of the underlying model field. The
-following would correctly allow you to search for both uncategorized products
-and products for a set of categories:</p>
+data type of the lookup expression <cite>instead</cite> of the data type underlying model
+field. The following would correctly allow you to search for both uncategorized
+products and products for a set of categories:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">NumberInFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">BaseInFilter</span><span class="p">,</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">NumberFilter</span><span class="p">):</span>
     <span class="k">pass</span>
 
@@ -281,7 +293,7 @@ and products for a set of categories:</p>
     <span class="n">uncategorized</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">BooleanFilter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s1">&#39;isnull&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>More info on constructing <a class="reference internal" href="ref/filters.html#base-in-filter"><span class="std std-ref">IN filters</span></a>.</p>
+<p>More info on constructing IN <a class="reference internal" href="ref/filters.html#base-in-filter"><span class="std std-ref">filters</span></a>.</p>
 </div>
 </div>
 <div class="section" id="generating-filters-with-meta-fields">

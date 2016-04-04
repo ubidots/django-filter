@@ -585,9 +585,9 @@ of the admin.</p>
 <div class="section" id="baseinfilter">
 <span id="base-in-filter"></span><h3><code class="docutils literal"><span class="pre">BaseInFilter</span></code><a class="headerlink" href="#baseinfilter" title="Permalink to this headline">¶</a></h3>
 <p>This is a base class used for creating IN lookup filters. It is expected that
-this filter class is used in conjunction with another filter, as this class
-<strong>only</strong> validates that the incoming value is comma-separated. The secondary
-filter then validates individual values.</p>
+this filter class is used in conjunction with another filter class, as this
+class <strong>only</strong> validates that the incoming value is comma-separated. The secondary
+filter is then used to validate the individual values.</p>
 <p>Example.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">NumberInFilter</span><span class="p">(</span><span class="n">BaseInFilter</span><span class="p">,</span> <span class="n">NumericFilter</span><span class="p">):</span>
     <span class="k">pass</span>
