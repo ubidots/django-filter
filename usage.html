@@ -57,7 +57,7 @@ our users filter which products they see on a list page.</p>
 <div class="section" id="the-model">
 <h2>The model<a class="headerlink" href="#the-model" title="Permalink to this headline">¶</a></h2>
 <p>Let&#8217;s start with our model:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.db</span> <span class="k">import</span> <span class="n">models</span>
 
 <span class="k">class</span> <span class="nc">Product</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>
@@ -72,14 +72,14 @@ our users filter which products they see on a list page.</p>
 <h2>The filter<a class="headerlink" href="#the-filter" title="Permalink to this headline">¶</a></h2>
 <p>We have a number of fields and we want to let our users filter based on the
 price or the release_date.  We create a <code class="docutils literal"><span class="pre">FilterSet</span></code> for this:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">django_filters</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">django_filters</span>
 
 <span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">CharFilter</span><span class="p">(</span><span class="n">lookup_expr</span><span class="o">=</span><span class="s">&#39;iexact&#39;</span><span class="p">)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">CharFilter</span><span class="p">(</span><span class="n">lookup_expr</span><span class="o">=</span><span class="s1">&#39;iexact&#39;</span><span class="p">)</span>
 
     <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">Product</span>
-        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;price&#39;</span><span class="p">,</span> <span class="s">&#39;release_date&#39;</span><span class="p">]</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;price&#39;</span><span class="p">,</span> <span class="s1">&#39;release_date&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 <p>As you can see this uses a very similar API to Django&#8217;s <code class="docutils literal"><span class="pre">ModelForm</span></code>.  Just
@@ -89,17 +89,17 @@ declarative syntax.</p>
 <h3>Declaring filters<a class="headerlink" href="#declaring-filters" title="Permalink to this headline">¶</a></h3>
 <p>The declarative syntax provides you with the most flexibility when creating
 filters, however it is fairly verbose. We&#8217;ll use the below example to outline
-the <a class="reference internal" href="ref/filters.html#core-arguments"><span>core filter arguments</span></a> on a <code class="docutils literal"><span class="pre">FilterSet</span></code>:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
+the <a class="reference internal" href="ref/filters.html#core-arguments"><span class="std std-ref">core filter arguments</span></a> on a <code class="docutils literal"><span class="pre">FilterSet</span></code>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
     <span class="n">price</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">NumberFilter</span><span class="p">()</span>
-    <span class="n">price__gt</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">NumberFilter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;price&#39;</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s">&#39;gt&#39;</span><span class="p">)</span>
-    <span class="n">price__lt</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">NumberFilter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;price&#39;</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s">&#39;lt&#39;</span><span class="p">)</span>
+    <span class="n">price__gt</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">NumberFilter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;price&#39;</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s1">&#39;gt&#39;</span><span class="p">)</span>
+    <span class="n">price__lt</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">NumberFilter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;price&#39;</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s1">&#39;lt&#39;</span><span class="p">)</span>
 
-    <span class="n">release_year</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">NumberFilter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;release_date&#39;</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s">&#39;year&#39;</span><span class="p">)</span>
-    <span class="n">release_year__gt</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">NumberFilter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;release_date&#39;</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s">&#39;year__gt&#39;</span><span class="p">)</span>
-    <span class="n">release_year__lt</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">NumberFilter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;release_date&#39;</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s">&#39;year__lt&#39;</span><span class="p">)</span>
+    <span class="n">release_year</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">NumberFilter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;release_date&#39;</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s1">&#39;year&#39;</span><span class="p">)</span>
+    <span class="n">release_year__gt</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">NumberFilter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;release_date&#39;</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s1">&#39;year__gt&#39;</span><span class="p">)</span>
+    <span class="n">release_year__lt</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">NumberFilter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;release_date&#39;</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s1">&#39;year__lt&#39;</span><span class="p">)</span>
 
-    <span class="n">manufacturer__name</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">CharFilter</span><span class="p">(</span><span class="n">lookup_expr</span><span class="o">=</span><span class="s">&#39;icontains&#39;</span><span class="p">)</span>
+    <span class="n">manufacturer__name</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">CharFilter</span><span class="p">(</span><span class="n">lookup_expr</span><span class="o">=</span><span class="s1">&#39;icontains&#39;</span><span class="p">)</span>
 
     <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">Product</span>
@@ -119,53 +119,92 @@ lookup expression. A detailed explanation of lookup expressions is provided in
 Django&#8217;s <a class="reference external" href="https://docs.djangoproject.com/en/dev/ref/models/lookups/#module-django.db.models.lookups">lookup reference</a>. django-filter supports expressions containing
 both transforms and a final lookup for version 1.9 of Django and above.
 For Django version 1.8, transformed expressions are not supported.</p>
-<p>While both of these fields are optional, it is recommended that you specify
+<div class="section" id="common-problems">
+<h4>Common problems<a class="headerlink" href="#common-problems" title="Permalink to this headline">¶</a></h4>
+<p>Below are some of the common problem that occur when declaring filters.</p>
+<p><strong>name and lookup_expr not configured</strong></p>
+<p>While <code class="docutils literal"><span class="pre">name</span></code> and <code class="docutils literal"><span class="pre">lookup_expr</span></code> are optional, it is recommended that you specify
 them. By default, if <code class="docutils literal"><span class="pre">name</span></code> is not specified, the filter&#8217;s name on the
 filterset class will be used. Additionally, <code class="docutils literal"><span class="pre">lookup_expr</span></code> defaults to
 <code class="docutils literal"><span class="pre">exact</span></code>. The following is an example of a misconfigured price filter:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
     <span class="n">price__gt</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">NumberFilter</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>The filter instance will have a field name of <code class="docutils literal"><span class="pre">price__gt</span></code> and an <code class="docutils literal"><span class="pre">exact</span></code>
 lookup type. Under the hood, this will incorrectly be resolved as:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">Produce</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">price__gt__exact</span><span class="o">=</span><span class="n">value</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Produce</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">price__gt__exact</span><span class="o">=</span><span class="n">value</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">It&#8217;s quite common to forget to set the lookup expression for
-<code class="code docutils literal"><span class="pre">CharField</span></code> and <code class="code docutils literal"><span class="pre">TextField</span></code> and wonder why a search for &#8220;foo&#8221;
-does not return results for &#8220;foobar&#8221;. This is because the default lookup
-type is <cite>exact</cite>, but you probably want to perform  an <cite>icontains</cite> lookup.</p>
+<p>This will mostly likely generate a <code class="docutils literal"><span class="pre">FieldError</span></code>. The correct configuration
+would be:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
+    <span class="n">price__gt</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">NumberFilter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;price&#39;</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s1">&#39;gt&#39;</span><span class="p">)</span>
+</pre></div>
 </div>
-<p>For more information on additional arguments, see <a class="reference internal" href="ref/filters.html#core-arguments"><span>Core Arguments</span></a>.</p>
+<p><strong>Missing lookup_expr for text search filters</strong></p>
+<p>It&#8217;s quite common to forget to set the lookup expression for <code class="code docutils literal"><span class="pre">CharField</span></code>
+and <code class="code docutils literal"><span class="pre">TextField</span></code> and wonder why a search for &#8220;foo&#8221; does not return results
+for &#8220;foobar&#8221;. This is because the default lookup type is <cite>exact</cite>, but you
+probably want to perform  an <cite>icontains</cite> lookup.</p>
+<p><strong>Filter and lookup expression mismatch (in, range, isnull)</strong></p>
+<p>It&#8217;s not always appropriate to directly match a filter to its model field&#8217;s
+type as some lookups change the expected type of value for the query. This is a
+commonly found issue with <code class="docutils literal"><span class="pre">in</span></code>, <code class="docutils literal"><span class="pre">range</span></code>, and <code class="docutils literal"><span class="pre">isnull</span></code> lookups. Let&#8217;s look
+at the following product model:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Product</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">category</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Category</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Given that <code class="docutils literal"><span class="pre">category</span></code> is optional, it&#8217;s reasonable to want to enable a search
+for uncategorized products. The following is an incorrectly configured filter:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
+    <span class="n">uncategorized</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">NumberFilter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s1">&#39;isnull&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>So what&#8217;s the issue? While the underlying column type for <code class="docutils literal"><span class="pre">category</span></code> is an
+integer, <code class="docutils literal"><span class="pre">isnull</span></code> lookups expect a boolean value. A <code class="docutils literal"><span class="pre">NumberFilter</span></code> however
+only validates numbers. Filters are not &#8216;expression aware&#8217; and won&#8217;t change
+behavior based on their <code class="docutils literal"><span class="pre">lookup_expr</span></code>. You should use filters that match the
+data type of the query expression instead of the underlying model field. The
+following would correctly allow you to search for both uncategorized products
+and products for a set of categories:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">NumberInFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">BaseInFilter</span><span class="p">,</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">NumberFilter</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
+    <span class="n">categories</span> <span class="o">=</span> <span class="n">NumberInFilter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s1">&#39;in&#39;</span><span class="p">)</span>
+    <span class="n">uncategorized</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">BooleanFilter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s1">&#39;isnull&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>More info on constructing <a class="reference internal" href="ref/filters.html#base-in-filter"><span class="std std-ref">IN filters</span></a>.</p>
+</div>
 </div>
 <div class="section" id="generating-filters-with-meta-fields">
 <h3>Generating filters with Meta.fields<a class="headerlink" href="#generating-filters-with-meta-fields" title="Permalink to this headline">¶</a></h3>
 <p>The FilterSet Meta class provides a <code class="docutils literal"><span class="pre">fields</span></code> attribute that can be used for
 easily specifying multiple filters without significant code duplication. The
 base syntax supports a list of multiple field names:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">django_filters</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">django_filters</span>
 
 <span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
     <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">Product</span>
-        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;price&#39;</span><span class="p">,</span> <span class="s">&#39;release_date&#39;</span><span class="p">]</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;price&#39;</span><span class="p">,</span> <span class="s1">&#39;release_date&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 <p>The above generates &#8216;exact&#8217; lookups for both the &#8216;price&#8217; and &#8216;release_date&#8217;
 fields.</p>
 <p>Additionally, a dictionary can be used to specify multiple lookup expressions
 for each field:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">django_filters</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">django_filters</span>
 
 <span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
     <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">Product</span>
         <span class="n">fields</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s">&#39;price&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;lt&#39;</span><span class="p">,</span> <span class="s">&#39;gt&#39;</span><span class="p">],</span>
-            <span class="s">&#39;release_date&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;exact&#39;</span><span class="p">,</span> <span class="s">&#39;year__gt&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;price&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;lt&#39;</span><span class="p">,</span> <span class="s1">&#39;gt&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;release_date&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;exact&#39;</span><span class="p">,</span> <span class="s1">&#39;year__gt&#39;</span><span class="p">],</span>
         <span class="p">}</span>
 </pre></div>
 </div>
@@ -180,10 +219,10 @@ filter is &#8216;release_date&#8217;, not &#8216;release_date__exact&#8217;.</p>
 <p>Items in the <code class="docutils literal"><span class="pre">fields</span></code> sequence in the <code class="docutils literal"><span class="pre">Meta</span></code> class may include
 &#8220;relationship paths&#8221; using Django&#8217;s <code class="docutils literal"><span class="pre">__</span></code> syntax to filter on fields on a
 related model:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
     <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">Product</span>
-        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;manufacturer__country&#39;</span><span class="p">]</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;manufacturer__country&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 <div class="section" id="overriding-default-filters">
@@ -191,18 +230,18 @@ related model:</p>
 <p>Like <code class="docutils literal"><span class="pre">django.contrib.admin.ModelAdmin</span></code>, it is possible to override
 default filters for all the models fields of the same kind using
 <code class="docutils literal"><span class="pre">filter_overrides</span></code>:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
     <span class="n">filter_overrides</span> <span class="o">=</span> <span class="p">{</span>
         <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s">&#39;filter_class&#39;</span><span class="p">:</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">CharFilter</span><span class="p">,</span>
-            <span class="s">&#39;extra&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="p">{</span>
-                <span class="s">&#39;lookup_expr&#39;</span><span class="p">:</span> <span class="s">&#39;icontains&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;filter_class&#39;</span><span class="p">:</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">CharFilter</span><span class="p">,</span>
+            <span class="s1">&#39;extra&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;lookup_expr&#39;</span><span class="p">:</span> <span class="s1">&#39;icontains&#39;</span><span class="p">,</span>
             <span class="p">},</span>
         <span class="p">},</span>
         <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s">&#39;filter_class&#39;</span><span class="p">:</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">BooleanFilter</span><span class="p">,</span>
-            <span class="s">&#39;extra&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="p">{</span>
-                <span class="s">&#39;widget&#39;</span><span class="p">:</span> <span class="s">&#39;forms.CheckboxInput&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;filter_class&#39;</span><span class="p">:</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">BooleanFilter</span><span class="p">,</span>
+            <span class="s1">&#39;extra&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;widget&#39;</span><span class="p">:</span> <span class="s1">&#39;forms.CheckboxInput&#39;</span><span class="p">,</span>
             <span class="p">},</span>
         <span class="p">},</span>
     <span class="p">}</span>
@@ -210,8 +249,8 @@ default filters for all the models fields of the same kind using
     <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">Product</span>
         <span class="n">fields</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;exact&#39;</span><span class="p">],</span>
-            <span class="s">&#39;release_date&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;isnull&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;exact&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;release_date&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;isnull&#39;</span><span class="p">],</span>
         <span class="p">}</span>
 </pre></div>
 </div>
@@ -225,12 +264,12 @@ the <code class="docutils literal"><span class="pre">MethodFilter</span></code> 
 the filter attribute gets linked to the custom filter function.
 Here is an example of overriding the filter function of the
 filter attribute <code class="docutils literal"><span class="pre">username</span></code></p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">F</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
-        <span class="n">username</span> <span class="o">=</span> <span class="n">MethodFilter</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s">&#39;my_custom_filter&#39;</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">F</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
+        <span class="n">username</span> <span class="o">=</span> <span class="n">MethodFilter</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s1">&#39;my_custom_filter&#39;</span><span class="p">)</span>
 
         <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
             <span class="n">model</span> <span class="o">=</span> <span class="n">User</span>
-            <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;username&#39;</span><span class="p">]</span>
+            <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">]</span>
 
         <span class="k">def</span> <span class="nf">my_custom_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">queryset</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">queryset</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
@@ -240,33 +279,33 @@ filter attribute <code class="docutils literal"><span class="pre">username</span
 </div>
 <p>The filter function can also be defined outside of the filter class scope.
 Though you would need to pass in the actual function value, not it&#8217;s name.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">my_custom_filter</span><span class="p">(</span><span class="n">queryset</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">my_custom_filter</span><span class="p">(</span><span class="n">queryset</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">queryset</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
         <span class="n">username</span><span class="o">=</span><span class="n">value</span>
     <span class="p">)</span>
 
 <span class="k">class</span> <span class="nc">F</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
-    <span class="c"># Notice: In this case, action accepts a func, not a string</span>
+    <span class="c1"># Notice: In this case, action accepts a func, not a string</span>
     <span class="n">username</span> <span class="o">=</span> <span class="n">MethodFilter</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="n">my_custom_filter</span><span class="p">)</span>
 
     <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">User</span>
-        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;username&#39;</span><span class="p">]</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 <p>Lastly, when using a <code class="docutils literal"><span class="pre">MethodFilter</span></code>, there is no need to define an action.
 You may simply do the following and <code class="docutils literal"><span class="pre">filter_username</span></code> will be auto-detected
 and used.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">F</span><span class="p">(</span><span class="n">FilterSet</span><span class="p">):</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">F</span><span class="p">(</span><span class="n">FilterSet</span><span class="p">):</span>
     <span class="n">username</span> <span class="o">=</span> <span class="n">MethodFilter</span><span class="p">()</span>
 
     <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">User</span>
-        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;username&#39;</span><span class="p">]</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">]</span>
 
     <span class="k">def</span> <span class="nf">filter_username</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">queryset</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">queryset</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
-            <span class="n">username__contains</span><span class="o">=</span><span class="s">&#39;ke&#39;</span>
+            <span class="n">username__contains</span><span class="o">=</span><span class="s1">&#39;ke&#39;</span>
         <span class="p">)</span>
 </pre></div>
 </div>
@@ -281,9 +320,9 @@ function is found, then the filter attribute will be left unfiltered.</p>
 <div class="section" id="the-view">
 <h2>The view<a class="headerlink" href="#the-view" title="Permalink to this headline">¶</a></h2>
 <p>Now we need to write a view:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">product_list</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">product_list</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
     <span class="n">f</span> <span class="o">=</span> <span class="n">ProductFilter</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="p">,</span> <span class="n">queryset</span><span class="o">=</span><span class="n">Product</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">())</span>
-    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s">&#39;my_app/template.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s">&#39;filter&#39;</span><span class="p">:</span> <span class="n">f</span><span class="p">})</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;my_app/template.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;filter&#39;</span><span class="p">:</span> <span class="n">f</span><span class="p">})</span>
 </pre></div>
 </div>
 <p>If a queryset argument isn&#8217;t provided then all the items in the default manager
@@ -294,14 +333,14 @@ want to paginate them, you can do that. They are in f.qs</p>
 <div class="section" id="the-url-conf">
 <h2>The URL conf<a class="headerlink" href="#the-url-conf" title="Permalink to this headline">¶</a></h2>
 <p>We need a URL pattern to call the view:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">url</span><span class="p">(</span><span class="s">r&#39;^list$&#39;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">product_list</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">url</span><span class="p">(</span><span class="s1">r&#39;^list$&#39;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">product_list</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="the-template">
 <h2>The template<a class="headerlink" href="#the-template" title="Permalink to this headline">¶</a></h2>
 <p>And lastly we need a template:</p>
-<div class="highlight-python"><div class="highlight"><pre>{% extends &quot;base.html&quot; %}
+<div class="highlight-default"><div class="highlight"><pre><span></span>{% extends &quot;base.html&quot; %}
 
 {% block content %}
     &lt;form action=&quot;&quot; method=&quot;get&quot;&gt;
@@ -324,13 +363,13 @@ the resulting queryset.</p>
 included in django-filter, which lives at <code class="docutils literal"><span class="pre">django_filters.views.FilterView</span></code>.
 You must provide either a <code class="docutils literal"><span class="pre">model</span></code> or <code class="docutils literal"><span class="pre">filterset_class</span></code> argument, similar to
 <code class="docutils literal"><span class="pre">ListView</span></code> in Django itself:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="c"># urls.py</span>
-<span class="kn">from</span> <span class="nn">django.conf.urls</span> <span class="kn">import</span> <span class="n">patterns</span><span class="p">,</span> <span class="n">url</span>
-<span class="kn">from</span> <span class="nn">django_filters.views</span> <span class="kn">import</span> <span class="n">FilterView</span>
-<span class="kn">from</span> <span class="nn">myapp.models</span> <span class="kn">import</span> <span class="n">Product</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># urls.py</span>
+<span class="kn">from</span> <span class="nn">django.conf.urls</span> <span class="k">import</span> <span class="n">patterns</span><span class="p">,</span> <span class="n">url</span>
+<span class="kn">from</span> <span class="nn">django_filters.views</span> <span class="k">import</span> <span class="n">FilterView</span>
+<span class="kn">from</span> <span class="nn">myapp.models</span> <span class="k">import</span> <span class="n">Product</span>
 
-<span class="n">urlpatterns</span> <span class="o">=</span> <span class="n">patterns</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">,</span>
-    <span class="p">(</span><span class="s">r&#39;^list/$&#39;</span><span class="p">,</span> <span class="n">FilterView</span><span class="o">.</span><span class="n">as_view</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">Product</span><span class="p">)),</span>
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="n">patterns</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="p">(</span><span class="s1">r&#39;^list/$&#39;</span><span class="p">,</span> <span class="n">FilterView</span><span class="o">.</span><span class="n">as_view</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">Product</span><span class="p">)),</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -341,12 +380,12 @@ context parameter <code class="docutils literal"><span class="pre">filter</span>
 its use is deprecated.  It can be found at
 <code class="docutils literal"><span class="pre">django_filters.views.object_filter</span></code>.  You must provide the same arguments
 to it as the class based view:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="c"># urls.py</span>
-<span class="kn">from</span> <span class="nn">django.conf.urls</span> <span class="kn">import</span> <span class="n">patterns</span><span class="p">,</span> <span class="n">url</span>
-<span class="kn">from</span> <span class="nn">myapp.models</span> <span class="kn">import</span> <span class="n">Product</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># urls.py</span>
+<span class="kn">from</span> <span class="nn">django.conf.urls</span> <span class="k">import</span> <span class="n">patterns</span><span class="p">,</span> <span class="n">url</span>
+<span class="kn">from</span> <span class="nn">myapp.models</span> <span class="k">import</span> <span class="n">Product</span>
 
-<span class="n">urlpatterns</span> <span class="o">=</span> <span class="n">patterns</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">,</span>
-    <span class="p">(</span><span class="s">r&#39;^list/$&#39;</span><span class="p">,</span> <span class="s">&#39;django_filters.views.object_filter&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s">&#39;model&#39;</span><span class="p">:</span> <span class="n">Product</span><span class="p">}),</span>
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="n">patterns</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="p">(</span><span class="s1">r&#39;^list/$&#39;</span><span class="p">,</span> <span class="s1">&#39;django_filters.views.object_filter&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;model&#39;</span><span class="p">:</span> <span class="n">Product</span><span class="p">}),</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -366,7 +405,10 @@ class-based view above.</p>
 <li><a class="reference internal" href="#">Using django-filter</a><ul>
 <li><a class="reference internal" href="#the-model">The model</a></li>
 <li><a class="reference internal" href="#the-filter">The filter</a><ul>
-<li><a class="reference internal" href="#declaring-filters">Declaring filters</a></li>
+<li><a class="reference internal" href="#declaring-filters">Declaring filters</a><ul>
+<li><a class="reference internal" href="#common-problems">Common problems</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#generating-filters-with-meta-fields">Generating filters with Meta.fields</a><ul>
 <li><a class="reference internal" href="#overriding-default-filters">Overriding default filters</a></li>
 </ul>
@@ -403,9 +445,6 @@ class-based view above.</p>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -429,7 +468,7 @@ class-based view above.</p>
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2013, Alex Gaynor and others..
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.
     </div>
   </body>
 </html>

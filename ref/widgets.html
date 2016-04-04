@@ -72,7 +72,7 @@ option on the <code class="docutils literal"><span class="pre">&lt;a&gt;</span><
 <p>This widget converts its input into Python&#8217;s True/False values. It will convert
 all case variations of <code class="docutils literal"><span class="pre">True</span></code> and <code class="docutils literal"><span class="pre">False</span></code> into the internal Python values.
 To use it, pass this into the <code class="docutils literal"><span class="pre">widgets</span></code> argument of the <code class="docutils literal"><span class="pre">BooleanFilter</span></code>:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">active</span> <span class="o">=</span> <span class="n">BooleanFilter</span><span class="p">(</span><span class="n">widget</span><span class="o">=</span><span class="n">BooleanWidget</span><span class="p">())</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">active</span> <span class="o">=</span> <span class="n">BooleanFilter</span><span class="p">(</span><span class="n">widget</span><span class="o">=</span><span class="n">BooleanWidget</span><span class="p">())</span>
 </pre></div>
 </div>
 </div>
@@ -81,6 +81,17 @@ To use it, pass this into the <code class="docutils literal"><span class="pre">w
 <p>This widget expects a comma separated value and converts it into a list of
 string values. It is expected that the field class handle a list of values as
 well as type conversion.</p>
+</div>
+<div class="section" id="rangewidget">
+<span id="range-widget"></span><h2><code class="docutils literal"><span class="pre">RangeWidget</span></code><a class="headerlink" href="#rangewidget" title="Permalink to this headline">¶</a></h2>
+<p>This widget is used with <code class="docutils literal"><span class="pre">RangeFilter</span></code> and its subclasses. It generates two
+form input elements which generally act as start/end values in a range.
+Under the hood, it is django&#8217;s <code class="docutils literal"><span class="pre">forms.TextInput</span></code> widget and excepts
+the same arguments and values. To use it, pass it to <code class="docutils literal"><span class="pre">widget</span></code> argument of
+a <code class="docutils literal"><span class="pre">RangeField</span></code>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">date_range</span> <span class="o">=</span> <span class="n">DateFromToRangeFilter</span><span class="p">(</span><span class="n">widget</span><span class="o">=</span><span class="n">RangeWidget</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;placeholder&#39;</span><span class="p">:</span> <span class="s1">&#39;YYYY/MM/DD&#39;</span><span class="p">}))</span>
+</pre></div>
+</div>
 </div>
 </div>
 
@@ -96,6 +107,7 @@ well as type conversion.</p>
 <li><a class="reference internal" href="#linkwidget"><code class="docutils literal"><span class="pre">LinkWidget</span></code></a></li>
 <li><a class="reference internal" href="#booleanwidget"><code class="docutils literal"><span class="pre">BooleanWidget</span></code></a></li>
 <li><a class="reference internal" href="#csvwidget"><code class="docutils literal"><span class="pre">CSVWidget</span></code></a></li>
+<li><a class="reference internal" href="#rangewidget"><code class="docutils literal"><span class="pre">RangeWidget</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -121,9 +133,6 @@ well as type conversion.</p>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -147,7 +156,7 @@ well as type conversion.</p>
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2013, Alex Gaynor and others..
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.
     </div>
   </body>
 </html>
