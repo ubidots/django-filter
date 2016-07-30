@@ -111,6 +111,7 @@
 <li class="toctree-l1"><a class="reference internal" href="ref/fields.html">Fields Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ref/widgets.html">Widget Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ref/settings.html">Available Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="migration.html">Migrating to 1.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tests.html">Running the django-filter tests</a></li>
 </ul>
 
@@ -463,14 +464,14 @@ want to paginate them, you can do that. They are in f.qs</p>
         {{ filter.form.as_p }}
         &lt;input type=&quot;submit&quot; /&gt;
     &lt;/form&gt;
-    {% for obj in filter %}
+    {% for obj in filter.qs %}
         {{ obj.name }} - ${{ obj.price }}&lt;br /&gt;
     {% endfor %}
 {% endblock %}
 </pre></div>
 </div>
 <p>And that&#8217;s all there is to it!  The <code class="docutils literal"><span class="pre">form</span></code> attribute contains a normal
-Django form, and when we iterate over the <code class="docutils literal"><span class="pre">FilterSet</span></code> we get the objects in
+Django form, and when we iterate over the <code class="docutils literal"><span class="pre">FilterSet.qs</span></code> we get the objects in
 the resulting queryset.</p>
 </div>
 <div class="section" id="generic-view-configuration">
@@ -480,13 +481,13 @@ included in django-filter, which lives at <code class="docutils literal"><span c
 You must provide either a <code class="docutils literal"><span class="pre">model</span></code> or <code class="docutils literal"><span class="pre">filterset_class</span></code> argument, similar to
 <code class="docutils literal"><span class="pre">ListView</span></code> in Django itself:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># urls.py</span>
-<span class="kn">from</span> <span class="nn">django.conf.urls</span> <span class="k">import</span> <span class="n">patterns</span><span class="p">,</span> <span class="n">url</span>
+<span class="kn">from</span> <span class="nn">django.conf.urls</span> <span class="k">import</span> <span class="n">url</span>
 <span class="kn">from</span> <span class="nn">django_filters.views</span> <span class="k">import</span> <span class="n">FilterView</span>
 <span class="kn">from</span> <span class="nn">myapp.models</span> <span class="k">import</span> <span class="n">Product</span>
 
-<span class="n">urlpatterns</span> <span class="o">=</span> <span class="n">patterns</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
-    <span class="p">(</span><span class="s1">r&#39;^list/$&#39;</span><span class="p">,</span> <span class="n">FilterView</span><span class="o">.</span><span class="n">as_view</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">Product</span><span class="p">)),</span>
-<span class="p">)</span>
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">url</span><span class="p">(</span><span class="s1">r&#39;^list/$&#39;</span><span class="p">,</span> <span class="n">FilterView</span><span class="o">.</span><span class="n">as_view</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">Product</span><span class="p">)),</span>
+<span class="p">]</span>
 </pre></div>
 </div>
 <p>You must provide a template at <code class="docutils literal"><span class="pre">&lt;app&gt;/&lt;model&gt;_filter.html</span></code> which gets the
@@ -497,12 +498,13 @@ its use is deprecated.  It can be found at
 <code class="docutils literal"><span class="pre">django_filters.views.object_filter</span></code>.  You must provide the same arguments
 to it as the class based view:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># urls.py</span>
-<span class="kn">from</span> <span class="nn">django.conf.urls</span> <span class="k">import</span> <span class="n">patterns</span><span class="p">,</span> <span class="n">url</span>
+<span class="kn">from</span> <span class="nn">django.conf.urls</span> <span class="k">import</span> <span class="n">url</span>
+<span class="kn">from</span> <span class="nn">django_filters.views</span> <span class="k">import</span> <span class="n">object_filter</span>
 <span class="kn">from</span> <span class="nn">myapp.models</span> <span class="k">import</span> <span class="n">Product</span>
 
-<span class="n">urlpatterns</span> <span class="o">=</span> <span class="n">patterns</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
-    <span class="p">(</span><span class="s1">r&#39;^list/$&#39;</span><span class="p">,</span> <span class="s1">&#39;django_filters.views.object_filter&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;model&#39;</span><span class="p">:</span> <span class="n">Product</span><span class="p">}),</span>
-<span class="p">)</span>
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">url</span><span class="p">(</span><span class="s1">r&#39;^list/$&#39;</span><span class="p">,</span> <span class="n">object_filter</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;model&#39;</span><span class="p">:</span> <span class="n">Product</span><span class="p">}),</span>
+<span class="p">]</span>
 </pre></div>
 </div>
 <p>The needed template and its context variables will also be the same as the
