@@ -123,6 +123,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#datetimefromtorangefilter"><code class="docutils literal"><span class="pre">DateTimeFromToRangeFilter</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#timerangefilter"><code class="docutils literal"><span class="pre">TimeRangeFilter</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#allvaluesfilter"><code class="docutils literal"><span class="pre">AllValuesFilter</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#allvaluesmultiplefilter"><code class="docutils literal"><span class="pre">AllValuesMultipleFilter</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#baseinfilter"><code class="docutils literal"><span class="pre">BaseInFilter</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#baserangefilter"><code class="docutils literal"><span class="pre">BaseRangeFilter</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#methodfilter"><code class="docutils literal"><span class="pre">MethodFilter</span></code></a></li>
@@ -579,6 +580,13 @@ selections for working with date fields.</p>
 <div class="section" id="allvaluesfilter">
 <h3><code class="docutils literal"><span class="pre">AllValuesFilter</span></code><a class="headerlink" href="#allvaluesfilter" title="Permalink to this headline">¶</a></h3>
 <p>This is a <code class="docutils literal"><span class="pre">ChoiceFilter</span></code> whose choices are the current values in the
+database.  So if in the DB for the given field you have values of 5, 7, and 9
+each of those is present as an option.  This is similar to the default behavior
+of the admin.</p>
+</div>
+<div class="section" id="allvaluesmultiplefilter">
+<h3><code class="docutils literal"><span class="pre">AllValuesMultipleFilter</span></code><a class="headerlink" href="#allvaluesmultiplefilter" title="Permalink to this headline">¶</a></h3>
+<p>This is a <code class="docutils literal"><span class="pre">MultipleChoiceFilter</span></code> whose choices are the current values in the
 database.  So if in the DB for the given field you have values of 5, 7, and 9
 each of those is present as an option.  This is similar to the default behavior
 of the admin.</p>
