@@ -90,7 +90,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#name"><code class="docutils literal"><span class="pre">name</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#label"><code class="docutils literal"><span class="pre">label</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#widget"><code class="docutils literal"><span class="pre">widget</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#action"><code class="docutils literal"><span class="pre">action</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#method"><code class="docutils literal"><span class="pre">method</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#lookup-expr"><code class="docutils literal"><span class="pre">lookup_expr</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#distinct"><code class="docutils literal"><span class="pre">distinct</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#exclude"><code class="docutils literal"><span class="pre">exclude</span></code></a></li>
@@ -219,12 +219,46 @@ to generate two form input elements using a single field.</li>
 </ul>
 </div></blockquote>
 </div>
-<div class="section" id="action">
-<h3><code class="docutils literal"><span class="pre">action</span></code><a class="headerlink" href="#action" title="Permalink to this headline">¶</a></h3>
-<p>An optional callable that tells the filter how to handle the queryset.  It
-recieves a <code class="docutils literal"><span class="pre">QuerySet</span></code> and the value to filter on and should return a
-<code class="docutils literal"><span class="pre">Queryset</span></code> that is filtered appropriately. <cite>action</cite> will default to
-<code class="docutils literal"><span class="pre">filter_{value-of-name-attribute}</span></code></p>
+<div class="section" id="method">
+<span id="filter-method"></span><h3><code class="docutils literal"><span class="pre">method</span></code><a class="headerlink" href="#method" title="Permalink to this headline">¶</a></h3>
+<p>An optional argument that tells the filter how to handle the queryset. It can
+accept either a callable or the name of a method on the <code class="docutils literal"><span class="pre">FilterSet</span></code>. The
+method receives a <code class="docutils literal"><span class="pre">QuerySet</span></code>, the name of the model field to filter on, and
+the value to filter with. It should return a <code class="docutils literal"><span class="pre">Queryset</span></code> that is filtered
+appropriately.</p>
+<p>The passed in value is validated and cleaned by the filter&#8217;s <code class="docutils literal"><span class="pre">field_class</span></code>,
+so raw value transformation and empty value checking should be unnecessary.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">F</span><span class="p">(</span><span class="n">FilterSet</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Filter for Books by if books are published or not&quot;&quot;&quot;</span>
+    <span class="n">published</span> <span class="o">=</span> <span class="n">BooleanFilter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;published_on&#39;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;filter_published&#39;</span><span class="p">)</span>
+
+    <span class="c1"># construct the full lookup expression.</span>
+    <span class="k">def</span> <span class="nf">filter_published</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">queryset</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">lookup</span> <span class="o">=</span> <span class="s1">&#39;__&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;isnull&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">queryset</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="n">lookup</span><span class="p">:</span> <span class="bp">False</span><span class="p">})</span>
+
+        <span class="c1"># alternatively, it may not be necessary to construct the lookup.</span>
+        <span class="k">return</span> <span class="n">queryset</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">published_on__isnull</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">Book</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;published&#39;</span><span class="p">]</span>
+
+
+<span class="c1"># Callables may also be defined out of the class scope.</span>
+<span class="k">def</span> <span class="nf">filter_not_empty</span><span class="p">(</span><span class="n">queryset</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="n">lookup</span> <span class="o">=</span> <span class="s1">&#39;__&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;isnull&#39;</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">queryset</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="n">lookup</span><span class="p">:</span> <span class="bp">False</span><span class="p">})</span>
+
+<span class="k">class</span> <span class="nc">F</span><span class="p">(</span><span class="n">FilterSet</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Filter for Books by if books are published or not&quot;&quot;&quot;</span>
+    <span class="n">published</span> <span class="o">=</span> <span class="n">BooleanFilter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;published_on&#39;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">filter_not_empty</span><span class="p">)</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">Book</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;published&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="lookup-expr">
 <h3><code class="docutils literal"><span class="pre">lookup_expr</span></code><a class="headerlink" href="#lookup-expr" title="Permalink to this headline">¶</a></h3>

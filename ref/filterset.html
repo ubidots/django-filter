@@ -86,9 +86,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../usage.html">Using django-filter</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">FilterSet Guide</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#meta-options">Meta options</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#automatic-filter-generation-with-model">Automatic filter generation with <code class="docutils literal"><span class="pre">model</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#declaring-filterable-fields">Declaring filterable <code class="docutils literal"><span class="pre">fields</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#disable-filter-fields-with-exclude">Disable filter fields with <code class="docutils literal"><span class="pre">exclude</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#ordering-using-order-by">Ordering using <code class="docutils literal"><span class="pre">order_by</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#custom-forms-using-form">Custom Forms using <code class="docutils literal"><span class="pre">form</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#group-fields-with-together">Group fields with <code class="docutils literal"><span class="pre">together</span></code></a></li>
@@ -161,69 +158,13 @@
 <div class="section" id="meta-options">
 <h2>Meta options<a class="headerlink" href="#meta-options" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><a class="reference internal" href="#model"><span class="std std-ref">model</span></a></li>
-<li><a class="reference internal" href="#fields"><span class="std std-ref">fields</span></a></li>
-<li><a class="reference internal" href="#exclude"><span class="std std-ref">exclude</span></a></li>
+<li>model</li>
+<li>fields</li>
+<li>exclude</li>
 <li><a class="reference internal" href="#order-by"><span class="std std-ref">order_by</span></a></li>
 <li><a class="reference internal" href="#form"><span class="std std-ref">form</span></a></li>
 <li><a class="reference internal" href="#together"><span class="std std-ref">together</span></a></li>
 </ul>
-<div class="section" id="automatic-filter-generation-with-model">
-<span id="model"></span><h3>Automatic filter generation with <code class="docutils literal"><span class="pre">model</span></code><a class="headerlink" href="#automatic-filter-generation-with-model" title="Permalink to this headline">¶</a></h3>
-<p>The <code class="docutils literal"><span class="pre">FilterSet</span></code> is capable of automatically generating filters for a given
-<code class="docutils literal"><span class="pre">model</span></code>&#8216;s fields. Similar to Django&#8217;s <code class="docutils literal"><span class="pre">ModelForm</span></code>, filters are created
-based on the underlying model field&#8217;s type. This option must be combined with
-either the <code class="docutils literal"><span class="pre">fields</span></code> or <code class="docutils literal"><span class="pre">exclude</span></code> option, which is the same requirement for
-Django&#8217;s <code class="docutils literal"><span class="pre">ModelForm</span></code> class, detailed <a class="reference external" href="https://docs.djangoproject.com/en/dev/topics/forms/modelforms/#selecting-the-fields-to-use">here</a>.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">UserFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
-    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
-        <span class="n">model</span> <span class="o">=</span> <span class="n">User</span>
-        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;last_login&#39;</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="declaring-filterable-fields">
-<span id="fields"></span><h3>Declaring filterable <code class="docutils literal"><span class="pre">fields</span></code><a class="headerlink" href="#declaring-filterable-fields" title="Permalink to this headline">¶</a></h3>
-<p>The <code class="docutils literal"><span class="pre">fields</span></code> option is combined with <code class="docutils literal"><span class="pre">model</span></code> to automatically generate
-filters. Note that generated filters will not overwrite filters declared on
-the <code class="docutils literal"><span class="pre">FilterSet</span></code>. The <code class="docutils literal"><span class="pre">fields</span></code> option accepts two syntaxes:</p>
-<ul class="simple">
-<li>a list of field names</li>
-<li>a dictionary of field names mapped to a list of lookups</li>
-</ul>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">UserFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
-    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
-        <span class="n">model</span> <span class="o">=</span> <span class="n">User</span>
-        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;last_login&#39;</span><span class="p">]</span>
-
-<span class="c1"># or</span>
-
-<span class="k">class</span> <span class="nc">UserFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
-    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
-        <span class="n">model</span> <span class="o">=</span> <span class="n">User</span>
-        <span class="n">fields</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">&#39;username&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;exact&#39;</span><span class="p">,</span> <span class="s1">&#39;contains&#39;</span><span class="p">],</span>
-            <span class="s1">&#39;last_login&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;exact&#39;</span><span class="p">,</span> <span class="s1">&#39;year__gt&#39;</span><span class="p">],</span>
-        <span class="p">}</span>
-</pre></div>
-</div>
-<p>The list syntax will create an <code class="docutils literal"><span class="pre">exact</span></code> lookup filter for each field included
-in <code class="docutils literal"><span class="pre">fields</span></code>. The dictionary syntax will create a filter for each lookup
-expression declared for its corresponding model field. These expressions may
-include both transforms and lookups, as explained in the <a class="reference external" href="https://docs.djangoproject.com/en/dev/ref/models/lookups/#module-django.db.models.lookups">lookup reference</a>.</p>
-</div>
-<div class="section" id="disable-filter-fields-with-exclude">
-<span id="exclude"></span><h3>Disable filter fields with <code class="docutils literal"><span class="pre">exclude</span></code><a class="headerlink" href="#disable-filter-fields-with-exclude" title="Permalink to this headline">¶</a></h3>
-<p>The <code class="docutils literal"><span class="pre">exclude</span></code> option accepts a blacklist of field names to exclude from
-automatic filter generation. Note that this option will not disable filters
-declared directly  on the <code class="docutils literal"><span class="pre">FilterSet</span></code>.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">UserFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
-    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
-        <span class="n">model</span> <span class="o">=</span> <span class="n">User</span>
-        <span class="n">exclude</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
 <div class="section" id="ordering-using-order-by">
 <span id="order-by"></span><h3>Ordering using <code class="docutils literal"><span class="pre">order_by</span></code><a class="headerlink" href="#ordering-using-order-by" title="Permalink to this headline">¶</a></h3>
 <p>You can allow the user to control ordering by providing the
@@ -288,7 +229,7 @@ in your FilterSet class.</p>
 <li><a class="reference internal" href="#strict"><span class="std std-ref">strict</span></a></li>
 </ul>
 <div class="section" id="strict">
-<span id="id3"></span><h3><code class="docutils literal"><span class="pre">strict</span></code><a class="headerlink" href="#strict" title="Permalink to this headline">¶</a></h3>
+<span id="id1"></span><h3><code class="docutils literal"><span class="pre">strict</span></code><a class="headerlink" href="#strict" title="Permalink to this headline">¶</a></h3>
 <p>The <code class="docutils literal"><span class="pre">strict</span></code> option controls whether results are returned when an invalid
 value is specified by the user for any filter field. By default, <code class="docutils literal"><span class="pre">strict</span></code> is
 set to <code class="docutils literal"><span class="pre">STRICTNESS.RETURN_NO_RESULTS</span></code> meaning that an empty queryset is

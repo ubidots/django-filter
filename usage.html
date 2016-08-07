@@ -97,7 +97,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#overriding-default-filters">Overriding default filters</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#custom-filtering-with-methodfilter">Custom filtering with MethodFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#custom-filtering-with-filter-method">Custom filtering with <code class="docutils literal"><span class="pre">Filter.method</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#the-view">The view</a></li>
@@ -373,65 +373,23 @@ default filters for all the models fields of the same kind using
 </div>
 </div>
 </div>
-<div class="section" id="custom-filtering-with-methodfilter">
-<h3>Custom filtering with MethodFilter<a class="headerlink" href="#custom-filtering-with-methodfilter" title="Permalink to this headline">¶</a></h3>
-<p>If you want fine control over each individual filter attribute, you can use
-the <code class="docutils literal"><span class="pre">MethodFilter</span></code> filter.</p>
-<p>By passing in the name of a custom defined filter function as an <code class="docutils literal"><span class="pre">action</span></code>,
-the filter attribute gets linked to the custom filter function.
-Here is an example of overriding the filter function of the
-filter attribute <code class="docutils literal"><span class="pre">username</span></code></p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">F</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
-        <span class="n">username</span> <span class="o">=</span> <span class="n">MethodFilter</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s1">&#39;my_custom_filter&#39;</span><span class="p">)</span>
-
-        <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
-            <span class="n">model</span> <span class="o">=</span> <span class="n">User</span>
-            <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">]</span>
-
-        <span class="k">def</span> <span class="nf">my_custom_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">queryset</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-            <span class="k">return</span> <span class="n">queryset</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
-                <span class="n">username</span><span class="o">=</span><span class="n">value</span>
-            <span class="p">)</span>
-</pre></div>
-</div>
-<p>The filter function can also be defined outside of the filter class scope.
-Though you would need to pass in the actual function value, not it&#8217;s name.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">my_custom_filter</span><span class="p">(</span><span class="n">queryset</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">queryset</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
-        <span class="n">username</span><span class="o">=</span><span class="n">value</span>
-    <span class="p">)</span>
-
-<span class="k">class</span> <span class="nc">F</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
-    <span class="c1"># Notice: In this case, action accepts a func, not a string</span>
-    <span class="n">username</span> <span class="o">=</span> <span class="n">MethodFilter</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="n">my_custom_filter</span><span class="p">)</span>
-
-    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
-        <span class="n">model</span> <span class="o">=</span> <span class="n">User</span>
-        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">]</span>
-</pre></div>
-</div>
-<p>Lastly, when using a <code class="docutils literal"><span class="pre">MethodFilter</span></code>, there is no need to define an action.
-You may simply do the following and <code class="docutils literal"><span class="pre">filter_username</span></code> will be auto-detected
-and used.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">F</span><span class="p">(</span><span class="n">FilterSet</span><span class="p">):</span>
-    <span class="n">username</span> <span class="o">=</span> <span class="n">MethodFilter</span><span class="p">()</span>
+<div class="section" id="custom-filtering-with-filter-method">
+<h3>Custom filtering with <code class="docutils literal"><span class="pre">Filter.method</span></code><a class="headerlink" href="#custom-filtering-with-filter-method" title="Permalink to this headline">¶</a></h3>
+<p>You can control the behavior of a filter by specifying a <code class="docutils literal"><span class="pre">method</span></code> to perform
+filtering. See more <a class="reference internal" href="ref/filters.html#filter-method"><span class="std std-ref">here</span></a>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">F</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
+    <span class="n">username</span> <span class="o">=</span> <span class="n">MethodFilter</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s1">&#39;my_custom_filter&#39;</span><span class="p">)</span>
 
     <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">User</span>
         <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">filter_username</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">queryset</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">my_custom_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">queryset</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">queryset</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
-            <span class="n">username__contains</span><span class="o">=</span><span class="s1">&#39;ke&#39;</span>
+            <span class="n">username</span><span class="o">=</span><span class="n">value</span>
         <span class="p">)</span>
 </pre></div>
 </div>
-<p>Under the hood, if <code class="docutils literal"><span class="pre">action</span></code> is not defined, <code class="docutils literal"><span class="pre">django_filter</span></code>
-searches for a class method with a name that follows the pattern
-<code class="docutils literal"><span class="pre">filter_{{ATTRIBUTE_NAME}}</span></code>. For example, if the attribute name is
-<code class="docutils literal"><span class="pre">email</span></code>, then the filter class will be scanned for the filter function
-<code class="docutils literal"><span class="pre">filter_email</span></code>. If no action is provided, and no filter class
-function is found, then the filter attribute will be left unfiltered.</p>
 </div>
 </div>
 <div class="section" id="the-view">
