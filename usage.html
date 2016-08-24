@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Using django-filter &mdash; django-filter 0.13.0 documentation</title>
+  <title>Using django-filter &mdash; django-filter 0.14.0 documentation</title>
   
 
   
@@ -30,7 +30,7 @@
   
 
   
-    <link rel="top" title="django-filter 0.13.0 documentation" href="index.html"/>
+    <link rel="top" title="django-filter 0.14.0 documentation" href="index.html"/>
         <link rel="next" title="FilterSet Guide" href="ref/filterset.html"/>
         <link rel="prev" title="Installing django-filter" href="install.html"/> 
 
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                0.13.0
+                0.14.0
               </div>
             
           
@@ -97,7 +97,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#overriding-default-filters">Overriding default filters</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#custom-filtering-with-filter-method">Custom filtering with <code class="docutils literal"><span class="pre">Filter.method</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#customize-filtering-with-filter-method">Customize filtering with <code class="docutils literal"><span class="pre">Filter.method</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#the-view">The view</a></li>
@@ -373,21 +373,21 @@ default filters for all the models fields of the same kind using
 </div>
 </div>
 </div>
-<div class="section" id="custom-filtering-with-filter-method">
-<h3>Custom filtering with <code class="docutils literal"><span class="pre">Filter.method</span></code><a class="headerlink" href="#custom-filtering-with-filter-method" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="customize-filtering-with-filter-method">
+<h3>Customize filtering with <code class="docutils literal"><span class="pre">Filter.method</span></code><a class="headerlink" href="#customize-filtering-with-filter-method" title="Permalink to this headline">¶</a></h3>
 <p>You can control the behavior of a filter by specifying a <code class="docutils literal"><span class="pre">method</span></code> to perform
-filtering. See more <a class="reference internal" href="ref/filters.html#filter-method"><span class="std std-ref">here</span></a>.</p>
+filtering. View more information in the <a class="reference internal" href="ref/filters.html#filter-method"><span class="std std-ref">method reference</span></a>.</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">F</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
-    <span class="n">username</span> <span class="o">=</span> <span class="n">MethodFilter</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s1">&#39;my_custom_filter&#39;</span><span class="p">)</span>
+    <span class="n">username</span> <span class="o">=</span> <span class="n">CharFilter</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;my_custom_filter&#39;</span><span class="p">)</span>
 
     <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">User</span>
         <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">my_custom_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">queryset</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">queryset</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
-            <span class="n">username</span><span class="o">=</span><span class="n">value</span>
-        <span class="p">)</span>
+    <span class="k">def</span> <span class="nf">my_custom_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">queryset</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">queryset</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="o">**</span><span class="p">{</span>
+            <span class="n">name</span><span class="p">:</span> <span class="n">value</span><span class="p">,</span>
+        <span class="p">})</span>
 </pre></div>
 </div>
 </div>
@@ -511,7 +511,7 @@ class-based view above.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.13.0',
+            VERSION:'0.14.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

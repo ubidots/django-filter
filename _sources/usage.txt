@@ -236,25 +236,25 @@ default filters for all the models fields of the same kind using
             }
 
 
-Custom filtering with ``Filter.method``
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Customize filtering with ``Filter.method``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can control the behavior of a filter by specifying a ``method`` to perform
-filtering. See more :ref:`here <filter-method>`.
+filtering. View more information in the :ref:`method reference <filter-method>`.
 
 .. code-block:: python
 
     class F(django_filters.FilterSet):
-        username = MethodFilter(action='my_custom_filter')
+        username = CharFilter(method='my_custom_filter')
 
         class Meta:
             model = User
             fields = ['username']
 
-        def my_custom_filter(self, queryset, value):
-            return queryset.filter(
-                username=value
-            )
+        def my_custom_filter(self, queryset, name, value):
+            return queryset.filter(**{
+                name: value,
+            })
 
 
 The view
