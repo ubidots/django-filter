@@ -5,9 +5,13 @@ The `DjangoFilterBackend` class supports highly customizable field filtering, us
 
 To use REST framework's `DjangoFilterBackend`, first install `django-filter`.
 
+.. code-block:: bash
+
     pip install django-filter
 
 If you are using the browsable API or admin API you may also want to install `django-crispy-forms`, which will enhance the presentation of the filter forms in HTML views, by allowing them to render Bootstrap 3 HTML.
+
+.. code-block:: bash
 
     pip install django-crispy-forms
 

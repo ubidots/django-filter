@@ -140,11 +140,13 @@
 <h1>Django Rest Framework Integration<a class="headerlink" href="#django-rest-framework-integration" title="Permalink to this headline">¶</a></h1>
 <p>The <cite>DjangoFilterBackend</cite> class supports highly customizable field filtering, using the [django-filter package][django-filter].</p>
 <p>To use REST framework&#8217;s <cite>DjangoFilterBackend</cite>, first install <cite>django-filter</cite>.</p>
-<blockquote>
-<div>pip install django-filter</div></blockquote>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>pip install django-filter
+</pre></div>
+</div>
 <p>If you are using the browsable API or admin API you may also want to install <cite>django-crispy-forms</cite>, which will enhance the presentation of the filter forms in HTML views, by allowing them to render Bootstrap 3 HTML.</p>
-<blockquote>
-<div>pip install django-crispy-forms</div></blockquote>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>pip install django-crispy-forms
+</pre></div>
+</div>
 <p>With crispy forms installed and added to Django&#8217;s <cite>INSTALLED_APPS</cite>, the browsable API will present a filtering control for <cite>DjangoFilterBackend</cite>, like so:</p>
 <img alt="_images/form.png" src="_images/form.png" />
 <p>#### Specifying filter fields</p>
