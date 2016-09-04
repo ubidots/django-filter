@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Django Rest Framework Integration &mdash; django-filter 0.14.0 documentation</title>
+  <title>Django Rest Framework &mdash; django-filter 0.14.0 documentation</title>
   
 
   
@@ -84,7 +84,13 @@
                 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installing django-filter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Using django-filter</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">Django Rest Framework Integration</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Django Rest Framework</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#quickstart">Quickstart</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#adding-a-filterset-with-filter-class">Adding a FilterSet with <code class="docutils literal"><span class="pre">filter_class</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#specifying-filter-fields">Specifying <code class="docutils literal"><span class="pre">filter_fields</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#crispy-forms">Crispy Forms</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="ref/filterset.html">FilterSet Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ref/filters.html">Filter Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ref/fields.html">Fields Reference</a></li>
@@ -122,7 +128,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
-    <li>Django Rest Framework Integration</li>
+    <li>Django Rest Framework</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -136,45 +142,55 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="django-rest-framework-integration">
-<h1>Django Rest Framework Integration<a class="headerlink" href="#django-rest-framework-integration" title="Permalink to this headline">¶</a></h1>
-<p>The <cite>DjangoFilterBackend</cite> class supports highly customizable field filtering, using the [django-filter package][django-filter].</p>
-<p>To use REST framework&#8217;s <cite>DjangoFilterBackend</cite>, first install <cite>django-filter</cite>.</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pip install django-filter
+  <div class="section" id="django-rest-framework">
+<h1>Django Rest Framework<a class="headerlink" href="#django-rest-framework" title="Permalink to this headline">¶</a></h1>
+<p>Integration with <a class="reference external" href="http://www.django-rest-framework.org/">Django Rest Framework</a> is provided through a DRF-specific <code class="docutils literal"><span class="pre">FilterSet</span></code> and a <a class="reference external" href="http://www.django-rest-framework.org/api-guide/filtering/">filter backend</a>. These may be found in the <code class="docutils literal"><span class="pre">rest_framework</span></code> sub-package.</p>
+<div class="section" id="quickstart">
+<h2>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this headline">¶</a></h2>
+<p>Using the new <code class="docutils literal"><span class="pre">FilterSet</span></code> simply requires changing the import path. Instead of importing from <code class="docutils literal"><span class="pre">django_filters</span></code>, import from the <code class="docutils literal"><span class="pre">rest_framework</span></code> sub-package.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django_filters</span> <span class="kn">import</span> <span class="n">rest_framework</span> <span class="k">as</span> <span class="n">filters</span>
+
+<span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
+    <span class="o">...</span>
 </pre></div>
 </div>
-<p>If you are using the browsable API or admin API you may also want to install <cite>django-crispy-forms</cite>, which will enhance the presentation of the filter forms in HTML views, by allowing them to render Bootstrap 3 HTML.</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pip install django-crispy-forms
-</pre></div>
-</div>
-<p>With crispy forms installed and added to Django&#8217;s <cite>INSTALLED_APPS</cite>, the browsable API will present a filtering control for <cite>DjangoFilterBackend</cite>, like so:</p>
-<img alt="_images/form.png" src="_images/form.png" />
-<p>#### Specifying filter fields</p>
-<p>If all you need is simple equality-based filtering, you can set a <cite>filter_fields</cite> attribute on the view, or viewset, listing the set of fields you wish to filter against.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ProductList</span><span class="p">(</span><span class="n">generics</span><span class="o">.</span><span class="n">ListAPIView</span><span class="p">):</span>
+<p>Your view class will also need to add <code class="docutils literal"><span class="pre">DjangoFilterBackend</span></code> to the <code class="docutils literal"><span class="pre">filter_backends</span></code>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django_filters</span> <span class="kn">import</span> <span class="n">rest_framework</span> <span class="k">as</span> <span class="n">filters</span>
+
+<span class="k">class</span> <span class="nc">ProductList</span><span class="p">(</span><span class="n">generics</span><span class="o">.</span><span class="n">ListAPIView</span><span class="p">):</span>
     <span class="n">queryset</span> <span class="o">=</span> <span class="n">Product</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
     <span class="n">serializer_class</span> <span class="o">=</span> <span class="n">ProductSerializer</span>
     <span class="n">filter_backends</span> <span class="o">=</span> <span class="p">(</span><span class="n">filters</span><span class="o">.</span><span class="n">DjangoFilterBackend</span><span class="p">,)</span>
     <span class="n">filter_fields</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="s1">&#39;in_stock&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>This will automatically create a <cite>FilterSet</cite> class for the given fields, and will allow you to make requests such as:</p>
-<blockquote>
-<div><a class="reference external" href="http://example.com/api/products?category=clothing&amp;in_stock=True">http://example.com/api/products?category=clothing&amp;in_stock=True</a></div></blockquote>
-<p>#### Specifying a FilterSet</p>
-<p>For more advanced filtering requirements you can specify a <cite>FilterSet</cite> class that should be used by the view.  For example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">django_filters</span>
-<span class="kn">from</span> <span class="nn">myapp.models</span> <span class="kn">import</span> <span class="n">Product</span>
-<span class="kn">from</span> <span class="nn">myapp.serializers</span> <span class="kn">import</span> <span class="n">ProductSerializer</span>
-<span class="kn">from</span> <span class="nn">rest_framework</span> <span class="kn">import</span> <span class="n">filters</span>
-<span class="kn">from</span> <span class="nn">rest_framework</span> <span class="kn">import</span> <span class="n">generics</span>
+<p>If you want to use the django-filter backend by default, add it to the <code class="docutils literal"><span class="pre">DEFAULT_FILTER_BACKENDS</span></code> setting.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># settings.py</span>
+<span class="n">REST_FRAMEWORK</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;DEFAULT_FILTER_BACKENDS&#39;</span><span class="p">:</span> <span class="p">(</span>
+        <span class="s1">&#39;django_filters.rest_framework.DjangoFilterBackend&#39;</span><span class="p">,</span>
+        <span class="o">...</span>
+    <span class="p">),</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="adding-a-filterset-with-filter-class">
+<h2>Adding a FilterSet with <code class="docutils literal"><span class="pre">filter_class</span></code><a class="headerlink" href="#adding-a-filterset-with-filter-class" title="Permalink to this headline">¶</a></h2>
+<p>To enable filtering with a <code class="docutils literal"><span class="pre">FilterSet</span></code>, add it to the <code class="docutils literal"><span class="pre">filter_class</span></code> parameter on your view class.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rest_framework</span> <span class="kn">import</span> <span class="n">generics</span>
+<span class="kn">from</span> <span class="nn">django_filters</span> <span class="kn">import</span> <span class="n">rest_framework</span> <span class="k">as</span> <span class="n">filters</span>
+<span class="kn">from</span> <span class="nn">myapp</span> <span class="kn">import</span> <span class="n">Product</span>
+
 
 <span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
     <span class="n">min_price</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">NumberFilter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;price&quot;</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s1">&#39;gte&#39;</span><span class="p">)</span>
     <span class="n">max_price</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">NumberFilter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;price&quot;</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s1">&#39;lte&#39;</span><span class="p">)</span>
+
     <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">Product</span>
         <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="s1">&#39;in_stock&#39;</span><span class="p">,</span> <span class="s1">&#39;min_price&#39;</span><span class="p">,</span> <span class="s1">&#39;max_price&#39;</span><span class="p">]</span>
+
 
 <span class="k">class</span> <span class="nc">ProductList</span><span class="p">(</span><span class="n">generics</span><span class="o">.</span><span class="n">ListAPIView</span><span class="p">):</span>
     <span class="n">queryset</span> <span class="o">=</span> <span class="n">Product</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
@@ -183,53 +199,38 @@
     <span class="n">filter_class</span> <span class="o">=</span> <span class="n">ProductFilter</span>
 </pre></div>
 </div>
-<p>Which will allow you to make requests such as:</p>
-<blockquote>
-<div><a class="reference external" href="http://example.com/api/products?category=clothing&amp;max_price=10.00">http://example.com/api/products?category=clothing&amp;max_price=10.00</a></div></blockquote>
-<p>You can also span relationships using <cite>django-filter</cite>, let&#8217;s assume that each
-product has foreign key to <cite>Manufacturer</cite> model, so we create filter that
-filters using <cite>Manufacturer</cite> name. For example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">myapp.models</span> <span class="kn">import</span> <span class="n">Product</span>
-<span class="kn">from</span> <span class="nn">myapp.serializers</span> <span class="kn">import</span> <span class="n">ProductSerializer</span>
-<span class="kn">from</span> <span class="nn">rest_framework</span> <span class="kn">import</span> <span class="n">filters</span>
-<span class="kn">from</span> <span class="nn">rest_framework</span> <span class="kn">import</span> <span class="n">generics</span>
+</div>
+<div class="section" id="specifying-filter-fields">
+<h2>Specifying <code class="docutils literal"><span class="pre">filter_fields</span></code><a class="headerlink" href="#specifying-filter-fields" title="Permalink to this headline">¶</a></h2>
+<p>You may bypass creating a <code class="docutils literal"><span class="pre">FilterSet</span></code> by instead adding <code class="docutils literal"><span class="pre">filter_fields</span></code> to your view class. This is equivalent to creating a FilterSet with just <a class="reference internal" href="ref/filterset.html#fields"><span>Meta.fields</span></a>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rest_framework</span> <span class="kn">import</span> <span class="n">generics</span>
+<span class="kn">from</span> <span class="nn">django_filters</span> <span class="kn">import</span> <span class="n">rest_framework</span> <span class="k">as</span> <span class="n">filters</span>
+<span class="kn">from</span> <span class="nn">myapp</span> <span class="kn">import</span> <span class="n">Product</span>
 
+
+<span class="k">class</span> <span class="nc">ProductList</span><span class="p">(</span><span class="n">generics</span><span class="o">.</span><span class="n">ListAPIView</span><span class="p">):</span>
+    <span class="n">queryset</span> <span class="o">=</span> <span class="n">Product</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+    <span class="n">filter_backends</span> <span class="o">=</span> <span class="p">(</span><span class="n">filters</span><span class="o">.</span><span class="n">DjangoFilterBackend</span><span class="p">,)</span>
+    <span class="n">filter_fields</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="s1">&#39;in_stock&#39;</span><span class="p">)</span>
+
+
+<span class="c1"># Equivalent FilterSet:</span>
 <span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
     <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">Product</span>
-        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="s1">&#39;in_stock&#39;</span><span class="p">,</span> <span class="s1">&#39;manufacturer__name&#39;</span><span class="p">]</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="s1">&#39;in_stock&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>This enables us to make queries like:</p>
-<blockquote>
-<div><a class="reference external" href="http://example.com/api/products?manufacturer__name=foo">http://example.com/api/products?manufacturer__name=foo</a></div></blockquote>
-<p>This is nice, but it exposes the Django&#8217;s double underscore convention as part of the API.  If you instead want to explicitly name the filter argument you can instead explicitly include it on the <cite>FilterSet</cite> class:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">django_filters</span>
-<span class="kn">from</span> <span class="nn">myapp.models</span> <span class="kn">import</span> <span class="n">Product</span>
-<span class="kn">from</span> <span class="nn">myapp.serializers</span> <span class="kn">import</span> <span class="n">ProductSerializer</span>
-<span class="kn">from</span> <span class="nn">rest_framework</span> <span class="kn">import</span> <span class="n">filters</span>
-<span class="kn">from</span> <span class="nn">rest_framework</span> <span class="kn">import</span> <span class="n">generics</span>
-
-<span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
-    <span class="n">manufacturer</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">CharFilter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;manufacturer__name&quot;</span><span class="p">)</span>
-
-    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
-        <span class="n">model</span> <span class="o">=</span> <span class="n">Product</span>
-        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="s1">&#39;in_stock&#39;</span><span class="p">,</span> <span class="s1">&#39;manufacturer&#39;</span><span class="p">]</span>
+</div>
+<div class="section" id="crispy-forms">
+<h2>Crispy Forms<a class="headerlink" href="#crispy-forms" title="Permalink to this headline">¶</a></h2>
+<p>If you are using DRF&#8217;s browsable API or admin API you may also want to install <cite>django-crispy-forms</cite>, which will enhance the presentation of the filter forms in HTML views, by allowing them to render Bootstrap 3 HTML. Note that this isn&#8217;t actively supported, although pull requests for bug fixes are welcome.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>pip install django-crispy-forms
 </pre></div>
 </div>
-<p>And now you can execute:</p>
-<blockquote>
-<div><a class="reference external" href="http://example.com/api/products?manufacturer=foo">http://example.com/api/products?manufacturer=foo</a></div></blockquote>
-<p>For more details on using filter sets see the [django-filter documentation][django-filter-docs].</p>
-<p>&#8212;</p>
-<p><strong>Hints &amp; Tips</strong></p>
-<ul class="simple">
-<li>By default filtering is not enabled.  If you want to use <cite>DjangoFilterBackend</cite> remember to make sure it is installed by using the <cite>&#8216;DEFAULT_FILTER_BACKENDS&#8217;</cite> setting.</li>
-<li>When using boolean fields, you should use the values <cite>True</cite> and <cite>False</cite> in the URL query parameters, rather than <cite>0</cite>, <cite>1</cite>, <cite>true</cite> or <cite>false</cite>.  (The allowed boolean values are currently hardwired in Django&#8217;s [NullBooleanSelect implementation][nullbooleanselect].)</li>
-<li><cite>django-filter</cite> supports filtering across relationships, using Django&#8217;s double-underscore syntax.</li>
-</ul>
-<p>&#8212;</p>
+<p>With crispy forms installed and added to Django&#8217;s <cite>INSTALLED_APPS</cite>, the browsable API will present a filtering control for <cite>DjangoFilterBackend</cite>, like so:</p>
+<img alt="_images/form.png" src="_images/form.png" />
+</div>
 </div>
 
 

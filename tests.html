@@ -83,7 +83,7 @@
                 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installing django-filter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Using django-filter</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rest_framework.html">Django Rest Framework Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rest_framework.html">Django Rest Framework</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ref/filterset.html">FilterSet Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ref/filters.html">Filter Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ref/fields.html">Fields Reference</a></li>
@@ -154,42 +154,54 @@ wrapper script is available to set up and run the test suite.</p>
 <div class="section" id="set-up-a-virtualenv-for-the-test-suite">
 <h2>Set up a virtualenv for the test suite<a class="headerlink" href="#set-up-a-virtualenv-for-the-test-suite" title="Permalink to this headline">¶</a></h2>
 <p>Run the following to create a new virtualenv to run the test suite in:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>virtualenv django-filter-tests
-cd django-filter-tests
-. bin/activate
+<div class="highlight-python"><div class="highlight"><pre><span></span>.. code-block:: bash
 </pre></div>
 </div>
+<blockquote>
+<div>virtualenv django-filter-tests
+cd django-filter-tests
+. bin/activate</div></blockquote>
 </div>
 <div class="section" id="get-a-copy-of-django-filter">
 <h2>Get a copy of django-filter<a class="headerlink" href="#get-a-copy-of-django-filter" title="Permalink to this headline">¶</a></h2>
 <p>Get the django-filter source code using the following command:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>git clone https://github.com/alex/django-filter.git
+<div class="highlight-python"><div class="highlight"><pre><span></span>.. code-block:: bash
 </pre></div>
 </div>
+<blockquote>
+<div>git clone <a class="reference external" href="https://github.com/alex/django-filter.git">https://github.com/alex/django-filter.git</a></div></blockquote>
 <p>Switch to the django-filter directory:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>cd django-filter
+<div class="highlight-python"><div class="highlight"><pre><span></span>.. code-block:: bash
 </pre></div>
 </div>
+<blockquote>
+<div>cd django-filter</div></blockquote>
 </div>
 <div class="section" id="install-the-test-dependencies">
 <h2>Install the test dependencies<a class="headerlink" href="#install-the-test-dependencies" title="Permalink to this headline">¶</a></h2>
 <p>Run the following to install the test dependencies within the
 virutalenv:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>pip install -r requirements/test.txt
+<div class="highlight-python"><div class="highlight"><pre><span></span>.. code-block:: bash
 </pre></div>
 </div>
+<blockquote>
+<div>pip install -r requirements/test.txt</div></blockquote>
 <p>Run the django-filter tests:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>python runtests.py
+<div class="highlight-python"><div class="highlight"><pre><span></span>.. code-block:: bash
 </pre></div>
 </div>
+<blockquote>
+<div>python runtests.py</div></blockquote>
 </div>
 <div class="section" id="testing-all-supported-versions">
 <h2>Testing all supported versions<a class="headerlink" href="#testing-all-supported-versions" title="Permalink to this headline">¶</a></h2>
 <p>You can also use the excellent tox testing tool to run the tests against all supported versions of
 Python and Django. Install tox globally, and then simply run:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">tox</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span>.. code-block:: bash
 </pre></div>
 </div>
+<blockquote>
+<div>tox</div></blockquote>
 </div>
 </div>
 
