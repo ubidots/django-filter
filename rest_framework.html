@@ -146,87 +146,76 @@
 <blockquote>
 <div>pip install django-crispy-forms</div></blockquote>
 <p>With crispy forms installed and added to Django&#8217;s <cite>INSTALLED_APPS</cite>, the browsable API will present a filtering control for <cite>DjangoFilterBackend</cite>, like so:</p>
-<p>![Django Filter](../img/django-filter.png)</p>
+<img alt="_images/form.png" src="_images/form.png" />
 <p>#### Specifying filter fields</p>
 <p>If all you need is simple equality-based filtering, you can set a <cite>filter_fields</cite> attribute on the view, or viewset, listing the set of fields you wish to filter against.</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>class ProductList(generics.ListAPIView):</dt>
-<dd>queryset = Product.objects.all()
-serializer_class = ProductSerializer
-filter_backends = (filters.DjangoFilterBackend,)
-filter_fields = (&#8216;category&#8217;, &#8216;in_stock&#8217;)</dd>
-</dl>
-</div></blockquote>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ProductList</span><span class="p">(</span><span class="n">generics</span><span class="o">.</span><span class="n">ListAPIView</span><span class="p">):</span>
+    <span class="n">queryset</span> <span class="o">=</span> <span class="n">Product</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+    <span class="n">serializer_class</span> <span class="o">=</span> <span class="n">ProductSerializer</span>
+    <span class="n">filter_backends</span> <span class="o">=</span> <span class="p">(</span><span class="n">filters</span><span class="o">.</span><span class="n">DjangoFilterBackend</span><span class="p">,)</span>
+    <span class="n">filter_fields</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="s1">&#39;in_stock&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
 <p>This will automatically create a <cite>FilterSet</cite> class for the given fields, and will allow you to make requests such as:</p>
 <blockquote>
 <div><a class="reference external" href="http://example.com/api/products?category=clothing&amp;in_stock=True">http://example.com/api/products?category=clothing&amp;in_stock=True</a></div></blockquote>
 <p>#### Specifying a FilterSet</p>
 <p>For more advanced filtering requirements you can specify a <cite>FilterSet</cite> class that should be used by the view.  For example:</p>
-<blockquote>
-<div><p>import django_filters
-from myapp.models import Product
-from myapp.serializers import ProductSerializer
-from rest_framework import filters
-from rest_framework import generics</p>
-<dl class="docutils">
-<dt>class ProductFilter(filters.FilterSet):</dt>
-<dd><p class="first">min_price = django_filters.NumberFilter(name=&#8221;price&#8221;, lookup_expr=&#8217;gte&#8217;)
-max_price = django_filters.NumberFilter(name=&#8221;price&#8221;, lookup_expr=&#8217;lte&#8217;)
-class Meta:</p>
-<blockquote class="last">
-<div>model = Product
-fields = [&#8216;category&#8217;, &#8216;in_stock&#8217;, &#8216;min_price&#8217;, &#8216;max_price&#8217;]</div></blockquote>
-</dd>
-<dt>class ProductList(generics.ListAPIView):</dt>
-<dd>queryset = Product.objects.all()
-serializer_class = ProductSerializer
-filter_backends = (filters.DjangoFilterBackend,)
-filter_class = ProductFilter</dd>
-</dl>
-</div></blockquote>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">django_filters</span>
+<span class="kn">from</span> <span class="nn">myapp.models</span> <span class="kn">import</span> <span class="n">Product</span>
+<span class="kn">from</span> <span class="nn">myapp.serializers</span> <span class="kn">import</span> <span class="n">ProductSerializer</span>
+<span class="kn">from</span> <span class="nn">rest_framework</span> <span class="kn">import</span> <span class="n">filters</span>
+<span class="kn">from</span> <span class="nn">rest_framework</span> <span class="kn">import</span> <span class="n">generics</span>
+
+<span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
+    <span class="n">min_price</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">NumberFilter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;price&quot;</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s1">&#39;gte&#39;</span><span class="p">)</span>
+    <span class="n">max_price</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">NumberFilter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;price&quot;</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s1">&#39;lte&#39;</span><span class="p">)</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">Product</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="s1">&#39;in_stock&#39;</span><span class="p">,</span> <span class="s1">&#39;min_price&#39;</span><span class="p">,</span> <span class="s1">&#39;max_price&#39;</span><span class="p">]</span>
+
+<span class="k">class</span> <span class="nc">ProductList</span><span class="p">(</span><span class="n">generics</span><span class="o">.</span><span class="n">ListAPIView</span><span class="p">):</span>
+    <span class="n">queryset</span> <span class="o">=</span> <span class="n">Product</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+    <span class="n">serializer_class</span> <span class="o">=</span> <span class="n">ProductSerializer</span>
+    <span class="n">filter_backends</span> <span class="o">=</span> <span class="p">(</span><span class="n">filters</span><span class="o">.</span><span class="n">DjangoFilterBackend</span><span class="p">,)</span>
+    <span class="n">filter_class</span> <span class="o">=</span> <span class="n">ProductFilter</span>
+</pre></div>
+</div>
 <p>Which will allow you to make requests such as:</p>
 <blockquote>
 <div><a class="reference external" href="http://example.com/api/products?category=clothing&amp;max_price=10.00">http://example.com/api/products?category=clothing&amp;max_price=10.00</a></div></blockquote>
 <p>You can also span relationships using <cite>django-filter</cite>, let&#8217;s assume that each
 product has foreign key to <cite>Manufacturer</cite> model, so we create filter that
 filters using <cite>Manufacturer</cite> name. For example:</p>
-<blockquote>
-<div><p>from myapp.models import Product
-from myapp.serializers import ProductSerializer
-from rest_framework import filters
-from rest_framework import generics</p>
-<dl class="docutils">
-<dt>class ProductFilter(filters.FilterSet):</dt>
-<dd><dl class="first last docutils">
-<dt>class Meta:</dt>
-<dd>model = Product
-fields = [&#8216;category&#8217;, &#8216;in_stock&#8217;, &#8216;manufacturer__name&#8217;]</dd>
-</dl>
-</dd>
-</dl>
-</div></blockquote>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">myapp.models</span> <span class="kn">import</span> <span class="n">Product</span>
+<span class="kn">from</span> <span class="nn">myapp.serializers</span> <span class="kn">import</span> <span class="n">ProductSerializer</span>
+<span class="kn">from</span> <span class="nn">rest_framework</span> <span class="kn">import</span> <span class="n">filters</span>
+<span class="kn">from</span> <span class="nn">rest_framework</span> <span class="kn">import</span> <span class="n">generics</span>
+
+<span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">Product</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="s1">&#39;in_stock&#39;</span><span class="p">,</span> <span class="s1">&#39;manufacturer__name&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
 <p>This enables us to make queries like:</p>
 <blockquote>
 <div><a class="reference external" href="http://example.com/api/products?manufacturer__name=foo">http://example.com/api/products?manufacturer__name=foo</a></div></blockquote>
 <p>This is nice, but it exposes the Django&#8217;s double underscore convention as part of the API.  If you instead want to explicitly name the filter argument you can instead explicitly include it on the <cite>FilterSet</cite> class:</p>
-<blockquote>
-<div><p>import django_filters
-from myapp.models import Product
-from myapp.serializers import ProductSerializer
-from rest_framework import filters
-from rest_framework import generics</p>
-<dl class="docutils">
-<dt>class ProductFilter(filters.FilterSet):</dt>
-<dd><p class="first">manufacturer = django_filters.CharFilter(name=&#8221;manufacturer__name&#8221;)</p>
-<dl class="last docutils">
-<dt>class Meta:</dt>
-<dd>model = Product
-fields = [&#8216;category&#8217;, &#8216;in_stock&#8217;, &#8216;manufacturer&#8217;]</dd>
-</dl>
-</dd>
-</dl>
-</div></blockquote>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">django_filters</span>
+<span class="kn">from</span> <span class="nn">myapp.models</span> <span class="kn">import</span> <span class="n">Product</span>
+<span class="kn">from</span> <span class="nn">myapp.serializers</span> <span class="kn">import</span> <span class="n">ProductSerializer</span>
+<span class="kn">from</span> <span class="nn">rest_framework</span> <span class="kn">import</span> <span class="n">filters</span>
+<span class="kn">from</span> <span class="nn">rest_framework</span> <span class="kn">import</span> <span class="n">generics</span>
+
+<span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
+    <span class="n">manufacturer</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">CharFilter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;manufacturer__name&quot;</span><span class="p">)</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">Product</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="s1">&#39;in_stock&#39;</span><span class="p">,</span> <span class="s1">&#39;manufacturer&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
 <p>And now you can execute:</p>
 <blockquote>
 <div><a class="reference external" href="http://example.com/api/products?manufacturer=foo">http://example.com/api/products?manufacturer=foo</a></div></blockquote>
