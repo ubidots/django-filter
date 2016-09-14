@@ -84,7 +84,7 @@
                 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../install.html">Installing django-filter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../usage.html">Using django-filter</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../rest_framework.html">Django Rest Framework Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rest_framework.html">Django Rest Framework</a></li>
 <li class="toctree-l1"><a class="reference internal" href="filterset.html">FilterSet Guide</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">Filter Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#core-arguments">Core Arguments</a><ul>
@@ -129,6 +129,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#baseinfilter"><code class="docutils literal"><span class="pre">BaseInFilter</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#baserangefilter"><code class="docutils literal"><span class="pre">BaseRangeFilter</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#methodfilter"><code class="docutils literal"><span class="pre">MethodFilter</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#orderingfilter"><code class="docutils literal"><span class="pre">OrderingFilter</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -753,6 +754,76 @@ filter set class. <cite>action</cite> will default to <code class="docutils lite
         <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;published&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="orderingfilter">
+<span id="ordering-filter"></span><h3><code class="docutils literal"><span class="pre">OrderingFilter</span></code><a class="headerlink" href="#orderingfilter" title="Permalink to this headline">¶</a></h3>
+<p>Enable queryset ordering. As an extension of <code class="docutils literal"><span class="pre">ChoiceFilter</span></code> it accepts
+two additional arguments that are used to build the ordering choices.</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">fields</span></code> is a mapping of {model field name: parameter name}. The
+parameter names are exposed in the choices and mask/alias the field
+names used in the <code class="docutils literal"><span class="pre">order_by()</span></code> call. Similar to field <code class="docutils literal"><span class="pre">choices</span></code>,
+<code class="docutils literal"><span class="pre">fields</span></code> accepts the &#8216;list of two-tuples&#8217; syntax that retains order.
+<code class="docutils literal"><span class="pre">fields</span></code> may also just be an iterable of strings. In this case, the
+field names simply double as the exposed parameter names.</li>
+<li><code class="docutils literal"><span class="pre">field_labels</span></code> is an optional argument that allows you to customize
+the display label for the corresponding parameter. It accepts a mapping
+of {field name: human readable label}. Keep in mind that the key is the
+field name, and not the exposed parameter name.</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">UserFilter</span><span class="p">(</span><span class="n">FilterSet</span><span class="p">):</span>
+    <span class="n">account</span> <span class="o">=</span> <span class="n">CharFilter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;username&#39;</span><span class="p">)</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="n">NumberFilter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;status&#39;</span><span class="p">)</span>
+
+    <span class="n">o</span> <span class="o">=</span> <span class="n">OrderingFilter</span><span class="p">(</span>
+        <span class="c1"># tuple-mapping retains order</span>
+        <span class="n">fields</span><span class="o">=</span><span class="p">(</span>
+            <span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;account&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s1">&#39;first_name&#39;</span><span class="p">,</span> <span class="s1">&#39;first_name&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s1">&#39;last_name&#39;</span><span class="p">,</span> <span class="s1">&#39;last_name&#39;</span><span class="p">),</span>
+        <span class="p">},</span>
+
+        <span class="c1"># labels do not need to retain order</span>
+        <span class="n">field_labels</span><span class="o">=</span><span class="p">{</span>
+            <span class="s1">&#39;username&#39;</span><span class="p">:</span> <span class="s1">&#39;User account&#39;</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="p">)</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">User</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;first_name&#39;</span><span class="p">,</span> <span class="s1">&#39;last_name&#39;</span><span class="p">]</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">UserFilter</span><span class="p">()</span><span class="o">.</span><span class="n">filter</span><span class="p">[</span><span class="s1">&#39;o&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">choices</span>
+<span class="p">[</span>
+    <span class="p">(</span><span class="s1">&#39;account&#39;</span><span class="p">,</span> <span class="s1">&#39;User account&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;-account&#39;</span><span class="p">,</span> <span class="s1">&#39;User account (descending)&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;first_name&#39;</span><span class="p">,</span> <span class="s1">&#39;First name&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;-first_name&#39;</span><span class="p">,</span> <span class="s1">&#39;First name (descending)&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;last_name&#39;</span><span class="p">,</span> <span class="s1">&#39;Last name&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;-last_name&#39;</span><span class="p">,</span> <span class="s1">&#39;Last name (descending)&#39;</span><span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>Additionally, you can just provide your own <code class="docutils literal"><span class="pre">choices</span></code> if you require
+explicit control over the exposed options. For example, when you might
+want to disable descending sort options.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">UserFilter</span><span class="p">(</span><span class="n">FilterSet</span><span class="p">):</span>
+    <span class="n">account</span> <span class="o">=</span> <span class="n">CharFilter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;username&#39;</span><span class="p">)</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="n">NumberFilter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;status&#39;</span><span class="p">)</span>
+
+    <span class="n">o</span> <span class="o">=</span> <span class="n">OrderingFilter</span><span class="p">(</span>
+        <span class="n">choices</span><span class="o">=</span><span class="p">(</span>
+            <span class="p">(</span><span class="s1">&#39;account&#39;</span><span class="p">,</span> <span class="s1">&#39;Account&#39;</span><span class="p">),</span>
+        <span class="p">),</span>
+        <span class="n">fields</span><span class="o">=</span><span class="p">{</span>
+            <span class="s1">&#39;username&#39;</span><span class="p">:</span> <span class="s1">&#39;account&#39;</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+<p>This filter is also CSV-based, and accepts multiple ordering params. The
+default select widget does not enable the use of this, but it is useful
+for APIs.</p>
 </div>
 </div>
 </div>
