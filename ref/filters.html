@@ -86,7 +86,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../usage.html">Using django-filter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../rest_framework.html">Django Rest Framework</a></li>
 <li class="toctree-l1"><a class="reference internal" href="filterset.html">FilterSet Guide</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">Filter Reference</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Filter Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#core-arguments">Core Arguments</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#name"><code class="docutils literal"><span class="pre">name</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#label"><code class="docutils literal"><span class="pre">label</span></code></a></li>
@@ -208,16 +208,16 @@ to the widgets that are included with Django that you can use there are
 additional ones that django-filter provides which may be useful:</p>
 <blockquote>
 <div><ul class="simple">
-<li><a class="reference internal" href="widgets.html#link-widget"><span>LinkWidget</span></a> &#8211; this displays the options in a manner
+<li><a class="reference internal" href="widgets.html#link-widget"><span class="std std-ref">LinkWidget</span></a> &#8211; this displays the options in a manner
 similar to the way the Django Admin does, as a series of links. The link
 for the selected option will have <code class="docutils literal"><span class="pre">class=&quot;selected&quot;</span></code>.</li>
-<li><a class="reference internal" href="widgets.html#boolean-widget"><span>BooleanWidget</span></a> &#8211; this widget converts its input
+<li><a class="reference internal" href="widgets.html#boolean-widget"><span class="std std-ref">BooleanWidget</span></a> &#8211; this widget converts its input
 into Python&#8217;s True/False values. It will convert all case variations of
 <code class="docutils literal"><span class="pre">True</span></code> and <code class="docutils literal"><span class="pre">False</span></code> into the internal Python values.</li>
-<li><a class="reference internal" href="widgets.html#csv-widget"><span>CSVWidget</span></a> &#8211; this widget expects a comma separated
+<li><a class="reference internal" href="widgets.html#csv-widget"><span class="std std-ref">CSVWidget</span></a> &#8211; this widget expects a comma separated
 value and converts it into a list of string values. It is expected that
 the field class handle a list of values as well as type conversion.</li>
-<li><a class="reference internal" href="widgets.html#range-widget"><span>RangeWidget</span></a> &#8211; this widget is used with <code class="docutils literal"><span class="pre">RangeFilter</span></code>
+<li><a class="reference internal" href="widgets.html#range-widget"><span class="std std-ref">RangeWidget</span></a> &#8211; this widget is used with <code class="docutils literal"><span class="pre">RangeFilter</span></code>
 to generate two form input elements using a single field.</li>
 </ul>
 </div></blockquote>
@@ -270,19 +270,19 @@ so raw value transformation and empty value checking should be unnecessary.</p>
 select the lookup from a dropdown. The list of lookup types are filtered against
 <code class="docutils literal"><span class="pre">filters.LOOKUP_TYPES</span></code>. If <cite>lookup_expr=None</cite> is passed, then a list of all lookup
 types will be generated:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
     <span class="n">name</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">CharFilter</span><span class="p">(</span><span class="n">lookup_expr</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;exact&#39;</span><span class="p">,</span> <span class="s1">&#39;iexact&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
 <p>You can enable custom lookups by adding them to <code class="docutils literal"><span class="pre">LOOKUP_TYPES</span></code>:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django_filters</span> <span class="kn">import</span> <span class="n">filters</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django_filters</span> <span class="k">import</span> <span class="n">filters</span>
 
 <span class="n">filters</span><span class="o">.</span><span class="n">LOOKUP_TYPES</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;gt&#39;</span><span class="p">,</span> <span class="s1">&#39;gte&#39;</span><span class="p">,</span> <span class="s1">&#39;lt&#39;</span><span class="p">,</span> <span class="s1">&#39;lte&#39;</span><span class="p">,</span> <span class="s1">&#39;custom_lookup_type&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 <p>Additionally, you can provide human-friendly help text by overriding <code class="docutils literal"><span class="pre">LOOKUP_TYPES</span></code>:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># filters.py</span>
-<span class="kn">from</span> <span class="nn">django_filters</span> <span class="kn">import</span> <span class="n">filters</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># filters.py</span>
+<span class="kn">from</span> <span class="nn">django_filters</span> <span class="k">import</span> <span class="n">filters</span>
 
 <span class="n">filters</span><span class="o">.</span><span class="n">LOOKUP_TYPES</span> <span class="o">=</span> <span class="p">[</span>
     <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;---------&#39;</span><span class="p">),</span>
@@ -352,7 +352,7 @@ as the model&#8217;s attribute.</p>
 <p>This filter matches an item of any type by choices, used with any field that
 has <code class="docutils literal"><span class="pre">choices</span></code>.</p>
 <p>Requires <code class="docutils literal"><span class="pre">choices</span></code> <code class="docutils literal"><span class="pre">kwarg</span></code> to be passed if explicitly declared on the <code class="docutils literal"><span class="pre">FilterSet</span></code>. For example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="n">username</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>
     <span class="n">first_name</span> <span class="o">=</span> <span class="n">SubCharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
     <span class="n">last_name</span> <span class="o">=</span> <span class="n">SubSubCharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
@@ -379,15 +379,15 @@ has <code class="docutils literal"><span class="pre">choices</span></code>.</p>
 match against. This could be done by using <cite>coerce</cite> parameter.
 An example use-case is limiting boolean choices to match against so only
 some predefined strings could be used as input of a boolean filter:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">django_filters</span>
-<span class="kn">from</span> <span class="nn">distutils.util</span> <span class="kn">import</span> <span class="n">strtobool</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">django_filters</span>
+<span class="kn">from</span> <span class="nn">distutils.util</span> <span class="k">import</span> <span class="n">strtobool</span>
 
 <span class="n">BOOLEAN_CHOICES</span> <span class="o">=</span> <span class="p">((</span><span class="s1">&#39;false&#39;</span><span class="p">,</span> <span class="s1">&#39;False&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;true&#39;</span><span class="p">,</span> <span class="s1">&#39;True&#39;</span><span class="p">),)</span>
 
 <span class="k">class</span> <span class="nc">YourFilterSet</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
     <span class="o">...</span>
     <span class="n">flag</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">TypedChoiceFilter</span><span class="p">(</span><span class="n">choices</span><span class="o">=</span><span class="n">BOOLEAN_CHOICES</span><span class="p">,</span>
-                                            <span class="nb">coerce</span><span class="o">=</span><span class="n">strtobool</span><span class="p">)</span>
+                                            <span class="n">coerce</span><span class="o">=</span><span class="n">strtobool</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -422,7 +422,7 @@ test.</p>
 <h3><code class="docutils literal"><span class="pre">IsoDateTimeFilter</span></code><a class="headerlink" href="#isodatetimefilter" title="Permalink to this headline">¶</a></h3>
 <p>Uses <code class="docutils literal"><span class="pre">IsoDateTimeField</span></code> to support filtering on ISO 8601 formatted dates, as are often used in APIs, and are employed by default by Django REST Framework.</p>
 <p>Example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">F</span><span class="p">(</span><span class="n">FilterSet</span><span class="p">):</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">F</span><span class="p">(</span><span class="n">FilterSet</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Filter for Books by date published, using ISO 8601 formatted dates&quot;&quot;&quot;</span>
     <span class="n">published</span> <span class="o">=</span> <span class="n">IsoDateTimeFilter</span><span class="p">()</span>
 
@@ -447,7 +447,7 @@ and week designators, e.g. &#8216;P3DT10H22M&#8217;).</p>
 <code class="docutils literal"><span class="pre">QuerySet</span></code> for the related field. If manually instantiated you <strong>must</strong>
 provide the <code class="docutils literal"><span class="pre">queryset</span></code> kwarg.</p>
 <p>Example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">F</span><span class="p">(</span><span class="n">FilterSet</span><span class="p">):</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">F</span><span class="p">(</span><span class="n">FilterSet</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Filter for books by author&quot;&quot;&quot;</span>
     <span class="n">author</span> <span class="o">=</span> <span class="n">ModelChoiceFilter</span><span class="p">(</span><span class="n">queryset</span><span class="o">=</span><span class="n">Author</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">())</span>
 
@@ -465,7 +465,7 @@ for <code class="docutils literal"><span class="pre">ManyToManyField</span></cod
 <code class="docutils literal"><span class="pre">ModelMultipleChoiceFilter</span></code> will use the default <code class="docutils literal"><span class="pre">QuerySet</span></code> for the related
 field. If manually instantiated you <strong>must</strong> provide the <code class="docutils literal"><span class="pre">queryset</span></code> kwarg.</p>
 <p>To use a custom field name for the lookup, you can use <code class="docutils literal"><span class="pre">to_field_name</span></code>:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">FooFilter</span><span class="p">(</span><span class="n">BaseFilterSet</span><span class="p">):</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">FooFilter</span><span class="p">(</span><span class="n">BaseFilterSet</span><span class="p">):</span>
     <span class="n">foo</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">ModelMultipleChoiceFilter</span><span class="p">(</span>
         <span class="n">name</span><span class="o">=</span><span class="s1">&#39;attr__uuid&#39;</span><span class="p">,</span>
         <span class="n">to_field_name</span><span class="o">=</span><span class="s1">&#39;uuid&#39;</span><span class="p">,</span>
@@ -475,7 +475,7 @@ field. If manually instantiated you <strong>must</strong> provide the <code clas
 </div>
 <p>If you want to use a custom queryset, e.g. to add annotated fields, this can be
 done as follows:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyMultipleChoiceFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">ModelMultipleChoiceFilter</span><span class="p">):</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyMultipleChoiceFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">ModelMultipleChoiceFilter</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">get_filter_predicate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;annotated_field&#39;</span><span class="p">:</span> <span class="n">v</span><span class="o">.</span><span class="n">annotated_field</span><span class="p">}</span>
 
@@ -493,15 +493,15 @@ done as follows:</p>
 </div>
 <p>The <code class="docutils literal"><span class="pre">annotate_with_custom_field</span></code> method would be defined through a custom
 QuerySet, which then gets used as the model&#8217;s manager:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">CustomQuerySet</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">QuerySet</span><span class="p">):</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">CustomQuerySet</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">QuerySet</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">annotate_with_custom_field</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span>
             <span class="n">custom_field</span><span class="o">=</span><span class="n">Case</span><span class="p">(</span>
-                <span class="n">When</span><span class="p">(</span><span class="n">foo__isnull</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                <span class="n">When</span><span class="p">(</span><span class="n">foo__isnull</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                      <span class="n">then</span><span class="o">=</span><span class="n">F</span><span class="p">(</span><span class="s1">&#39;foo__uuid&#39;</span><span class="p">)),</span>
-                <span class="n">When</span><span class="p">(</span><span class="n">bar__isnull</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                <span class="n">When</span><span class="p">(</span><span class="n">bar__isnull</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                      <span class="n">then</span><span class="o">=</span><span class="n">F</span><span class="p">(</span><span class="s1">&#39;bar__uuid&#39;</span><span class="p">)),</span>
-                <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
             <span class="p">),</span>
         <span class="p">)</span>
 
@@ -529,7 +529,7 @@ type and if only the upper limit value is provided, the filter uses <cite>__ends
 <div class="section" id="rangefilter">
 <h3><code class="docutils literal"><span class="pre">RangeFilter</span></code><a class="headerlink" href="#rangefilter" title="Permalink to this headline">¶</a></h3>
 <p>Filters where a value is between two numerical values, or greater than a minimum or less than a maximum where only one limit value is provided.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">F</span><span class="p">(</span><span class="n">FilterSet</span><span class="p">):</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">F</span><span class="p">(</span><span class="n">FilterSet</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Filter for Books by Price&quot;&quot;&quot;</span>
     <span class="n">price</span> <span class="o">=</span> <span class="n">RangeFilter</span><span class="p">()</span>
 
@@ -559,7 +559,7 @@ selections for working with date fields.</p>
 <h3><code class="docutils literal"><span class="pre">DateFromToRangeFilter</span></code><a class="headerlink" href="#datefromtorangefilter" title="Permalink to this headline">¶</a></h3>
 <p>Similar to a <code class="docutils literal"><span class="pre">RangeFilter</span></code> except it uses dates instead of numerical values. It can be used with <code class="docutils literal"><span class="pre">DateField</span></code>. It also works with <code class="docutils literal"><span class="pre">DateTimeField</span></code>, but takes into consideration only the date.</p>
 <p>Example of using the <code class="docutils literal"><span class="pre">DateField</span></code> field:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Comment</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Comment</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="n">date</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateField</span><span class="p">()</span>
     <span class="n">time</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TimeField</span><span class="p">()</span>
 
@@ -581,7 +581,7 @@ selections for working with date fields.</p>
 </pre></div>
 </div>
 <p>Example of using the <code class="docutils literal"><span class="pre">DateTimeField</span></code> field:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Article</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Article</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="n">published</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">()</span>
 
 <span class="k">class</span> <span class="nc">F</span><span class="p">(</span><span class="n">FilterSet</span><span class="p">):</span>
@@ -613,7 +613,7 @@ selections for working with date fields.</p>
 <h3><code class="docutils literal"><span class="pre">DateTimeFromToRangeFilter</span></code><a class="headerlink" href="#datetimefromtorangefilter" title="Permalink to this headline">¶</a></h3>
 <p>Similar to a <code class="docutils literal"><span class="pre">RangeFilter</span></code> except it uses datetime format values instead of numerical values. It can be used with <code class="docutils literal"><span class="pre">DateTimeField</span></code>.</p>
 <p>Example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Article</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Article</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="n">published</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">()</span>
 
 <span class="k">class</span> <span class="nc">F</span><span class="p">(</span><span class="n">FilterSet</span><span class="p">):</span>
@@ -645,7 +645,7 @@ selections for working with date fields.</p>
 <h3><code class="docutils literal"><span class="pre">TimeRangeFilter</span></code><a class="headerlink" href="#timerangefilter" title="Permalink to this headline">¶</a></h3>
 <p>Similar to a <code class="docutils literal"><span class="pre">RangeFilter</span></code> except it uses time format values instead of numerical values. It can be used with <code class="docutils literal"><span class="pre">TimeField</span></code>.</p>
 <p>Example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Comment</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Comment</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="n">date</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateField</span><span class="p">()</span>
     <span class="n">time</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TimeField</span><span class="p">()</span>
 
@@ -688,7 +688,7 @@ this filter class is used in conjunction with another filter class, as this
 class <strong>only</strong> validates that the incoming value is comma-separated. The secondary
 filter is then used to validate the individual values.</p>
 <p>Example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">NumberInFilter</span><span class="p">(</span><span class="n">BaseInFilter</span><span class="p">,</span> <span class="n">NumericFilter</span><span class="p">):</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">NumberInFilter</span><span class="p">(</span><span class="n">BaseInFilter</span><span class="p">,</span> <span class="n">NumericFilter</span><span class="p">):</span>
     <span class="k">pass</span>
 
 <span class="k">class</span> <span class="nc">F</span><span class="p">(</span><span class="n">FilterSet</span><span class="p">):</span>
@@ -714,7 +714,7 @@ filter is then used to validate the individual values.</p>
 identically to <code class="docutils literal"><span class="pre">BaseInFilter</span></code> with the exception that it expects only two
 comma-separated values.</p>
 <p>Example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">NumberRangeFilter</span><span class="p">(</span><span class="n">BaseInFilter</span><span class="p">,</span> <span class="n">NumericFilter</span><span class="p">):</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">NumberRangeFilter</span><span class="p">(</span><span class="n">BaseInFilter</span><span class="p">,</span> <span class="n">NumericFilter</span><span class="p">):</span>
     <span class="k">pass</span>
 
 <span class="k">class</span> <span class="nc">F</span><span class="p">(</span><span class="n">FilterSet</span><span class="p">):</span>
@@ -740,13 +740,13 @@ comma-separated values.</p>
 this filter is a property of. Set the <cite>action</cite> to a string that will map to a method on the
 filter set class. <cite>action</cite> will default to <code class="docutils literal"><span class="pre">filter_{value-of-name-attribute}</span></code></p>
 <p>Example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">F</span><span class="p">(</span><span class="n">FilterSet</span><span class="p">):</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">F</span><span class="p">(</span><span class="n">FilterSet</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Filter for Books by if books are published or not&quot;&quot;&quot;</span>
     <span class="n">published</span> <span class="o">=</span> <span class="n">MethodFilter</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">filter_published</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">queryset</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">value</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">queryset</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">published__isnull</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">queryset</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">published__isnull</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">queryset</span>
 
     <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
