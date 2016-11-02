@@ -128,8 +128,10 @@
 <li class="toctree-l3"><a class="reference internal" href="#allvaluesmultiplefilter"><code class="docutils literal"><span class="pre">AllValuesMultipleFilter</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#baseinfilter"><code class="docutils literal"><span class="pre">BaseInFilter</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#baserangefilter"><code class="docutils literal"><span class="pre">BaseRangeFilter</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#methodfilter"><code class="docutils literal"><span class="pre">MethodFilter</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#orderingfilter"><code class="docutils literal"><span class="pre">OrderingFilter</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#orderingfilter"><code class="docutils literal"><span class="pre">OrderingFilter</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#adding-custom-filter-choices">Adding Custom filter choices</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -351,9 +353,8 @@ as the model&#8217;s attribute.</p>
 </div>
 <div class="section" id="choicefilter">
 <h3><code class="docutils literal"><span class="pre">ChoiceFilter</span></code><a class="headerlink" href="#choicefilter" title="Permalink to this headline">¶</a></h3>
-<p>This filter matches an item of any type by choices, used with any field that
-has <code class="docutils literal"><span class="pre">choices</span></code>.</p>
-<p>Requires <code class="docutils literal"><span class="pre">choices</span></code> <code class="docutils literal"><span class="pre">kwarg</span></code> to be passed if explicitly declared on the <code class="docutils literal"><span class="pre">FilterSet</span></code>. For example:</p>
+<p>This filter matches values in its <code class="docutils literal"><span class="pre">choices</span></code> argument. The <code class="docutils literal"><span class="pre">choices</span></code> must be
+explicitly passed when the filter is declared on the <code class="docutils literal"><span class="pre">FilterSet</span></code>. For example,</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="n">username</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>
     <span class="n">first_name</span> <span class="o">=</span> <span class="n">SubCharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
@@ -374,6 +375,20 @@ has <code class="docutils literal"><span class="pre">choices</span></code>.</p>
         <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;status&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
+<p><code class="docutils literal"><span class="pre">ChoiceFilter</span></code> also has arguments that enable a choice for not filtering, as
+well as a choice for filtering by <code class="docutils literal"><span class="pre">None</span></code> values. Each of the arguments have a
+corresponding global setting (<a class="reference internal" href="settings.html"><em>Available Settings</em></a>).</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">empty_label</span></code>: The display label to use for the select choice to not filter.
+The choice may be disabled by setting this argument to <code class="docutils literal"><span class="pre">None</span></code>. Defaults to
+<code class="docutils literal"><span class="pre">FILTERS_EMPTY_CHOICE_LABEL</span></code>.</li>
+<li><code class="docutils literal"><span class="pre">null_label</span></code>: The display label to use for the choice to filter by <code class="docutils literal"><span class="pre">None</span></code>
+values. The choice may be disabled by setting this argument to <code class="docutils literal"><span class="pre">None</span></code>.
+Defaults to <code class="docutils literal"><span class="pre">FILTERS_NULL_CHOICE_LABEL</span></code>.</li>
+<li><code class="docutils literal"><span class="pre">null_value</span></code>: The special value to match to enable filtering by <code class="docutils literal"><span class="pre">None</span></code>
+values. This value defaults <code class="docutils literal"><span class="pre">FILTERS_NULL_CHOICE_VALUE</span></code> and needs to be
+a non-empty value (<code class="docutils literal"><span class="pre">''</span></code>, <code class="docutils literal"><span class="pre">None</span></code>, <code class="docutils literal"><span class="pre">[]</span></code>, <code class="docutils literal"><span class="pre">()</span></code>, <code class="docutils literal"><span class="pre">{}</span></code>).</li>
+</ul>
 </div>
 <div class="section" id="typedchoicefilter">
 <h3><code class="docutils literal"><span class="pre">TypedChoiceFilter</span></code><a class="headerlink" href="#typedchoicefilter" title="Permalink to this headline">¶</a></h3>
@@ -401,6 +416,7 @@ The filter will form the AND of the selected choices when the <code class="docut
 argument is passed to this class.</p>
 <p>Multiple choices are represented in the query string by reusing the same key with
 different values (e.g. &#8216;&#8217;?status=Regular&amp;status=Admin&#8217;&#8216;).</p>
+<p><code class="docutils literal"><span class="pre">distinct</span></code> defaults to <code class="docutils literal"><span class="pre">True</span></code> as to-many relationships will generally require this.</p>
 <p>Advanced Use: Depending on your application logic, when all or no choices are
 selected, filtering may be a noop. In this case you may wish to avoid the
 filtering overhead, particularly of the <cite>distinct</cite> call.</p>
@@ -422,7 +438,8 @@ test.</p>
 </div>
 <div class="section" id="isodatetimefilter">
 <h3><code class="docutils literal"><span class="pre">IsoDateTimeFilter</span></code><a class="headerlink" href="#isodatetimefilter" title="Permalink to this headline">¶</a></h3>
-<p>Uses <code class="docutils literal"><span class="pre">IsoDateTimeField</span></code> to support filtering on ISO 8601 formatted dates, as are often used in APIs, and are employed by default by Django REST Framework.</p>
+<p>Uses <code class="docutils literal"><span class="pre">IsoDateTimeField</span></code> to support filtering on ISO 8601 formatted dates, as are often
+used in APIs, and are employed by default by Django REST Framework.</p>
 <p>Example:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">F</span><span class="p">(</span><span class="n">FilterSet</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Filter for Books by date published, using ISO 8601 formatted dates&quot;&quot;&quot;</span>
@@ -458,6 +475,19 @@ provide the <code class="docutils literal"><span class="pre">queryset</span></co
         <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;author&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
+<p>The <code class="docutils literal"><span class="pre">queryset</span></code> argument also supports callable behavior. If a callable is
+passed, it will be invoked with <code class="docutils literal"><span class="pre">Filterset.request</span></code> as its only argument.
+This allows you to easily filter by properties on the request object without
+having to override the <code class="docutils literal"><span class="pre">FilterSet.__init__</span></code>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">departments</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">company</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">company</span>
+    <span class="k">return</span> <span class="n">company</span><span class="o">.</span><span class="n">department_set</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">EmployeeFilter</span><span class="p">(</span><span class="n">filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
+    <span class="n">department</span> <span class="o">=</span> <span class="n">filters</span><span class="o">.</span><span class="n">ModelChoiceFilter</span><span class="p">(</span><span class="n">queryset</span><span class="o">=</span><span class="n">departments</span><span class="p">)</span>
+    <span class="o">...</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="modelmultiplechoicefilter">
 <h3><code class="docutils literal"><span class="pre">ModelMultipleChoiceFilter</span></code><a class="headerlink" href="#modelmultiplechoicefilter" title="Permalink to this headline">¶</a></h3>
@@ -465,7 +495,8 @@ provide the <code class="docutils literal"><span class="pre">queryset</span></co
 for <code class="docutils literal"><span class="pre">ManyToManyField</span></code> by default.</p>
 <p>As with <code class="docutils literal"><span class="pre">ModelChoiceFilter</span></code>, if automatically instantiated,
 <code class="docutils literal"><span class="pre">ModelMultipleChoiceFilter</span></code> will use the default <code class="docutils literal"><span class="pre">QuerySet</span></code> for the related
-field. If manually instantiated you <strong>must</strong> provide the <code class="docutils literal"><span class="pre">queryset</span></code> kwarg.</p>
+field. If manually instantiated you <strong>must</strong> provide the <code class="docutils literal"><span class="pre">queryset</span></code> kwarg.
+Like <code class="docutils literal"><span class="pre">ModelChoiceFilter</span></code>, the <code class="docutils literal"><span class="pre">queryset</span></code> argument has callable behavior.</p>
 <p>To use a custom field name for the lookup, you can use <code class="docutils literal"><span class="pre">to_field_name</span></code>:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">FooFilter</span><span class="p">(</span><span class="n">BaseFilterSet</span><span class="p">):</span>
     <span class="n">foo</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">ModelMultipleChoiceFilter</span><span class="p">(</span>
@@ -520,13 +551,14 @@ and <code class="docutils literal"><span class="pre">DecimalField</span></code> 
 <div class="section" id="numericrangefilter">
 <h3><code class="docutils literal"><span class="pre">NumericRangeFilter</span></code><a class="headerlink" href="#numericrangefilter" title="Permalink to this headline">¶</a></h3>
 <p>Filters where a value is between two numerical values, or greater than a minimum or less
-than a maximum where only one limit value is provided. This filter is designed to work with
-the Postgres Numerical Range Fields, including <cite>IntegerRangeField</cite>, <cite>BigIntegerRangeField</cite> and <cite>FloatRangeField</cite>,
-available since Django 1.8. The default widget used is the <cite>RangeField</cite>.</p>
-<p>RangeField lookup_exprs can be used, including <cite>overlap</cite>, <cite>contains</cite>, and <cite>contained_by</cite>. More lookups can be
-found in the Django docs (<a class="reference external" href="https://docs.djangoproject.com/en/1.8/ref/contrib/postgres/fields/#querying-range-fields">https://docs.djangoproject.com/en/1.8/ref/contrib/postgres/fields/#querying-range-fields</a>).</p>
-<p>If the lower limit value is provided, the filter automatically defaults to <cite>__startswith</cite> as the lookup
-type and if only the upper limit value is provided, the filter uses <cite>__endswith</cite>.</p>
+than a maximum where only one limit value is provided. This filter is designed to work
+with the Postgres Numerical Range Fields, including <code class="docutils literal"><span class="pre">IntegerRangeField</span></code>,
+<code class="docutils literal"><span class="pre">BigIntegerRangeField</span></code> and <code class="docutils literal"><span class="pre">FloatRangeField</span></code> (available since Django 1.8). The default
+widget used is the <code class="docutils literal"><span class="pre">RangeField</span></code>.</p>
+<p>Regular field lookups are available in addition to several containment lookups, including
+<code class="docutils literal"><span class="pre">overlap</span></code>, <code class="docutils literal"><span class="pre">contains</span></code>, and <code class="docutils literal"><span class="pre">contained_by</span></code>. More details in the Django <a class="reference external" href="https://docs.djangoproject.com/en/1.8/ref/contrib/postgres/fields/#querying-range-fields">docs</a>.</p>
+<p>If the lower limit value is provided, the filter automatically defaults to <code class="docutils literal"><span class="pre">startswith</span></code>
+as the lookup and <code class="docutils literal"><span class="pre">endswith</span></code> if only the upper limit value is provided.</p>
 </div>
 <div class="section" id="rangefilter">
 <h3><code class="docutils literal"><span class="pre">RangeFilter</span></code><a class="headerlink" href="#rangefilter" title="Permalink to this headline">¶</a></h3>
@@ -736,27 +768,6 @@ comma-separated values.</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="methodfilter">
-<h3><code class="docutils literal"><span class="pre">MethodFilter</span></code><a class="headerlink" href="#methodfilter" title="Permalink to this headline">¶</a></h3>
-<p>This is a <code class="docutils literal"><span class="pre">Filter</span></code> that will allow you to run a method that exists on the filter set that
-this filter is a property of. Set the <cite>action</cite> to a string that will map to a method on the
-filter set class. <cite>action</cite> will default to <code class="docutils literal"><span class="pre">filter_{value-of-name-attribute}</span></code></p>
-<p>Example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">F</span><span class="p">(</span><span class="n">FilterSet</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Filter for Books by if books are published or not&quot;&quot;&quot;</span>
-    <span class="n">published</span> <span class="o">=</span> <span class="n">MethodFilter</span><span class="p">()</span>
-
-    <span class="k">def</span> <span class="nf">filter_published</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">queryset</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">value</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">queryset</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">published__isnull</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">queryset</span>
-
-    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
-        <span class="n">model</span> <span class="o">=</span> <span class="n">Book</span>
-        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;published&#39;</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
 <div class="section" id="orderingfilter">
 <span id="ordering-filter"></span><h3><code class="docutils literal"><span class="pre">OrderingFilter</span></code><a class="headerlink" href="#orderingfilter" title="Permalink to this headline">¶</a></h3>
 <p>Enable queryset ordering. As an extension of <code class="docutils literal"><span class="pre">ChoiceFilter</span></code> it accepts
@@ -826,6 +837,29 @@ want to disable descending sort options.</p>
 <p>This filter is also CSV-based, and accepts multiple ordering params. The
 default select widget does not enable the use of this, but it is useful
 for APIs.</p>
+<div class="section" id="adding-custom-filter-choices">
+<h4>Adding Custom filter choices<a class="headerlink" href="#adding-custom-filter-choices" title="Permalink to this headline">¶</a></h4>
+<p>If you wish to sort by non-model fields, you&#8217;ll need to add custom handling to an
+<code class="docutils literal"><span class="pre">OrderingFilter</span></code> subclass. For example, if you want to sort by a computed
+&#8216;relevance&#8217; factor, you would need to do something like the following:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">CustomOrderingFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">OrderingFilter</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">CustomOrderingFilter</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">choices</span> <span class="o">+=</span> <span class="p">[</span>
+            <span class="p">(</span><span class="s1">&#39;relevance&#39;</span><span class="p">,</span> <span class="s1">&#39;Relevance&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s1">&#39;-relevance&#39;</span><span class="p">,</span> <span class="s1">&#39;Relevance (descending)&#39;</span><span class="p">),</span>
+        <span class="p">]</span>
+
+
+    <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qs</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;relevance&#39;</span><span class="p">,</span> <span class="s1">&#39;-relevance&#39;</span><span class="p">]:</span>
+            <span class="c1"># sort queryset by relevance</span>
+            <span class="k">return</span> <span class="o">...</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">CustomOrderingFilter</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">qs</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
 </div>
 </div>
 </div>

@@ -90,8 +90,12 @@
 <li class="toctree-l1"><a class="reference internal" href="fields.html">Fields Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="widgets.html">Widget Reference</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">Available Settings</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#filters-empty-choice-label">FILTERS_EMPTY_CHOICE_LABEL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#filters-null-choice-label">FILTERS_NULL_CHOICE_LABEL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#filters-null-choice-value">FILTERS_NULL_CHOICE_VALUE</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#filters-disable-help-text">FILTERS_DISABLE_HELP_TEXT</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#filters-verbose-lookups">FILTERS_VERBOSE_LOOKUPS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#filters-strictness">FILTERS_STRICTNESS</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../migration.html">Migrating to 1.0</a></li>
@@ -145,6 +149,21 @@
 <p>Here is a list of all available settings of django-filters and their
 default values. All settings are prefixed with <code class="docutils literal"><span class="pre">FILTERS_</span></code>, although this
 is a bit verbose it helps to make it easy to identify these settings.</p>
+<div class="section" id="filters-empty-choice-label">
+<h2>FILTERS_EMPTY_CHOICE_LABEL<a class="headerlink" href="#filters-empty-choice-label" title="Permalink to this headline">¶</a></h2>
+<p>Default: <code class="docutils literal"><span class="pre">'---------'</span></code></p>
+<p>Set the default value for <code class="docutils literal"><span class="pre">ChoiceFilter.empty_label</span></code>. You may disable the empty choice by setting this to <code class="docutils literal"><span class="pre">None</span></code>.</p>
+</div>
+<div class="section" id="filters-null-choice-label">
+<h2>FILTERS_NULL_CHOICE_LABEL<a class="headerlink" href="#filters-null-choice-label" title="Permalink to this headline">¶</a></h2>
+<p>Default: <code class="docutils literal"><span class="pre">None</span></code></p>
+<p>Set the default value for <code class="docutils literal"><span class="pre">ChoiceFilter.null_label</span></code>. You may enable the null choice by setting a non-<code class="docutils literal"><span class="pre">None</span></code> value.</p>
+</div>
+<div class="section" id="filters-null-choice-value">
+<h2>FILTERS_NULL_CHOICE_VALUE<a class="headerlink" href="#filters-null-choice-value" title="Permalink to this headline">¶</a></h2>
+<p>Default: <code class="docutils literal"><span class="pre">'null'</span></code></p>
+<p>Set the default value for <code class="docutils literal"><span class="pre">ChoiceFilter.null_value</span></code>. You may want to change this value if the default <code class="docutils literal"><span class="pre">'null'</span></code> string conflicts with an actual choice.</p>
+</div>
 <div class="section" id="filters-disable-help-text">
 <h2>FILTERS_DISABLE_HELP_TEXT<a class="headerlink" href="#filters-disable-help-text" title="Permalink to this headline">¶</a></h2>
 <p>Default: <code class="docutils literal"><span class="pre">False</span></code></p>
@@ -190,6 +209,11 @@ For example, you could add verbose output for &#8220;exact&#8221; lookups.</p>
     <span class="k">return</span> <span class="n">verbose_lookups</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="filters-strictness">
+<h2>FILTERS_STRICTNESS<a class="headerlink" href="#filters-strictness" title="Permalink to this headline">¶</a></h2>
+<p>DEFAULT: <code class="docutils literal"><span class="pre">STRICTNESS.RETURN_NO_RESULTS</span></code></p>
+<p>Set the global default for FilterSet <a class="reference internal" href="filterset.html#strict"><span>strictness</span></a>.</p>
 </div>
 </div>
 

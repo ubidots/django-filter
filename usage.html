@@ -97,6 +97,11 @@
 <li class="toctree-l4"><a class="reference internal" href="#overriding-default-filters">Overriding default filters</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#request-based-filtering">Request-based filtering</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#filtering-the-primary-qs">Filtering the primary <code class="docutils literal"><span class="pre">.qs</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#filtering-the-related-queryset-for-modelchoicefilter">Filtering the related queryset for <code class="docutils literal"><span class="pre">ModelChoiceFilter</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#customize-filtering-with-filter-method">Customize filtering with <code class="docutils literal"><span class="pre">Filter.method</span></code></a></li>
 </ul>
 </li>
@@ -374,10 +379,54 @@ default filters for all the models fields of the same kind using
 </div>
 </div>
 </div>
+<div class="section" id="request-based-filtering">
+<h3>Request-based filtering<a class="headerlink" href="#request-based-filtering" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal"><span class="pre">FilterSet</span></code> may be initialized with an optional <code class="docutils literal"><span class="pre">request</span></code> argument. If
+a request object is passed, then you may access the request during filtering.
+This allows you to filter by properties on the request, such as the currently
+logged-in user or the <code class="docutils literal"><span class="pre">Accepts-Languages</span></code> header.</p>
+<div class="section" id="filtering-the-primary-qs">
+<h4>Filtering the primary <code class="docutils literal"><span class="pre">.qs</span></code><a class="headerlink" href="#filtering-the-primary-qs" title="Permalink to this headline">¶</a></h4>
+<p>To filter the primary queryset by the <code class="docutils literal"><span class="pre">request</span></code> object, simply override the
+<code class="docutils literal"><span class="pre">FilterSet.qs</span></code> property. For example, you could filter blog articles to only
+those that are published and those that are owned by the logged-in user
+(presumably the author&#8217;s draft articles).</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ArticleFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">Article</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="o">...</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">qs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">parent</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">ArticleFilter</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">qs</span>
+        <span class="k">return</span> <span class="n">parent</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">is_published</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span> \
+            <span class="o">|</span> <span class="n">parent</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">author</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="filtering-the-related-queryset-for-modelchoicefilter">
+<h4>Filtering the related queryset for <code class="docutils literal"><span class="pre">ModelChoiceFilter</span></code><a class="headerlink" href="#filtering-the-related-queryset-for-modelchoicefilter" title="Permalink to this headline">¶</a></h4>
+<p>The <code class="docutils literal"><span class="pre">queryset</span></code> argument for <code class="docutils literal"><span class="pre">ModelChoiceFilter</span></code> and <code class="docutils literal"><span class="pre">ModelMultipleChoiceFilter</span></code>
+supports callable behavior. If a callable is passed, it will be invoked with the
+<code class="docutils literal"><span class="pre">request</span></code> as its only argument. This allows you to perform the same kinds of
+request-based filtering without resorting to overriding <code class="docutils literal"><span class="pre">FilterSet.__init__</span></code>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">departments</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">company</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">company</span>
+    <span class="k">return</span> <span class="n">company</span><span class="o">.</span><span class="n">department_set</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">EmployeeFilter</span><span class="p">(</span><span class="n">filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
+    <span class="n">department</span> <span class="o">=</span> <span class="n">filters</span><span class="o">.</span><span class="n">ModelChoiceFilter</span><span class="p">(</span><span class="n">queryset</span><span class="o">=</span><span class="n">departments</span><span class="p">)</span>
+    <span class="o">...</span>
+</pre></div>
+</div>
+</div>
+</div>
 <div class="section" id="customize-filtering-with-filter-method">
 <h3>Customize filtering with <code class="docutils literal"><span class="pre">Filter.method</span></code><a class="headerlink" href="#customize-filtering-with-filter-method" title="Permalink to this headline">¶</a></h3>
 <p>You can control the behavior of a filter by specifying a <code class="docutils literal"><span class="pre">method</span></code> to perform
-filtering. View more information in the <a class="reference internal" href="ref/filters.html#filter-method"><span>method reference</span></a>.</p>
+filtering. View more information in the <a class="reference internal" href="ref/filters.html#filter-method"><span>method reference</span></a>.
+Note that you may access the filterset&#8217;s properties, such as the <code class="docutils literal"><span class="pre">request</span></code>.</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">F</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
     <span class="n">username</span> <span class="o">=</span> <span class="n">CharFilter</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;my_custom_filter&#39;</span><span class="p">)</span>
 
