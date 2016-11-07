@@ -88,6 +88,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#quickstart">Quickstart</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#adding-a-filterset-with-filter-class">Adding a FilterSet with <code class="docutils literal"><span class="pre">filter_class</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#specifying-filter-fields">Specifying <code class="docutils literal"><span class="pre">filter_fields</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#schema-generation-with-core-api">Schema Generation with Core API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#crispy-forms">Crispy Forms</a></li>
 </ul>
 </li>
@@ -222,13 +223,64 @@
 </pre></div>
 </div>
 </div>
+<div class="section" id="schema-generation-with-core-api">
+<h2>Schema Generation with Core API<a class="headerlink" href="#schema-generation-with-core-api" title="Permalink to this headline">¶</a></h2>
+<p>The backend class integrates with DRF&#8217;s schema generation by implementing <code class="docutils literal"><span class="pre">get_schema_fields()</span></code>. This is automatically enabled when Core API is installed. Schema generation usually functions seamlessly, however the implementation does expect to invoke the view&#8217;s <code class="docutils literal"><span class="pre">get_queryset()</span></code> method. There is a caveat in that views are artificially constructed during schema generation, so the <code class="docutils literal"><span class="pre">args</span></code> and <code class="docutils literal"><span class="pre">kwargs</span></code> attributes will be empty. If you depend on arguments parsed from the URL, you will need to handle their absence in <code class="docutils literal"><span class="pre">get_queryset()</span></code>.</p>
+<p>For example, your get queryset method may look like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">IssueViewSet</span><span class="p">(</span><span class="n">views</span><span class="o">.</span><span class="n">ModelViewSet</span><span class="p">):</span>
+    <span class="n">queryset</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">Issue</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">get_project</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">models</span><span class="o">.</span><span class="n">Project</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;project_id&#39;</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">get_queryset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">project</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_project</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">queryset</span> \
+            <span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">project</span><span class="o">=</span><span class="n">project</span><span class="p">)</span> \
+            <span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">author</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This could be rewritten like so:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">IssueViewSet</span><span class="p">(</span><span class="n">views</span><span class="o">.</span><span class="n">ModelViewSet</span><span class="p">):</span>
+    <span class="n">queryset</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">Issue</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">get_project</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">models</span><span class="o">.</span><span class="n">Project</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;project_id&#39;</span><span class="p">])</span>
+        <span class="k">except</span> <span class="n">models</span><span class="o">.</span><span class="n">Project</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">None</span>
+
+    <span class="k">def</span> <span class="nf">get_queryset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">project</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_project</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">project</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">queryset</span><span class="o">.</span><span class="n">none</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">queryset</span> \
+            <span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">project</span><span class="o">=</span><span class="n">project</span><span class="p">)</span> \
+            <span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">author</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Or more simply as:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">IssueViewSet</span><span class="p">(</span><span class="n">views</span><span class="o">.</span><span class="n">ModelViewSet</span><span class="p">):</span>
+    <span class="n">queryset</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">Issue</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">get_queryset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># project_id may be None</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">queryset</span> \
+            <span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">project_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;project_id&#39;</span><span class="p">))</span> \
+            <span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">author</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="crispy-forms">
 <h2>Crispy Forms<a class="headerlink" href="#crispy-forms" title="Permalink to this headline">¶</a></h2>
-<p>If you are using DRF&#8217;s browsable API or admin API you may also want to install <cite>django-crispy-forms</cite>, which will enhance the presentation of the filter forms in HTML views, by allowing them to render Bootstrap 3 HTML. Note that this isn&#8217;t actively supported, although pull requests for bug fixes are welcome.</p>
+<p>If you are using DRF&#8217;s browsable API or admin API you may also want to install <code class="docutils literal"><span class="pre">django-crispy-forms</span></code>, which will enhance the presentation of the filter forms in HTML views, by allowing them to render Bootstrap 3 HTML. Note that this isn&#8217;t actively supported, although pull requests for bug fixes are welcome.</p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span>pip install django-crispy-forms
 </pre></div>
 </div>
-<p>With crispy forms installed and added to Django&#8217;s <cite>INSTALLED_APPS</cite>, the browsable API will present a filtering control for <cite>DjangoFilterBackend</cite>, like so:</p>
+<p>With crispy forms installed and added to Django&#8217;s <code class="docutils literal"><span class="pre">INSTALLED_APPS</span></code>, the browsable API will present a filtering control for <code class="docutils literal"><span class="pre">DjangoFilterBackend</span></code>, like so:</p>
 <img alt="_images/form.png" src="_images/form.png" />
 </div>
 </div>
