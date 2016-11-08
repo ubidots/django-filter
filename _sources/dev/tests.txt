@@ -63,4 +63,5 @@ supported versions of Python and Django. Install tox, and then simply run:
 
 .. code-block:: bash
 
+    $ pip install tox
     $ tox

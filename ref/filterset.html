@@ -86,7 +86,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../guide/install.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guide/usage.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guide/rest_framework.html">Integration with DRF</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../guide/tips.html">Helpful Tips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guide/tips.html">Tips and Solutions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guide/migration.html">Migrating to 1.0</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Reference Documentation</span></p>
@@ -96,7 +96,6 @@
 <li class="toctree-l3"><a class="reference internal" href="#automatic-filter-generation-with-model">Automatic filter generation with <code class="docutils literal"><span class="pre">model</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#declaring-filterable-fields">Declaring filterable <code class="docutils literal"><span class="pre">fields</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#disable-filter-fields-with-exclude">Disable filter fields with <code class="docutils literal"><span class="pre">exclude</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#ordering-using-order-by">Ordering using <code class="docutils literal"><span class="pre">order_by</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#custom-forms-using-form">Custom Forms using <code class="docutils literal"><span class="pre">form</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#group-fields-with-together">Group fields with <code class="docutils literal"><span class="pre">together</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#strict"><code class="docutils literal"><span class="pre">strict</span></code></a></li>
@@ -104,7 +103,6 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#overriding-filterset-methods">Overriding <code class="docutils literal"><span class="pre">FilterSet</span></code> methods</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#filter-for-lookup"><code class="docutils literal"><span class="pre">filter_for_lookup()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#get-ordering-field"><code class="docutils literal"><span class="pre">get_ordering_field()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -170,7 +168,6 @@
 <li><a class="reference internal" href="#model"><span>model</span></a></li>
 <li><a class="reference internal" href="#fields"><span>fields</span></a></li>
 <li><a class="reference internal" href="#exclude"><span>exclude</span></a></li>
-<li><a class="reference internal" href="#order-by"><span>order_by</span></a></li>
 <li><a class="reference internal" href="#form"><span>form</span></a></li>
 <li><a class="reference internal" href="#together"><span>together</span></a></li>
 <li>filter_overrides</li>
@@ -231,36 +228,6 @@ declared directly  on the <code class="docutils literal"><span class="pre">Filte
         <span class="n">exclude</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="ordering-using-order-by">
-<span id="order-by"></span><h3>Ordering using <code class="docutils literal"><span class="pre">order_by</span></code><a class="headerlink" href="#ordering-using-order-by" title="Permalink to this headline">¶</a></h3>
-<p>You can allow the user to control ordering by providing the
-<code class="docutils literal"><span class="pre">order_by</span></code> argument in the Filter&#8217;s Meta class.  <code class="docutils literal"><span class="pre">order_by</span></code> can be either a
-<code class="docutils literal"><span class="pre">list</span></code> or <code class="docutils literal"><span class="pre">tuple</span></code> of field names, in which case those are the options, or
-it can be a <code class="docutils literal"><span class="pre">bool</span></code> which, if True, indicates that all fields that
-the user can filter on can also be sorted on. An example of ordering using a list:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">django_filters</span>
-
-<span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
-    <span class="n">price</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">NumberFilter</span><span class="p">(</span><span class="n">lookup_expr</span><span class="o">=</span><span class="s1">&#39;lt&#39;</span><span class="p">)</span>
-    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
-        <span class="n">model</span> <span class="o">=</span> <span class="n">Product</span>
-        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;price&#39;</span><span class="p">,</span> <span class="s1">&#39;release_date&#39;</span><span class="p">]</span>
-        <span class="n">order_by</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;price&#39;</span><span class="p">]</span>
-</pre></div>
-</div>
-<p>If you want to control the display of items in <code class="docutils literal"><span class="pre">order_by</span></code>, you can set it to
-a list or tuple of 2-tuples in the format <code class="docutils literal"><span class="pre">(field_name,</span> <span class="pre">display_name)</span></code>.
-This lets you override the displayed names for your ordering fields:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">order_by</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;Company Name&#39;</span><span class="p">),</span>
-    <span class="p">(</span><span class="s1">&#39;average_rating&#39;</span><span class="p">,</span> <span class="s1">&#39;Stars&#39;</span><span class="p">),</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-<p>Note that the default query parameter name used for ordering is <code class="docutils literal"><span class="pre">o</span></code>.  You
-can override this by setting an <code class="docutils literal"><span class="pre">order_by_field</span></code> attribute on the
-<code class="docutils literal"><span class="pre">FilterSet</span></code>&#8216;s Meta class to the string value you would like to use.</p>
 </div>
 <div class="section" id="custom-forms-using-form">
 <span id="form"></span><h3>Custom Forms using <code class="docutils literal"><span class="pre">form</span></code><a class="headerlink" href="#custom-forms-using-form" title="Permalink to this headline">¶</a></h3>
@@ -327,30 +294,6 @@ filters for a model field, you can override <code class="docutils literal"><span
 
         <span class="c1"># use default behavior otherwise</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">ProductFilter</span><span class="p">,</span> <span class="n">cls</span><span class="p">)</span><span class="o">.</span><span class="n">filter_for_lookup</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">lookup_type</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="get-ordering-field">
-<h3><code class="docutils literal"><span class="pre">get_ordering_field()</span></code><a class="headerlink" href="#get-ordering-field" title="Permalink to this headline">¶</a></h3>
-<p>If you want to use a custom widget, or in any other way override the ordering
-field you can override the <code class="docutils literal"><span class="pre">get_ordering_field()</span></code> method on a <code class="docutils literal"><span class="pre">FilterSet</span></code>.
-This method just needs to return a Form Field.</p>
-<p>Ordering on multiple fields, or other complex orderings can be achieved by
-overriding the <code class="docutils literal"><span class="pre">FilterSet.get_order_by()</span></code> method. This is passed the selected
-<code class="docutils literal"><span class="pre">order_by</span></code> value, and is expected to return an iterable of values to pass to
-<code class="docutils literal"><span class="pre">QuerySet.order_by</span></code>. For example, to sort a <code class="docutils literal"><span class="pre">User</span></code> table by last name, then
-first name:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">UserFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
-    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
-        <span class="n">order_by</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;Username&#39;</span><span class="p">),</span>
-            <span class="p">(</span><span class="s1">&#39;last_name&#39;</span><span class="p">,</span> <span class="s1">&#39;Last Name&#39;</span><span class="p">)</span>
-        <span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">get_order_by</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">order_value</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">order_value</span> <span class="o">==</span> <span class="s1">&#39;last_name&#39;</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">[</span><span class="s1">&#39;last_name&#39;</span><span class="p">,</span> <span class="s1">&#39;first_name&#39;</span><span class="p">]</span>
-        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">UserFilter</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_order_by</span><span class="p">(</span><span class="n">order_value</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

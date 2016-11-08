@@ -1,13 +1,13 @@
-============
-Helpful Tips
-============
+==================
+Tips and Solutions
+==================
 
 Common problems for declared filters
 ------------------------------------
 
 Below are some of the common problem that occur when declaring filters. It is
-recommended that you do read this as it provides a more complete understanding
-on how filters work.
+recommended that you read this as it provides a more complete understanding of
+how filters work.
 
 
 Filter ``name`` and ``lookup_expr`` not configured
@@ -88,3 +88,25 @@ uncategorized products and products for a set of categories:
         uncategorized = django_filters.BooleanFilter(name='category', lookup_expr='isnull')
 
 More info on constructing ``in`` and ``range`` csv :ref:`filters <base-in-filter>`.
+
+
+Filtering by empty values
+-------------------------
+
+Using ``BooleanFilter`` with ``isnull`` lookups
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+None/Any handling on ChoiceFilter #519
+
+
+Filtering by an empty string
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Suggested EmptyStringFilter #478
+
+
+Combine filters or something
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Suggested NullableDateRangeFilter #446

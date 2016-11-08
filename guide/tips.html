@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Helpful Tips &mdash; django-filter 0.15.3 documentation</title>
+  <title>Tips and Solutions &mdash; django-filter 0.15.3 documentation</title>
   
 
   
@@ -86,11 +86,17 @@
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rest_framework.html">Integration with DRF</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">Helpful Tips</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Tips and Solutions</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#common-problems-for-declared-filters">Common problems for declared filters</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#filter-name-and-lookup-expr-not-configured">Filter <code class="docutils literal"><span class="pre">name</span></code> and <code class="docutils literal"><span class="pre">lookup_expr</span></code> not configured</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#missing-lookup-expr-for-text-search-filters">Missing <code class="docutils literal"><span class="pre">lookup_expr</span></code> for text search filters</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#filter-and-lookup-expression-mismatch-in-range-isnull">Filter and lookup expression mismatch (in, range, isnull)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#filtering-by-empty-values">Filtering by empty values</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#using-booleanfilter-with-isnull-lookups">Using <code class="docutils literal"><span class="pre">BooleanFilter</span></code> with <code class="docutils literal"><span class="pre">isnull</span></code> lookups</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#filtering-by-an-empty-string">Filtering by an empty string</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#combine-filters-or-something">Combine filters or something</a></li>
 </ul>
 </li>
 </ul>
@@ -138,7 +144,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="../index.html">Docs</a> &raquo;</li>
       
-    <li>Helpful Tips</li>
+    <li>Tips and Solutions</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -152,13 +158,13 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="helpful-tips">
-<h1>Helpful Tips<a class="headerlink" href="#helpful-tips" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="tips-and-solutions">
+<h1>Tips and Solutions<a class="headerlink" href="#tips-and-solutions" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="common-problems-for-declared-filters">
 <h2>Common problems for declared filters<a class="headerlink" href="#common-problems-for-declared-filters" title="Permalink to this headline">¶</a></h2>
 <p>Below are some of the common problem that occur when declaring filters. It is
-recommended that you do read this as it provides a more complete understanding
-on how filters work.</p>
+recommended that you read this as it provides a more complete understanding of
+how filters work.</p>
 <div class="section" id="filter-name-and-lookup-expr-not-configured">
 <h3>Filter <code class="docutils literal"><span class="pre">name</span></code> and <code class="docutils literal"><span class="pre">lookup_expr</span></code> not configured<a class="headerlink" href="#filter-name-and-lookup-expr-not-configured" title="Permalink to this headline">¶</a></h3>
 <p>While <code class="docutils literal"><span class="pre">name</span></code> and <code class="docutils literal"><span class="pre">lookup_expr</span></code> are optional, it is recommended that you specify
@@ -221,6 +227,21 @@ uncategorized products and products for a set of categories:</p>
 </pre></div>
 </div>
 <p>More info on constructing <code class="docutils literal"><span class="pre">in</span></code> and <code class="docutils literal"><span class="pre">range</span></code> csv <a class="reference internal" href="../ref/filters.html#base-in-filter"><span>filters</span></a>.</p>
+</div>
+</div>
+<div class="section" id="filtering-by-empty-values">
+<h2>Filtering by empty values<a class="headerlink" href="#filtering-by-empty-values" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="using-booleanfilter-with-isnull-lookups">
+<h3>Using <code class="docutils literal"><span class="pre">BooleanFilter</span></code> with <code class="docutils literal"><span class="pre">isnull</span></code> lookups<a class="headerlink" href="#using-booleanfilter-with-isnull-lookups" title="Permalink to this headline">¶</a></h3>
+<p>None/Any handling on ChoiceFilter #519</p>
+</div>
+<div class="section" id="filtering-by-an-empty-string">
+<h3>Filtering by an empty string<a class="headerlink" href="#filtering-by-an-empty-string" title="Permalink to this headline">¶</a></h3>
+<p>Suggested EmptyStringFilter #478</p>
+</div>
+<div class="section" id="combine-filters-or-something">
+<h3>Combine filters or something<a class="headerlink" href="#combine-filters-or-something" title="Permalink to this headline">¶</a></h3>
+<p>Suggested NullableDateRangeFilter #446</p>
 </div>
 </div>
 </div>
