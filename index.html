@@ -31,7 +31,7 @@
 
   
     <link rel="top" title="django-filter 0.15.3 documentation" href="#"/>
-        <link rel="next" title="Installing django-filter" href="install.html"/> 
+        <link rel="next" title="Installation" href="guide/install.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -80,17 +80,25 @@
           
             
             
-                <ul>
-<li class="toctree-l1"><a class="reference internal" href="install.html">Installing django-filter</a></li>
-<li class="toctree-l1"><a class="reference internal" href="usage.html">Using django-filter</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rest_framework.html">Django Rest Framework</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ref/filterset.html">FilterSet Guide</a></li>
+                <p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="guide/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guide/usage.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guide/rest_framework.html">Integration with DRF</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guide/tips.html">Helpful Tips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guide/migration.html">Migrating to 1.0</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ref/filterset.html">FilterSet Options</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ref/filters.html">Filter Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ref/fields.html">Fields Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ref/fields.html">Field Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ref/widgets.html">Widget Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ref/settings.html">Available Settings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="migration.html">Migrating to 1.0</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tests.html">Running the django-filter tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ref/settings.html">Settings Reference</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="dev/tests.html">Running the Test Suite</a></li>
 </ul>
 
             
@@ -141,19 +149,59 @@
 the more mundane bits of view code. Specifically, it allows users to filter
 down a queryset based on a model&#8217;s fields, displaying the form to let them
 do this.</p>
-<p>Contents:</p>
-<div class="toctree-wrapper compound">
+<div class="toctree-wrapper compound" id="user-guide">
+<p class="caption"><span class="caption-text">User Guide</span><a class="headerlink" href="#user-guide" title="Permalink to this toctree">¶</a></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="install.html">Installing django-filter</a></li>
-<li class="toctree-l1"><a class="reference internal" href="usage.html">Using django-filter</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rest_framework.html">Django Rest Framework</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ref/filterset.html">FilterSet Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guide/install.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide/install.html#requirements">Requirements</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guide/usage.html">Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide/usage.html#the-model">The model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/usage.html#the-filter">The filter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/usage.html#the-view">The view</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/usage.html#the-url-conf">The URL conf</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/usage.html#the-template">The template</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/usage.html#generic-view-configuration">Generic view  &amp; configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guide/rest_framework.html">Integration with DRF</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide/rest_framework.html#quickstart">Quickstart</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/rest_framework.html#adding-a-filterset-with-filter-class">Adding a FilterSet with <code class="docutils literal"><span class="pre">filter_class</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/rest_framework.html#using-the-filter-fields-shortcut">Using the <code class="docutils literal"><span class="pre">filter_fields</span></code> shortcut</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/rest_framework.html#schema-generation-with-core-api">Schema Generation with Core API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/rest_framework.html#crispy-forms">Crispy Forms</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guide/tips.html">Helpful Tips</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide/tips.html#common-problems-for-declared-filters">Common problems for declared filters</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guide/migration.html">Migrating to 1.0</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide/migration.html#methodfilter-and-filter-action-replaced-by-filter-method">MethodFilter and Filter.action replaced by Filter.method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/migration.html#queryset-methods-are-no-longer-proxied">QuerySet methods are no longer proxied</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/migration.html#filters-no-longer-autogenerated-when-meta-fields-is-not-specified">Filters no longer autogenerated when Meta.fields is not specified</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/migration.html#move-filterset-options-to-meta-class">Move FilterSet options to Meta class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/migration.html#filterset-ordering-replaced-by-orderingfilter">FilterSet ordering replaced by OrderingFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/migration.html#deprecated-filters-help-text-filter-and-filters-help-text-exclude">Deprecated <code class="docutils literal"><span class="pre">FILTERS_HELP_TEXT_FILTER</span></code> and <code class="docutils literal"><span class="pre">FILTERS_HELP_TEXT_EXCLUDE</span></code></a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound" id="reference-documentation">
+<p class="caption"><span class="caption-text">Reference Documentation</span><a class="headerlink" href="#reference-documentation" title="Permalink to this toctree">¶</a></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ref/filterset.html">FilterSet Options</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ref/filters.html">Filter Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ref/fields.html">Fields Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ref/fields.html">Field Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ref/widgets.html">Widget Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ref/settings.html">Available Settings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="migration.html">Migrating to 1.0</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tests.html">Running the django-filter tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ref/settings.html">Settings Reference</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound" id="developer-documentation">
+<p class="caption"><span class="caption-text">Developer Documentation</span><a class="headerlink" href="#developer-documentation" title="Permalink to this toctree">¶</a></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="dev/tests.html">Running the Test Suite</a></li>
 </ul>
 </div>
 </div>
@@ -165,7 +213,7 @@ do this.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="install.html" class="btn btn-neutral float-right" title="Installing django-filter" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="guide/install.html" class="btn btn-neutral float-right" title="Installation" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
     </div>

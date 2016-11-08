@@ -1,0 +1,296 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Helpful Tips &mdash; django-filter 0.15.3 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="django-filter 0.15.3 documentation" href="../index.html"/>
+        <link rel="next" title="Migrating to 1.0" href="migration.html"/>
+        <link rel="prev" title="Integration with DRF" href="rest_framework.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> django-filter
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.15.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <p class="caption"><span class="caption-text">User Guide</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rest_framework.html">Integration with DRF</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Helpful Tips</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#common-problems-for-declared-filters">Common problems for declared filters</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#filter-name-and-lookup-expr-not-configured">Filter <code class="docutils literal"><span class="pre">name</span></code> and <code class="docutils literal"><span class="pre">lookup_expr</span></code> not configured</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#missing-lookup-expr-for-text-search-filters">Missing <code class="docutils literal"><span class="pre">lookup_expr</span></code> for text search filters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#filter-and-lookup-expression-mismatch-in-range-isnull">Filter and lookup expression mismatch (in, range, isnull)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="migration.html">Migrating to 1.0</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../ref/filterset.html">FilterSet Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/filters.html">Filter Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/fields.html">Field Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/widgets.html">Widget Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/settings.html">Settings Reference</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dev/tests.html">Running the Test Suite</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">django-filter</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+    <li>Helpful Tips</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/guide/tips.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="helpful-tips">
+<h1>Helpful Tips<a class="headerlink" href="#helpful-tips" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="common-problems-for-declared-filters">
+<h2>Common problems for declared filters<a class="headerlink" href="#common-problems-for-declared-filters" title="Permalink to this headline">¶</a></h2>
+<p>Below are some of the common problem that occur when declaring filters. It is
+recommended that you do read this as it provides a more complete understanding
+on how filters work.</p>
+<div class="section" id="filter-name-and-lookup-expr-not-configured">
+<h3>Filter <code class="docutils literal"><span class="pre">name</span></code> and <code class="docutils literal"><span class="pre">lookup_expr</span></code> not configured<a class="headerlink" href="#filter-name-and-lookup-expr-not-configured" title="Permalink to this headline">¶</a></h3>
+<p>While <code class="docutils literal"><span class="pre">name</span></code> and <code class="docutils literal"><span class="pre">lookup_expr</span></code> are optional, it is recommended that you specify
+them. By default, if <code class="docutils literal"><span class="pre">name</span></code> is not specified, the filter&#8217;s name on the
+filterset class will be used. Additionally, <code class="docutils literal"><span class="pre">lookup_expr</span></code> defaults to
+<code class="docutils literal"><span class="pre">exact</span></code>. The following is an example of a misconfigured price filter:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
+    <span class="n">price__gt</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">NumberFilter</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The filter instance will have a field name of <code class="docutils literal"><span class="pre">price__gt</span></code> and an <code class="docutils literal"><span class="pre">exact</span></code>
+lookup type. Under the hood, this will incorrectly be resolved as:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">Produce</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">price__gt__exact</span><span class="o">=</span><span class="n">value</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The above will most likely generate a <code class="docutils literal"><span class="pre">FieldError</span></code>. The correct configuration
+would be:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
+    <span class="n">price__gt</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">NumberFilter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;price&#39;</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s1">&#39;gt&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="missing-lookup-expr-for-text-search-filters">
+<h3>Missing <code class="docutils literal"><span class="pre">lookup_expr</span></code> for text search filters<a class="headerlink" href="#missing-lookup-expr-for-text-search-filters" title="Permalink to this headline">¶</a></h3>
+<p>It&#8217;s quite common to forget to set the lookup expression for <code class="code docutils literal"><span class="pre">CharField</span></code>
+and <code class="code docutils literal"><span class="pre">TextField</span></code> and wonder why a search for &#8220;foo&#8221; does not return results
+for &#8220;foobar&#8221;. This is because the default lookup type is <code class="docutils literal"><span class="pre">exact</span></code>, but you
+probably want to perform  an <code class="docutils literal"><span class="pre">icontains</span></code> lookup.</p>
+</div>
+<div class="section" id="filter-and-lookup-expression-mismatch-in-range-isnull">
+<h3>Filter and lookup expression mismatch (in, range, isnull)<a class="headerlink" href="#filter-and-lookup-expression-mismatch-in-range-isnull" title="Permalink to this headline">¶</a></h3>
+<p>It&#8217;s not always appropriate to directly match a filter to its model field&#8217;s
+type, as some lookups expect different types of values. This is a commonly
+found issue with <code class="docutils literal"><span class="pre">in</span></code>, <code class="docutils literal"><span class="pre">range</span></code>, and <code class="docutils literal"><span class="pre">isnull</span></code> lookups. Let&#8217;s look
+at the following product model:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Product</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">category</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Category</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Given that <code class="docutils literal"><span class="pre">category</span></code> is optional, it&#8217;s reasonable to want to enable a search
+for uncategorized products. The following is an incorrectly configured
+<code class="docutils literal"><span class="pre">isnull</span></code> filter:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
+    <span class="n">uncategorized</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">NumberFilter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s1">&#39;isnull&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>So what&#8217;s the issue? While the underlying column type for <code class="docutils literal"><span class="pre">category</span></code> is an
+integer, <code class="docutils literal"><span class="pre">isnull</span></code> lookups expect a boolean value. A <code class="docutils literal"><span class="pre">NumberFilter</span></code> however
+only validates numbers. Filters are not <cite>&#8216;expression aware&#8217;</cite> and won&#8217;t change
+behavior based on their <code class="docutils literal"><span class="pre">lookup_expr</span></code>. You should use filters that match the
+data type of the lookup expression <cite>instead</cite> of the data type underlying the
+model field. The following would correctly allow you to search for both
+uncategorized products and products for a set of categories:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">NumberInFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">BaseInFilter</span><span class="p">,</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">NumberFilter</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
+    <span class="n">categories</span> <span class="o">=</span> <span class="n">NumberInFilter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s1">&#39;in&#39;</span><span class="p">)</span>
+    <span class="n">uncategorized</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">BooleanFilter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s1">&#39;isnull&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>More info on constructing <code class="docutils literal"><span class="pre">in</span></code> and <code class="docutils literal"><span class="pre">range</span></code> csv <a class="reference internal" href="../ref/filters.html#base-in-filter"><span>filters</span></a>.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="migration.html" class="btn btn-neutral float-right" title="Migrating to 1.0" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="rest_framework.html" class="btn btn-neutral" title="Integration with DRF" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2013, Alex Gaynor and others..
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.15.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

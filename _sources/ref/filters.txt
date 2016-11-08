@@ -1,3 +1,4 @@
+================
 Filter Reference
 ================
 
@@ -274,6 +275,13 @@ Set `always_filter` to False after instantiation to enable the default `is_noop`
 test.
 
 Override `is_noop` if you require a different test for your application.
+
+
+``TypedMultipleChoiceFilter``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Like ``MultipleChoiceFilter``, but in addition accepts the ``coerce`` parameter, as
+in ``TypedChoiceFilter``.
 
 
 ``DateFilter``

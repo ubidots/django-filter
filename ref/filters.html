@@ -31,8 +31,8 @@
 
   
     <link rel="top" title="django-filter 0.15.3 documentation" href="../index.html"/>
-        <link rel="next" title="Fields Reference" href="fields.html"/>
-        <link rel="prev" title="FilterSet Guide" href="filterset.html"/> 
+        <link rel="next" title="Field Reference" href="fields.html"/>
+        <link rel="prev" title="FilterSet Options" href="filterset.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -81,11 +81,17 @@
           
             
             
-                <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../install.html">Installing django-filter</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../usage.html">Using django-filter</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../rest_framework.html">Django Rest Framework</a></li>
-<li class="toctree-l1"><a class="reference internal" href="filterset.html">FilterSet Guide</a></li>
+                <p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../guide/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guide/usage.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guide/rest_framework.html">Integration with DRF</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guide/tips.html">Helpful Tips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guide/migration.html">Migrating to 1.0</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="filterset.html">FilterSet Options</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">Filter Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#core-arguments">Core Arguments</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#name"><code class="docutils literal"><span class="pre">name</span></code></a></li>
@@ -110,6 +116,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#choicefilter"><code class="docutils literal"><span class="pre">ChoiceFilter</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#typedchoicefilter"><code class="docutils literal"><span class="pre">TypedChoiceFilter</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#multiplechoicefilter"><code class="docutils literal"><span class="pre">MultipleChoiceFilter</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#typedmultiplechoicefilter"><code class="docutils literal"><span class="pre">TypedMultipleChoiceFilter</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#datefilter"><code class="docutils literal"><span class="pre">DateFilter</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#timefilter"><code class="docutils literal"><span class="pre">TimeFilter</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#datetimefilter"><code class="docutils literal"><span class="pre">DateTimeFilter</span></code></a></li>
@@ -136,11 +143,13 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="fields.html">Fields Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fields.html">Field Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="widgets.html">Widget Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="settings.html">Available Settings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../migration.html">Migrating to 1.0</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tests.html">Running the django-filter tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settings.html">Settings Reference</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dev/tests.html">Running the Test Suite</a></li>
 </ul>
 
             
@@ -377,7 +386,7 @@ explicitly passed when the filter is declared on the <code class="docutils liter
 </div>
 <p><code class="docutils literal"><span class="pre">ChoiceFilter</span></code> also has arguments that enable a choice for not filtering, as
 well as a choice for filtering by <code class="docutils literal"><span class="pre">None</span></code> values. Each of the arguments have a
-corresponding global setting (<a class="reference internal" href="settings.html"><em>Available Settings</em></a>).</p>
+corresponding global setting (<a class="reference internal" href="settings.html"><em>Settings Reference</em></a>).</p>
 <ul class="simple">
 <li><code class="docutils literal"><span class="pre">empty_label</span></code>: The display label to use for the select choice to not filter.
 The choice may be disabled by setting this argument to <code class="docutils literal"><span class="pre">None</span></code>. Defaults to
@@ -423,6 +432,11 @@ filtering overhead, particularly of the <cite>distinct</cite> call.</p>
 <p>Set <cite>always_filter</cite> to False after instantiation to enable the default <cite>is_noop</cite>
 test.</p>
 <p>Override <cite>is_noop</cite> if you require a different test for your application.</p>
+</div>
+<div class="section" id="typedmultiplechoicefilter">
+<h3><code class="docutils literal"><span class="pre">TypedMultipleChoiceFilter</span></code><a class="headerlink" href="#typedmultiplechoicefilter" title="Permalink to this headline">¶</a></h3>
+<p>Like <code class="docutils literal"><span class="pre">MultipleChoiceFilter</span></code>, but in addition accepts the <code class="docutils literal"><span class="pre">coerce</span></code> parameter, as
+in <code class="docutils literal"><span class="pre">TypedChoiceFilter</span></code>.</p>
 </div>
 <div class="section" id="datefilter">
 <h3><code class="docutils literal"><span class="pre">DateFilter</span></code><a class="headerlink" href="#datefilter" title="Permalink to this headline">¶</a></h3>
@@ -871,10 +885,10 @@ for APIs.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="fields.html" class="btn btn-neutral float-right" title="Fields Reference" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="fields.html" class="btn btn-neutral float-right" title="Field Reference" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="filterset.html" class="btn btn-neutral" title="FilterSet Guide" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="filterset.html" class="btn btn-neutral" title="FilterSet Options" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

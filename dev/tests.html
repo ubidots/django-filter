@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Field Reference &mdash; django-filter 0.15.3 documentation</title>
+  <title>Running the Test Suite &mdash; django-filter 0.15.3 documentation</title>
   
 
   
@@ -31,8 +31,7 @@
 
   
     <link rel="top" title="django-filter 0.15.3 documentation" href="../index.html"/>
-        <link rel="next" title="Widget Reference" href="widgets.html"/>
-        <link rel="prev" title="Filter Reference" href="filters.html"/> 
+        <link rel="prev" title="Settings Reference" href="../ref/settings.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -90,19 +89,22 @@
 <li class="toctree-l1"><a class="reference internal" href="../guide/migration.html">Migrating to 1.0</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Reference Documentation</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="filterset.html">FilterSet Options</a></li>
-<li class="toctree-l1"><a class="reference internal" href="filters.html">Filter Reference</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">Field Reference</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#isodatetimefield"><code class="docutils literal"><span class="pre">IsoDateTimeField</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="widgets.html">Widget Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="settings.html">Settings Reference</a></li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../ref/filterset.html">FilterSet Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/filters.html">Filter Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/fields.html">Field Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/widgets.html">Widget Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ref/settings.html">Settings Reference</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Developer Documentation</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../dev/tests.html">Running the Test Suite</a></li>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="">Running the Test Suite</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#clone-the-repository">Clone the repository</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#set-up-the-virtualenv">Set up the virtualenv</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#execute-the-test-runner">Execute the test runner</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#test-all-supported-versions">Test all supported versions</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -133,11 +135,11 @@
   <ul class="wy-breadcrumbs">
     <li><a href="../index.html">Docs</a> &raquo;</li>
       
-    <li>Field Reference</li>
+    <li>Running the Test Suite</li>
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="../_sources/ref/fields.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/dev/tests.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -147,16 +149,51 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="field-reference">
-<h1>Field Reference<a class="headerlink" href="#field-reference" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="isodatetimefield">
-<h2><code class="docutils literal"><span class="pre">IsoDateTimeField</span></code><a class="headerlink" href="#isodatetimefield" title="Permalink to this headline">¶</a></h2>
-<p>Extends <code class="docutils literal"><span class="pre">django.forms.DateTimeField</span></code> to allow parsing ISO 8601 formated dates, in addition to existing formats</p>
-<p>Defines a class level attribute <code class="docutils literal"><span class="pre">ISO_8601</span></code> as constant for the format.</p>
-<p>Sets <code class="docutils literal"><span class="pre">input_formats</span> <span class="pre">=</span> <span class="pre">[ISO_8601]</span></code> — this means that by default <code class="docutils literal"><span class="pre">IsoDateTimeField</span></code> will <strong>only</strong> parse ISO 8601 formated dates.</p>
-<p>You may set <code class="docutils literal"><span class="pre">input_formats</span></code> to your list of required formats as per the <a class="reference external" href="https://docs.djangoproject.com/en/1.8/ref/forms/fields/#django.forms.DateTimeField.input_formats">DateTimeField Docs</a>, using the <code class="docutils literal"><span class="pre">ISO_8601</span></code> class level attribute to specify the  ISO 8601 format.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="n">IsoDateTimeField</span><span class="p">()</span>
-<span class="n">f</span><span class="o">.</span><span class="n">input_formats</span> <span class="o">=</span> <span class="p">[</span><span class="n">IsoDateTimeField</span><span class="o">.</span><span class="n">ISO_8601</span><span class="p">]</span> <span class="o">+</span> <span class="n">DateTimeField</span><span class="o">.</span><span class="n">input_formats</span>
+  <div class="section" id="running-the-test-suite">
+<h1>Running the Test Suite<a class="headerlink" href="#running-the-test-suite" title="Permalink to this headline">¶</a></h1>
+<p>The easiest way to run the django-filter tests is to check out the source
+code and create a virtualenv where you can install the test dependencies.
+Django-filter uses a custom test runner to configure the environment, so a
+wrapper script is available to set up and run the test suite.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The following assumes you have <a class="reference external" href="https://virtualenv.pypa.io/en/stable/">virtualenv</a> and <a class="reference external" href="https://git-scm.com">git</a> installed.</p>
+</div>
+<div class="section" id="clone-the-repository">
+<h2>Clone the repository<a class="headerlink" href="#clone-the-repository" title="Permalink to this headline">¶</a></h2>
+<p>Get the source code using the following command:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ git clone https://github.com/carltongibson/django-filter.git
+</pre></div>
+</div>
+<p>Switch to the django-filter directory:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> django-filter
+</pre></div>
+</div>
+</div>
+<div class="section" id="set-up-the-virtualenv">
+<h2>Set up the virtualenv<a class="headerlink" href="#set-up-the-virtualenv" title="Permalink to this headline">¶</a></h2>
+<p>Create a new virtualenv to run the test suite in:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ virtualenv venv
+</pre></div>
+</div>
+<p>Then activate the virtualenv and install the test requirements:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ <span class="nb">source</span> venv/bin/activate
+$ pip install -r requirements/test.txt
+</pre></div>
+</div>
+</div>
+<div class="section" id="execute-the-test-runner">
+<h2>Execute the test runner<a class="headerlink" href="#execute-the-test-runner" title="Permalink to this headline">¶</a></h2>
+<p>Run the tests with the runner script:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ python runtests.py
+</pre></div>
+</div>
+</div>
+<div class="section" id="test-all-supported-versions">
+<h2>Test all supported versions<a class="headerlink" href="#test-all-supported-versions" title="Permalink to this headline">¶</a></h2>
+<p>You can also use the excellent tox testing tool to run the tests against all
+supported versions of Python and Django. Install tox, and then simply run:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ tox
 </pre></div>
 </div>
 </div>
@@ -169,10 +206,8 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="widgets.html" class="btn btn-neutral float-right" title="Widget Reference" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
-      
-        <a href="filters.html" class="btn btn-neutral" title="Filter Reference" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../ref/settings.html" class="btn btn-neutral" title="Settings Reference" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

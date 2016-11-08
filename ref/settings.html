@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Available Settings &mdash; django-filter 0.15.3 documentation</title>
+  <title>Settings Reference &mdash; django-filter 0.15.3 documentation</title>
   
 
   
@@ -31,7 +31,7 @@
 
   
     <link rel="top" title="django-filter 0.15.3 documentation" href="../index.html"/>
-        <link rel="next" title="Migrating to 1.0" href="../migration.html"/>
+        <link rel="next" title="Running the Test Suite" href="../dev/tests.html"/>
         <link rel="prev" title="Widget Reference" href="widgets.html"/> 
 
   
@@ -81,15 +81,21 @@
           
             
             
-                <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../install.html">Installing django-filter</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../usage.html">Using django-filter</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../rest_framework.html">Django Rest Framework</a></li>
-<li class="toctree-l1"><a class="reference internal" href="filterset.html">FilterSet Guide</a></li>
+                <p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../guide/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guide/usage.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guide/rest_framework.html">Integration with DRF</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guide/tips.html">Helpful Tips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guide/migration.html">Migrating to 1.0</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="filterset.html">FilterSet Options</a></li>
 <li class="toctree-l1"><a class="reference internal" href="filters.html">Filter Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fields.html">Fields Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fields.html">Field Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="widgets.html">Widget Reference</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">Available Settings</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Settings Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#filters-empty-choice-label">FILTERS_EMPTY_CHOICE_LABEL</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#filters-null-choice-label">FILTERS_NULL_CHOICE_LABEL</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#filters-null-choice-value">FILTERS_NULL_CHOICE_VALUE</a></li>
@@ -98,8 +104,10 @@
 <li class="toctree-l2"><a class="reference internal" href="#filters-strictness">FILTERS_STRICTNESS</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../migration.html">Migrating to 1.0</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tests.html">Running the django-filter tests</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dev/tests.html">Running the Test Suite</a></li>
 </ul>
 
             
@@ -130,7 +138,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="../index.html">Docs</a> &raquo;</li>
       
-    <li>Available Settings</li>
+    <li>Settings Reference</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -144,8 +152,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="available-settings">
-<span id="ref-settings"></span><h1>Available Settings<a class="headerlink" href="#available-settings" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="settings-reference">
+<h1>Settings Reference<a class="headerlink" href="#settings-reference" title="Permalink to this headline">¶</a></h1>
 <p>Here is a list of all available settings of django-filters and their
 default values. All settings are prefixed with <code class="docutils literal"><span class="pre">FILTERS_</span></code>, although this
 is a bit verbose it helps to make it easy to identify these settings.</p>
@@ -224,7 +232,7 @@ For example, you could add verbose output for &#8220;exact&#8221; lookups.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../migration.html" class="btn btn-neutral float-right" title="Migrating to 1.0" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../dev/tests.html" class="btn btn-neutral float-right" title="Running the Test Suite" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="widgets.html" class="btn btn-neutral" title="Widget Reference" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
