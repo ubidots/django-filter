@@ -206,9 +206,3 @@ behavior as an ``isnull`` filter.
 
         class Meta:
             model = MyModel
-
-
-Combine filters or something
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Suggested NullableDateRangeFilter #446
