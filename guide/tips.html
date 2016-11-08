@@ -94,8 +94,16 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#filtering-by-empty-values">Filtering by empty values</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#using-booleanfilter-with-isnull-lookups">Using <code class="docutils literal"><span class="pre">BooleanFilter</span></code> with <code class="docutils literal"><span class="pre">isnull</span></code> lookups</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#filtering-by-an-empty-string">Filtering by an empty string</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#filtering-by-null-values">Filtering by null values</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#solution-1-using-a-booleanfilter-with-isnull">Solution 1: Using a <code class="docutils literal"><span class="pre">BooleanFilter</span></code> with <code class="docutils literal"><span class="pre">isnull</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#solution-2-using-choicefilter-s-null-choice">Solution 2: Using <code class="docutils literal"><span class="pre">ChoiceFilter</span></code>&#8216;s null choice</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#filtering-by-an-empty-string">Filtering by an empty string</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#solution-1-magic-values">Solution 1: magic values</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#solution-2-empty-string-filter">Solution 2: empty string filter</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#combine-filters-or-something">Combine filters or something</a></li>
 </ul>
 </li>
@@ -231,13 +239,100 @@ uncategorized products and products for a set of categories:</p>
 </div>
 <div class="section" id="filtering-by-empty-values">
 <h2>Filtering by empty values<a class="headerlink" href="#filtering-by-empty-values" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="using-booleanfilter-with-isnull-lookups">
-<h3>Using <code class="docutils literal"><span class="pre">BooleanFilter</span></code> with <code class="docutils literal"><span class="pre">isnull</span></code> lookups<a class="headerlink" href="#using-booleanfilter-with-isnull-lookups" title="Permalink to this headline">¶</a></h3>
-<p>None/Any handling on ChoiceFilter #519</p>
+<p>There are a number of cases where you may need to filter by empty or null
+values. The following are some common solutions to these problems:</p>
+<div class="section" id="filtering-by-null-values">
+<h3>Filtering by null values<a class="headerlink" href="#filtering-by-null-values" title="Permalink to this headline">¶</a></h3>
+<p>As explained in the above &#8220;Filter and lookup expression mismatch&#8221; section, a
+common problem is how to correctly filter by null values on a field.</p>
+<div class="section" id="solution-1-using-a-booleanfilter-with-isnull">
+<h4>Solution 1: Using a <code class="docutils literal"><span class="pre">BooleanFilter</span></code> with <code class="docutils literal"><span class="pre">isnull</span></code><a class="headerlink" href="#solution-1-using-a-booleanfilter-with-isnull" title="Permalink to this headline">¶</a></h4>
+<p>Using <code class="docutils literal"><span class="pre">BooleanFilter</span></code> with an <code class="docutils literal"><span class="pre">isnull</span></code> lookup is a builtin solution used by
+the FilterSet&#8217;s automatic filter generation. To do this manually, simply add:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
+    <span class="n">uncategorized</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">BooleanFilter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s1">&#39;isnull&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Remember that the filter class is validating the input value. The underlying
+type of the mode field is not relevant here.</p>
+</div>
+<p>You may also reverse the logic with the <code class="docutils literal"><span class="pre">exclude</span></code> parameter.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
+    <span class="n">has_category</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">BooleanFilter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s1">&#39;isnull&#39;</span><span class="p">,</span> <span class="n">exclude</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="solution-2-using-choicefilter-s-null-choice">
+<h4>Solution 2: Using <code class="docutils literal"><span class="pre">ChoiceFilter</span></code>&#8216;s null choice<a class="headerlink" href="#solution-2-using-choicefilter-s-null-choice" title="Permalink to this headline">¶</a></h4>
+<p>If you&#8217;re using a ChoiceFilter, you may also filter by null values by enabling
+the <code class="docutils literal"><span class="pre">null_label</span></code> parameter. More details in the <code class="docutils literal"><span class="pre">ChoiceFilter</span></code> reference
+<a class="reference internal" href="../ref/filters.html#choice-filter"><span>docs</span></a>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
+    <span class="n">category</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">ModelChoiceFilter</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s1">&#39;isnull&#39;</span><span class="p">,</span>
+        <span class="n">null_label</span><span class="o">=</span><span class="s1">&#39;Uncategorized&#39;</span><span class="p">,</span>
+        <span class="n">queryset</span><span class="o">=</span><span class="n">Category</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">(),</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
 </div>
 <div class="section" id="filtering-by-an-empty-string">
 <h3>Filtering by an empty string<a class="headerlink" href="#filtering-by-an-empty-string" title="Permalink to this headline">¶</a></h3>
-<p>Suggested EmptyStringFilter #478</p>
+<p>It&#8217;s not currently possible to filter by an empty string, since empty values are
+interpreted as a skipped filter.</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span>GET http://localhost/api/my-model?myfield=
+</pre></div>
+</div>
+<div class="section" id="solution-1-magic-values">
+<h4>Solution 1: magic values<a class="headerlink" href="#solution-1-magic-values" title="Permalink to this headline">¶</a></h4>
+<p>You can override the <code class="docutils literal"><span class="pre">filter()</span></code> method of a filter class to specifically check
+for magic values. This is similar to the <code class="docutils literal"><span class="pre">ChoiceFilter</span></code>&#8216;s null value handling.</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span>GET http://localhost/api/my-model?myfield=EMPTY
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyCharFilter</span><span class="p">(</span><span class="n">filters</span><span class="o">.</span><span class="n">CharFilter</span><span class="p">):</span>
+    <span class="n">empty_value</span> <span class="o">=</span> <span class="s1">&#39;EMPTY&#39;</span>
+
+    <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qs</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">empty_value</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">MyCharFilter</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">qs</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+        <span class="n">qs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_method</span><span class="p">(</span><span class="n">qs</span><span class="p">)(</span><span class="o">**</span><span class="p">{</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">__</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lookup_expr</span><span class="p">):</span> <span class="s2">&quot;&quot;</span><span class="p">})</span>
+        <span class="k">return</span> <span class="n">qs</span><span class="o">.</span><span class="n">distinct</span><span class="p">()</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">distinct</span> <span class="k">else</span> <span class="n">qs</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="solution-2-empty-string-filter">
+<h4>Solution 2: empty string filter<a class="headerlink" href="#solution-2-empty-string-filter" title="Permalink to this headline">¶</a></h4>
+<p>It would also be possible to create an empty value filter that exhibits the same
+behavior as an <code class="docutils literal"><span class="pre">isnull</span></code> filter.</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span>GET http://localhost/api/my-model?myfield__isempty=false
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.core.validators</span> <span class="kn">import</span> <span class="n">EMPTY_VALUES</span>
+
+<span class="k">class</span> <span class="nc">EmptyStringFilter</span><span class="p">(</span><span class="n">filters</span><span class="o">.</span><span class="n">BooleanFilter</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qs</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">EMPTY_VALUES</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">qs</span>
+
+        <span class="n">exclude</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">exclude</span> <span class="o">^</span> <span class="p">(</span><span class="n">value</span> <span class="ow">is</span> <span class="bp">False</span><span class="p">)</span>
+        <span class="n">method</span> <span class="o">=</span> <span class="n">qs</span><span class="o">.</span><span class="n">exclude</span> <span class="k">if</span> <span class="n">exclude</span> <span class="k">else</span> <span class="n">qs</span><span class="o">.</span><span class="n">filter</span>
+
+        <span class="k">return</span> <span class="n">method</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">})</span>
+
+
+<span class="k">class</span> <span class="nc">MyFilterSet</span><span class="p">(</span><span class="n">filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
+    <span class="n">myfield__isempty</span> <span class="o">=</span> <span class="n">EmptyStringFilter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;myfield&#39;</span><span class="p">)</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">MyModel</span>
+</pre></div>
+</div>
+</div>
 </div>
 <div class="section" id="combine-filters-or-something">
 <h3>Combine filters or something<a class="headerlink" href="#combine-filters-or-something" title="Permalink to this headline">¶</a></h3>
