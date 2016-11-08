@@ -97,11 +97,12 @@
 <li class="toctree-l3"><a class="reference internal" href="#filtering-by-null-values">Filtering by null values</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#solution-1-using-a-booleanfilter-with-isnull">Solution 1: Using a <code class="docutils literal"><span class="pre">BooleanFilter</span></code> with <code class="docutils literal"><span class="pre">isnull</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#solution-2-using-choicefilter-s-null-choice">Solution 2: Using <code class="docutils literal"><span class="pre">ChoiceFilter</span></code>&#8216;s null choice</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#solution-3-comining-fields-w-multivaluefield">Solution 3: Comining fields w/ <code class="docutils literal"><span class="pre">MultiValueField</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#filtering-by-an-empty-string">Filtering by an empty string</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#solution-1-magic-values">Solution 1: magic values</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#solution-2-empty-string-filter">Solution 2: empty string filter</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#solution-1-magic-values">Solution 1: Magic values</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#solution-2-empty-string-filter">Solution 2: Empty string filter</a></li>
 </ul>
 </li>
 </ul>
@@ -277,6 +278,12 @@ the <code class="docutils literal"><span class="pre">null_label</span></code> pa
 </pre></div>
 </div>
 </div>
+<div class="section" id="solution-3-comining-fields-w-multivaluefield">
+<h4>Solution 3: Comining fields w/ <code class="docutils literal"><span class="pre">MultiValueField</span></code><a class="headerlink" href="#solution-3-comining-fields-w-multivaluefield" title="Permalink to this headline">¶</a></h4>
+<p>An alternative approach is to use Django&#8217;s <code class="docutils literal"><span class="pre">MultiValueField</span></code> to manually add
+in a <code class="docutils literal"><span class="pre">BooleanField</span></code> to handle null values. Proof of concept:
+<a class="reference external" href="https://github.com/carltongibson/django-filter/issues/446">https://github.com/carltongibson/django-filter/issues/446</a></p>
+</div>
 </div>
 <div class="section" id="filtering-by-an-empty-string">
 <h3>Filtering by an empty string<a class="headerlink" href="#filtering-by-an-empty-string" title="Permalink to this headline">¶</a></h3>
@@ -286,7 +293,7 @@ interpreted as a skipped filter.</p>
 </pre></div>
 </div>
 <div class="section" id="solution-1-magic-values">
-<h4>Solution 1: magic values<a class="headerlink" href="#solution-1-magic-values" title="Permalink to this headline">¶</a></h4>
+<h4>Solution 1: Magic values<a class="headerlink" href="#solution-1-magic-values" title="Permalink to this headline">¶</a></h4>
 <p>You can override the <code class="docutils literal"><span class="pre">filter()</span></code> method of a filter class to specifically check
 for magic values. This is similar to the <code class="docutils literal"><span class="pre">ChoiceFilter</span></code>&#8216;s null value handling.</p>
 <div class="highlight-http"><div class="highlight"><pre><span></span>GET http://localhost/api/my-model?myfield=EMPTY
@@ -305,7 +312,7 @@ for magic values. This is similar to the <code class="docutils literal"><span cl
 </div>
 </div>
 <div class="section" id="solution-2-empty-string-filter">
-<h4>Solution 2: empty string filter<a class="headerlink" href="#solution-2-empty-string-filter" title="Permalink to this headline">¶</a></h4>
+<h4>Solution 2: Empty string filter<a class="headerlink" href="#solution-2-empty-string-filter" title="Permalink to this headline">¶</a></h4>
 <p>It would also be possible to create an empty value filter that exhibits the same
 behavior as an <code class="docutils literal"><span class="pre">isnull</span></code> filter.</p>
 <div class="highlight-http"><div class="highlight"><pre><span></span>GET http://localhost/api/my-model?myfield__isempty=false
