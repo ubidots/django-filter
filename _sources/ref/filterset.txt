@@ -12,7 +12,7 @@ Meta options
 - :ref:`exclude <exclude>`
 - :ref:`form <form>`
 - :ref:`together <together>`
-- filter_overrides
+- :ref:`filter_overrides <filter_overrides>`
 - :ref:`strict <strict>`
 
 
@@ -120,6 +120,36 @@ field set must either be all or none present in the request for
             fields = ['price', 'release_date', 'rating']
             together = ['rating', 'price']
 
+
+.. _filter_overrides:
+
+Customise filter generation with ``filter_overrides``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The inner ``Meta`` class also takes an optional ``filter_overrides`` argument.
+This is a map of model fields to filter classes with options::
+
+   class ProductFilter(django_filters.FilterSet):
+
+        class Meta:
+            model = Product
+            fields = ['name', 'release_date']
+            filter_overrides = {
+                models.CharField: {
+                    'filter_class': django_filters.CharFilter,
+                    'extra': lambda f: {
+                        'lookup_expr': 'icontains',
+                    },
+                },
+                models.BooleanField: {
+                    'filter_class': django_filters.BooleanFilter,
+                    'extra': lambda f: {
+                        'widget': forms.CheckboxInput,
+                    },
+                },
+            }
+
+
 .. _strict:
 
 ``strict``
@@ -163,7 +193,7 @@ filters for a model field, you can override ``filter_for_lookup()``. Ex::
         def filter_for_lookup(cls, f, lookup_type):
             # override date range lookups
             if isinstance(f, models.DateField) and lookup_type == 'range':
-                return django_filters.DateRangeFiler, {}
+                return django_filters.DateRangeFilter, {}
 
             # use default behavior otherwise
             return super(ProductFilter, cls).filter_for_lookup(f, lookup_type)

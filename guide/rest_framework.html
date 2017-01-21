@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Integration with DRF &mdash; django-filter 0.15.3 documentation</title>
+  <title>Integration with DRF &mdash; django-filter 1.0.1 documentation</title>
   
 
   
@@ -30,7 +30,10 @@
   
 
   
-    <link rel="top" title="django-filter 0.15.3 documentation" href="../index.html"/>
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="django-filter 1.0.1 documentation" href="../index.html"/>
         <link rel="next" title="Tips and Solutions" href="tips.html"/>
         <link rel="prev" title="Getting Started" href="usage.html"/> 
 
@@ -60,7 +63,7 @@
             
             
               <div class="version">
-                0.15.3
+                1.0.1
               </div>
             
           
@@ -85,7 +88,7 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Getting Started</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">Integration with DRF</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Integration with DRF</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#quickstart">Quickstart</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#adding-a-filterset-with-filter-class">Adding a FilterSet with <code class="docutils literal"><span class="pre">filter_class</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#using-the-filter-fields-shortcut">Using the <code class="docutils literal"><span class="pre">filter_fields</span></code> shortcut</a></li>
@@ -211,7 +214,7 @@
 </div>
 <div class="section" id="using-the-filter-fields-shortcut">
 <h2>Using the <code class="docutils literal"><span class="pre">filter_fields</span></code> shortcut<a class="headerlink" href="#using-the-filter-fields-shortcut" title="Permalink to this headline">¶</a></h2>
-<p>You may bypass creating a <code class="docutils literal"><span class="pre">FilterSet</span></code> by instead adding <code class="docutils literal"><span class="pre">filter_fields</span></code> to your view class. This is equivalent to creating a FilterSet with just <a class="reference internal" href="../ref/filterset.html#fields"><span>Meta.fields</span></a>.</p>
+<p>You may bypass creating a <code class="docutils literal"><span class="pre">FilterSet</span></code> by instead adding <code class="docutils literal"><span class="pre">filter_fields</span></code> to your view class. This is equivalent to creating a FilterSet with just <a class="reference internal" href="../ref/filterset.html#fields"><span class="std std-ref">Meta.fields</span></a>.</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rest_framework</span> <span class="kn">import</span> <span class="n">generics</span>
 <span class="kn">from</span> <span class="nn">django_filters</span> <span class="kn">import</span> <span class="n">rest_framework</span> <span class="k">as</span> <span class="n">filters</span>
 <span class="kn">from</span> <span class="nn">myapp</span> <span class="kn">import</span> <span class="n">Product</span>
@@ -334,7 +337,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0.15.3',
+            VERSION:'1.0.1',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

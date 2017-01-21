@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>FilterSet Options &mdash; django-filter 0.15.3 documentation</title>
+  <title>FilterSet Options &mdash; django-filter 1.0.1 documentation</title>
   
 
   
@@ -30,7 +30,10 @@
   
 
   
-    <link rel="top" title="django-filter 0.15.3 documentation" href="../index.html"/>
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="django-filter 1.0.1 documentation" href="../index.html"/>
         <link rel="next" title="Filter Reference" href="filters.html"/>
         <link rel="prev" title="Migrating to 1.0" href="../guide/migration.html"/> 
 
@@ -60,7 +63,7 @@
             
             
               <div class="version">
-                0.15.3
+                1.0.1
               </div>
             
           
@@ -91,13 +94,14 @@
 </ul>
 <p class="caption"><span class="caption-text">Reference Documentation</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="">FilterSet Options</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">FilterSet Options</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#meta-options">Meta options</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#automatic-filter-generation-with-model">Automatic filter generation with <code class="docutils literal"><span class="pre">model</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#declaring-filterable-fields">Declaring filterable <code class="docutils literal"><span class="pre">fields</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#disable-filter-fields-with-exclude">Disable filter fields with <code class="docutils literal"><span class="pre">exclude</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#custom-forms-using-form">Custom Forms using <code class="docutils literal"><span class="pre">form</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#group-fields-with-together">Group fields with <code class="docutils literal"><span class="pre">together</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#customise-filter-generation-with-filter-overrides">Customise filter generation with <code class="docutils literal"><span class="pre">filter_overrides</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#strict"><code class="docutils literal"><span class="pre">strict</span></code></a></li>
 </ul>
 </li>
@@ -165,13 +169,13 @@
 <div class="section" id="meta-options">
 <h2>Meta options<a class="headerlink" href="#meta-options" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><a class="reference internal" href="#model"><span>model</span></a></li>
-<li><a class="reference internal" href="#fields"><span>fields</span></a></li>
-<li><a class="reference internal" href="#exclude"><span>exclude</span></a></li>
-<li><a class="reference internal" href="#form"><span>form</span></a></li>
-<li><a class="reference internal" href="#together"><span>together</span></a></li>
-<li>filter_overrides</li>
-<li><a class="reference internal" href="#strict"><span>strict</span></a></li>
+<li><a class="reference internal" href="#model"><span class="std std-ref">model</span></a></li>
+<li><a class="reference internal" href="#fields"><span class="std std-ref">fields</span></a></li>
+<li><a class="reference internal" href="#exclude"><span class="std std-ref">exclude</span></a></li>
+<li><a class="reference internal" href="#form"><span class="std std-ref">form</span></a></li>
+<li><a class="reference internal" href="#together"><span class="std std-ref">together</span></a></li>
+<li><a class="reference internal" href="#filter-overrides"><span class="std std-ref">filter_overrides</span></a></li>
+<li><a class="reference internal" href="#strict"><span class="std std-ref">strict</span></a></li>
 </ul>
 <div class="section" id="automatic-filter-generation-with-model">
 <span id="model"></span><h3>Automatic filter generation with <code class="docutils literal"><span class="pre">model</span></code><a class="headerlink" href="#automatic-filter-generation-with-model" title="Permalink to this headline">¶</a></h3>
@@ -242,13 +246,39 @@ is a list of lists, each containing field names. For convenience can be a
 single list/tuple when dealing with a single set of fields. Fields within a
 field set must either be all or none present in the request for
 <code class="docutils literal"><span class="pre">FilterSet.form</span></code> to be valid:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">django_filters</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">django_filters</span>
 
 <span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
     <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">Product</span>
         <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;price&#39;</span><span class="p">,</span> <span class="s1">&#39;release_date&#39;</span><span class="p">,</span> <span class="s1">&#39;rating&#39;</span><span class="p">]</span>
         <span class="n">together</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;rating&#39;</span><span class="p">,</span> <span class="s1">&#39;price&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="customise-filter-generation-with-filter-overrides">
+<span id="filter-overrides"></span><h3>Customise filter generation with <code class="docutils literal"><span class="pre">filter_overrides</span></code><a class="headerlink" href="#customise-filter-generation-with-filter-overrides" title="Permalink to this headline">¶</a></h3>
+<p>The inner <code class="docutils literal"><span class="pre">Meta</span></code> class also takes an optional <code class="docutils literal"><span class="pre">filter_overrides</span></code> argument.
+This is a map of model fields to filter classes with options:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
+
+     <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+         <span class="n">model</span> <span class="o">=</span> <span class="n">Product</span>
+         <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;release_date&#39;</span><span class="p">]</span>
+         <span class="n">filter_overrides</span> <span class="o">=</span> <span class="p">{</span>
+             <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">:</span> <span class="p">{</span>
+                 <span class="s1">&#39;filter_class&#39;</span><span class="p">:</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">CharFilter</span><span class="p">,</span>
+                 <span class="s1">&#39;extra&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="p">{</span>
+                     <span class="s1">&#39;lookup_expr&#39;</span><span class="p">:</span> <span class="s1">&#39;icontains&#39;</span><span class="p">,</span>
+                 <span class="p">},</span>
+             <span class="p">},</span>
+             <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">:</span> <span class="p">{</span>
+                 <span class="s1">&#39;filter_class&#39;</span><span class="p">:</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">BooleanFilter</span><span class="p">,</span>
+                 <span class="s1">&#39;extra&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="p">{</span>
+                     <span class="s1">&#39;widget&#39;</span><span class="p">:</span> <span class="n">forms</span><span class="o">.</span><span class="n">CheckboxInput</span><span class="p">,</span>
+                 <span class="p">},</span>
+             <span class="p">},</span>
+         <span class="p">}</span>
 </pre></div>
 </div>
 </div>
@@ -279,7 +309,7 @@ current implementation provides the following behavior:</p>
 </ul>
 <p>If you want to override the <code class="docutils literal"><span class="pre">filter_class</span></code> and <code class="docutils literal"><span class="pre">params</span></code> used to instantiate
 filters for a model field, you can override <code class="docutils literal"><span class="pre">filter_for_lookup()</span></code>. Ex:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
     <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">Product</span>
         <span class="n">fields</span> <span class="o">=</span> <span class="p">{</span>
@@ -290,7 +320,7 @@ filters for a model field, you can override <code class="docutils literal"><span
     <span class="k">def</span> <span class="nf">filter_for_lookup</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">lookup_type</span><span class="p">):</span>
         <span class="c1"># override date range lookups</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">models</span><span class="o">.</span><span class="n">DateField</span><span class="p">)</span> <span class="ow">and</span> <span class="n">lookup_type</span> <span class="o">==</span> <span class="s1">&#39;range&#39;</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">DateRangeFiler</span><span class="p">,</span> <span class="p">{}</span>
+            <span class="k">return</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">DateRangeFilter</span><span class="p">,</span> <span class="p">{}</span>
 
         <span class="c1"># use default behavior otherwise</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">ProductFilter</span><span class="p">,</span> <span class="n">cls</span><span class="p">)</span><span class="o">.</span><span class="n">filter_for_lookup</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">lookup_type</span><span class="p">)</span>
@@ -341,7 +371,7 @@ filters for a model field, you can override <code class="docutils literal"><span
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0.15.3',
+            VERSION:'1.0.1',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
