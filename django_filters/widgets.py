@@ -149,6 +149,8 @@ class BooleanWidget(forms.Select):
 
 
 class BaseCSVWidget(forms.Widget):
+    delimiter = ','
+
     def _isiterable(self, value):
         return isinstance(value, Iterable) and not isinstance(value, string_types)
 
@@ -158,7 +160,7 @@ class BaseCSVWidget(forms.Widget):
         if value is not None:
             if value == '':  # empty value should parse as an empty list
                 return []
-            return value.split(',')
+            return value.split(self.delimiter)
         return None
 
     def render(self, name, value, attrs=None):
@@ -174,7 +176,7 @@ class BaseCSVWidget(forms.Widget):
         # (otherwise, the additional values are lost)
         surrogate = forms.TextInput()
         value = [force_text(format_value(surrogate, v)) for v in value]
-        value = ','.join(list(value))
+        value = self.delimiter.join(list(value))
 
         return surrogate.render(name, value, attrs)
 
