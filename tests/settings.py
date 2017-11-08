@@ -12,6 +12,7 @@ DATABASES = {
 INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.staticfiles',
+    'django.contrib.postgres',
     'django.contrib.auth',
     'rest_framework',
     'django_filters',

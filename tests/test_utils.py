@@ -3,6 +3,7 @@ import datetime
 from django.db import models
 from django.db.models.constants import LOOKUP_SEP
 from django.db.models.fields.related import ForeignObjectRel
+from django.db.models.lookups import Transform
 from django.test import TestCase, override_settings
 from django.utils.functional import Promise
 from django.utils.timezone import get_default_timezone
@@ -78,7 +79,11 @@ class ResolveFieldTests(TestCase):
         eg, an 'EXACT' lookup on a user's username
         """
         model_field = User._meta.get_field('username')
-        lookups = model_field.class_lookups.keys()
+        lookups = [
+            term for term, lookup
+            in model_field.get_lookups().items()
+            if not issubclass(lookup, Transform)
+        ]
 
         # This is simple - the final ouput of an untransformed field is itself.
         # The lookups are the default lookups registered to the class.
