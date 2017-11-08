@@ -50,7 +50,6 @@ __all__ = [
     'ModelMultipleChoiceFilter',
     'MultipleChoiceFilter',
     'NumberFilter',
-    'NumericRangeFilter',
     'OrderingFilter',
     'RangeFilter',
     'TimeFilter',
@@ -382,24 +381,6 @@ class ModelMultipleChoiceFilter(QuerySetRequestMixin, MultipleChoiceFilter):
 
 class NumberFilter(Filter):
     field_class = forms.DecimalField
-
-
-class NumericRangeFilter(Filter):
-    field_class = RangeField
-
-    def filter(self, qs, value):
-        if value:
-            if value.start is not None and value.stop is not None:
-                lookup = '%s__%s' % (self.field_name, self.lookup_expr)
-                return self.get_method(qs)(**{lookup: (value.start, value.stop)})
-            else:
-                if value.start is not None:
-                    qs = self.get_method(qs)(**{'%s__startswith' % self.field_name: value.start})
-                if value.stop is not None:
-                    qs = self.get_method(qs)(**{'%s__endswith' % self.field_name: value.stop})
-            if self.distinct:
-                qs = qs.distinct()
-        return qs
 
 
 class RangeFilter(Filter):
