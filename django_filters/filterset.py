@@ -56,6 +56,7 @@ class FilterSetMetaclass(type):
 
         new_class = super(FilterSetMetaclass, cls).__new__(cls, name, bases, attrs)
         new_class._meta = FilterSetOptions(getattr(new_class, 'Meta', None))
+        new_class.filter_defaults = cls.merge_filter_defaults(new_class)
         new_class.base_filters = new_class.get_filters()
 
         return new_class
@@ -85,6 +86,22 @@ class FilterSetMetaclass(type):
                 ] + filters
 
         return OrderedDict(filters)
+
+    @classmethod
+    def merge_filter_defaults(cls, new_class):
+        """
+        Build a merged set of FILTER_DEFAULTS from all base classes.
+        """
+        # iterate base classes in reverse order, allows subclasses to
+        # override parent class filter_defaults.
+        merged = {
+            k: v
+            for base in reversed(new_class.mro())
+            for k, v in getattr(base, 'FILTER_DEFAULTS', {}).items()
+        }
+        merged.update(new_class._meta.filter_overrides)
+
+        return merged
 
 
 FILTER_FOR_DBFIELD_DEFAULTS = {
@@ -136,7 +153,6 @@ FILTER_FOR_DBFIELD_DEFAULTS = {
 
 
 class BaseFilterSet(object):
-    FILTER_DEFAULTS = FILTER_FOR_DBFIELD_DEFAULTS
 
     def __init__(self, data=None, queryset=None, *, request=None, prefix=None):
         if queryset is None:
@@ -351,9 +367,7 @@ class BaseFilterSet(object):
 
     @classmethod
     def filter_for_lookup(cls, field, lookup_type):
-        DEFAULTS = dict(cls.FILTER_DEFAULTS)
-        if hasattr(cls, '_meta'):
-            DEFAULTS.update(cls._meta.filter_overrides)
+        DEFAULTS = cls.filter_defaults
 
         data = try_dbfield(DEFAULTS.get, field.__class__) or {}
         filter_class = data.get('filter_class')
@@ -421,7 +435,7 @@ class BaseFilterSet(object):
 
 
 class FilterSet(BaseFilterSet, metaclass=FilterSetMetaclass):
-    pass
+    FILTER_DEFAULTS = FILTER_FOR_DBFIELD_DEFAULTS
 
 
 def filterset_factory(model, fields=ALL_FIELDS):
