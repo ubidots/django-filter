@@ -89,7 +89,7 @@
 <li class="toctree-l1"><a class="reference internal" href="rest_framework.html">Integration with DRF</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Tips and Solutions</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#common-problems-for-declared-filters">Common problems for declared filters</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#filter-name-and-lookup-expr-not-configured">Filter <code class="docutils literal notranslate"><span class="pre">name</span></code> and <code class="docutils literal notranslate"><span class="pre">lookup_expr</span></code> not configured</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#filter-field-name-and-lookup-expr-not-configured">Filter <code class="docutils literal notranslate"><span class="pre">field_name</span></code> and <code class="docutils literal notranslate"><span class="pre">lookup_expr</span></code> not configured</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#missing-lookup-expr-for-text-search-filters">Missing <code class="docutils literal notranslate"><span class="pre">lookup_expr</span></code> for text search filters</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#filter-and-lookup-expression-mismatch-in-range-isnull">Filter and lookup expression mismatch (in, range, isnull)</a></li>
 </ul>
@@ -195,10 +195,10 @@
 <p>Below are some of the common problem that occur when declaring filters. It is
 recommended that you read this as it provides a more complete understanding of
 how filters work.</p>
-<div class="section" id="filter-name-and-lookup-expr-not-configured">
-<h3>Filter <code class="docutils literal notranslate"><span class="pre">name</span></code> and <code class="docutils literal notranslate"><span class="pre">lookup_expr</span></code> not configured<a class="headerlink" href="#filter-name-and-lookup-expr-not-configured" title="Permalink to this headline">¶</a></h3>
-<p>While <code class="docutils literal notranslate"><span class="pre">name</span></code> and <code class="docutils literal notranslate"><span class="pre">lookup_expr</span></code> are optional, it is recommended that you specify
-them. By default, if <code class="docutils literal notranslate"><span class="pre">name</span></code> is not specified, the filter’s name on the
+<div class="section" id="filter-field-name-and-lookup-expr-not-configured">
+<h3>Filter <code class="docutils literal notranslate"><span class="pre">field_name</span></code> and <code class="docutils literal notranslate"><span class="pre">lookup_expr</span></code> not configured<a class="headerlink" href="#filter-field-name-and-lookup-expr-not-configured" title="Permalink to this headline">¶</a></h3>
+<p>While <code class="docutils literal notranslate"><span class="pre">field_name</span></code> and <code class="docutils literal notranslate"><span class="pre">lookup_expr</span></code> are optional, it is recommended that you specify
+them. By default, if <code class="docutils literal notranslate"><span class="pre">field_name</span></code> is not specified, the filter’s name on the
 filterset class will be used. Additionally, <code class="docutils literal notranslate"><span class="pre">lookup_expr</span></code> defaults to
 <code class="docutils literal notranslate"><span class="pre">exact</span></code>. The following is an example of a misconfigured price filter:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
@@ -213,7 +213,7 @@ lookup type. Under the hood, this will incorrectly be resolved as:</p>
 <p>The above will most likely generate a <code class="docutils literal notranslate"><span class="pre">FieldError</span></code>. The correct configuration
 would be:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
-    <span class="n">price__gt</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">NumberFilter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;price&#39;</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s1">&#39;gt&#39;</span><span class="p">)</span>
+    <span class="n">price__gt</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">NumberFilter</span><span class="p">(</span><span class="n">field_name</span><span class="o">=</span><span class="s1">&#39;price&#39;</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s1">&#39;gt&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -238,7 +238,7 @@ at the following product model:</p>
 for uncategorized products. The following is an incorrectly configured
 <code class="docutils literal notranslate"><span class="pre">isnull</span></code> filter:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
-    <span class="n">uncategorized</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">NumberFilter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s1">&#39;isnull&#39;</span><span class="p">)</span>
+    <span class="n">uncategorized</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">NumberFilter</span><span class="p">(</span><span class="n">field_name</span><span class="o">=</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s1">&#39;isnull&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>So what’s the issue? While the underlying column type for <code class="docutils literal notranslate"><span class="pre">category</span></code> is an
@@ -252,8 +252,8 @@ uncategorized products and products for a set of categories:</p>
     <span class="k">pass</span>
 
 <span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
-    <span class="n">categories</span> <span class="o">=</span> <span class="n">NumberInFilter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s1">&#39;in&#39;</span><span class="p">)</span>
-    <span class="n">uncategorized</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">BooleanFilter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s1">&#39;isnull&#39;</span><span class="p">)</span>
+    <span class="n">categories</span> <span class="o">=</span> <span class="n">NumberInFilter</span><span class="p">(</span><span class="n">field_name</span><span class="o">=</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s1">&#39;in&#39;</span><span class="p">)</span>
+    <span class="n">uncategorized</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">BooleanFilter</span><span class="p">(</span><span class="n">field_name</span><span class="o">=</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s1">&#39;isnull&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>More info on constructing <code class="docutils literal notranslate"><span class="pre">in</span></code> and <code class="docutils literal notranslate"><span class="pre">range</span></code> csv <a class="reference internal" href="../ref/filters.html#base-in-filter"><span class="std std-ref">filters</span></a>.</p>
@@ -272,7 +272,7 @@ common problem is how to correctly filter by null values on a field.</p>
 <p>Using <code class="docutils literal notranslate"><span class="pre">BooleanFilter</span></code> with an <code class="docutils literal notranslate"><span class="pre">isnull</span></code> lookup is a builtin solution used by
 the FilterSet’s automatic filter generation. To do this manually, simply add:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
-    <span class="n">uncategorized</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">BooleanFilter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s1">&#39;isnull&#39;</span><span class="p">)</span>
+    <span class="n">uncategorized</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">BooleanFilter</span><span class="p">(</span><span class="n">field_name</span><span class="o">=</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s1">&#39;isnull&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -282,7 +282,7 @@ type of the mode field is not relevant here.</p>
 </div>
 <p>You may also reverse the logic with the <code class="docutils literal notranslate"><span class="pre">exclude</span></code> parameter.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
-    <span class="n">has_category</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">BooleanFilter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s1">&#39;isnull&#39;</span><span class="p">,</span> <span class="n">exclude</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">has_category</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">BooleanFilter</span><span class="p">(</span><span class="n">field_name</span><span class="o">=</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s1">&#39;isnull&#39;</span><span class="p">,</span> <span class="n">exclude</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -293,7 +293,7 @@ the <code class="docutils literal notranslate"><span class="pre">null_label</spa
 <a class="reference internal" href="../ref/filters.html#choice-filter"><span class="std std-ref">docs</span></a>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
     <span class="n">category</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">ModelChoiceFilter</span><span class="p">(</span>
-        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s1">&#39;isnull&#39;</span><span class="p">,</span>
+        <span class="n">field_name</span><span class="o">=</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s1">&#39;isnull&#39;</span><span class="p">,</span>
         <span class="n">null_label</span><span class="o">=</span><span class="s1">&#39;Uncategorized&#39;</span><span class="p">,</span>
         <span class="n">queryset</span><span class="o">=</span><span class="n">Category</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">(),</span>
     <span class="p">)</span>
@@ -351,7 +351,7 @@ behavior as an <code class="docutils literal notranslate"><span class="pre">isnu
 
 
 <span class="k">class</span> <span class="nc">MyFilterSet</span><span class="p">(</span><span class="n">filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
-    <span class="n">myfield__isempty</span> <span class="o">=</span> <span class="n">EmptyStringFilter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;myfield&#39;</span><span class="p">)</span>
+    <span class="n">myfield__isempty</span> <span class="o">=</span> <span class="n">EmptyStringFilter</span><span class="p">(</span><span class="n">field_name</span><span class="o">=</span><span class="s1">&#39;myfield&#39;</span><span class="p">)</span>
 
     <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">MyModel</span>
