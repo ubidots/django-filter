@@ -8,9 +8,11 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Widget Reference &mdash; django-filter 1.0.1 documentation</title>
+  <title>Widget Reference &mdash; django-filter 2.0.0 documentation</title>
   
 
+  
+  
   
   
 
@@ -22,28 +24,21 @@
 
   
 
-  
-  
-    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-        <link rel="index" title="Index"
-              href="../genindex.html"/>
-        <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="django-filter 1.0.1 documentation" href="../index.html"/>
-        <link rel="next" title="Settings Reference" href="settings.html"/>
-        <link rel="prev" title="Field Reference" href="fields.html"/> 
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Settings Reference" href="settings.html" />
+    <link rel="prev" title="Field Reference" href="fields.html" /> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -63,7 +58,7 @@
             
             
               <div class="version">
-                1.0.1
+                2.0.0
               </div>
             
           
@@ -84,13 +79,16 @@
           
             
             
-                <p class="caption"><span class="caption-text">User Guide</span></p>
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../guide/install.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guide/usage.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guide/rest_framework.html">Integration with DRF</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guide/tips.html">Tips and Solutions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../guide/migration.html">Migrating to 1.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guide/migration.html">Migration Guide</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Reference Documentation</span></p>
 <ul class="current">
@@ -98,10 +96,11 @@
 <li class="toctree-l1"><a class="reference internal" href="filters.html">Filter Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fields.html">Field Reference</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Widget Reference</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#linkwidget"><code class="docutils literal"><span class="pre">LinkWidget</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#booleanwidget"><code class="docutils literal"><span class="pre">BooleanWidget</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#csvwidget"><code class="docutils literal"><span class="pre">CSVWidget</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#rangewidget"><code class="docutils literal"><span class="pre">RangeWidget</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#linkwidget"><code class="docutils literal notranslate"><span class="pre">LinkWidget</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#booleanwidget"><code class="docutils literal notranslate"><span class="pre">BooleanWidget</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#csvwidget"><code class="docutils literal notranslate"><span class="pre">CSVWidget</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#rangewidget"><code class="docutils literal notranslate"><span class="pre">RangeWidget</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#suffixedmultiwidget"><code class="docutils literal notranslate"><span class="pre">SuffixedMultiWidget</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="settings.html">Settings Reference</a></li>
@@ -120,34 +119,54 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../index.html">django-filter</a>
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">django-filter</a>
+        
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="../index.html">Docs</a> &raquo;</li>
-      
-    <li>Widget Reference</li>
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Widget Reference</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
+            
             <a href="../_sources/ref/widgets.txt" rel="nofollow"> View page source</a>
           
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -158,42 +177,60 @@
 <p>This is a reference document with a list of the provided widgets and their
 arguments.</p>
 <div class="section" id="linkwidget">
-<span id="link-widget"></span><h2><code class="docutils literal"><span class="pre">LinkWidget</span></code><a class="headerlink" href="#linkwidget" title="Permalink to this headline">¶</a></h2>
+<span id="link-widget"></span><h2><code class="docutils literal notranslate"><span class="pre">LinkWidget</span></code><a class="headerlink" href="#linkwidget" title="Permalink to this headline">¶</a></h2>
 <p>This widget renders each option as a link, instead of an actual &lt;input&gt;.  It has
 one method that you can override for additional customizability.
-<code class="docutils literal"><span class="pre">option_string()</span></code> should return a string with 3 Python keyword argument
+<code class="docutils literal notranslate"><span class="pre">option_string()</span></code> should return a string with 3 Python keyword argument
 placeholders:</p>
 <ol class="arabic simple">
-<li><code class="docutils literal"><span class="pre">attrs</span></code>: This is a string with all the attributes that will be on the
-final <code class="docutils literal"><span class="pre">&lt;a&gt;</span></code> tag.</li>
-<li><code class="docutils literal"><span class="pre">query_string</span></code>: This is the query string for use in the <code class="docutils literal"><span class="pre">href</span></code>
-option on the <code class="docutils literal"><span class="pre">&lt;a&gt;</span></code> element.</li>
-<li><code class="docutils literal"><span class="pre">label</span></code>: This is the text to be displayed to the user.</li>
+<li><code class="docutils literal notranslate"><span class="pre">attrs</span></code>: This is a string with all the attributes that will be on the
+final <code class="docutils literal notranslate"><span class="pre">&lt;a&gt;</span></code> tag.</li>
+<li><code class="docutils literal notranslate"><span class="pre">query_string</span></code>: This is the query string for use in the <code class="docutils literal notranslate"><span class="pre">href</span></code>
+option on the <code class="docutils literal notranslate"><span class="pre">&lt;a&gt;</span></code> element.</li>
+<li><code class="docutils literal notranslate"><span class="pre">label</span></code>: This is the text to be displayed to the user.</li>
 </ol>
 </div>
 <div class="section" id="booleanwidget">
-<span id="boolean-widget"></span><h2><code class="docutils literal"><span class="pre">BooleanWidget</span></code><a class="headerlink" href="#booleanwidget" title="Permalink to this headline">¶</a></h2>
-<p>This widget converts its input into Python&#8217;s True/False values. It will convert
-all case variations of <code class="docutils literal"><span class="pre">True</span></code> and <code class="docutils literal"><span class="pre">False</span></code> into the internal Python values.
-To use it, pass this into the <code class="docutils literal"><span class="pre">widgets</span></code> argument of the <code class="docutils literal"><span class="pre">BooleanFilter</span></code>:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">active</span> <span class="o">=</span> <span class="n">BooleanFilter</span><span class="p">(</span><span class="n">widget</span><span class="o">=</span><span class="n">BooleanWidget</span><span class="p">())</span>
+<span id="boolean-widget"></span><h2><code class="docutils literal notranslate"><span class="pre">BooleanWidget</span></code><a class="headerlink" href="#booleanwidget" title="Permalink to this headline">¶</a></h2>
+<p>This widget converts its input into Python’s True/False values. It will convert
+all case variations of <code class="docutils literal notranslate"><span class="pre">True</span></code> and <code class="docutils literal notranslate"><span class="pre">False</span></code> into the internal Python values.
+To use it, pass this into the <code class="docutils literal notranslate"><span class="pre">widgets</span></code> argument of the <code class="docutils literal notranslate"><span class="pre">BooleanFilter</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">active</span> <span class="o">=</span> <span class="n">BooleanFilter</span><span class="p">(</span><span class="n">widget</span><span class="o">=</span><span class="n">BooleanWidget</span><span class="p">())</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="csvwidget">
-<span id="csv-widget"></span><h2><code class="docutils literal"><span class="pre">CSVWidget</span></code><a class="headerlink" href="#csvwidget" title="Permalink to this headline">¶</a></h2>
+<span id="csv-widget"></span><h2><code class="docutils literal notranslate"><span class="pre">CSVWidget</span></code><a class="headerlink" href="#csvwidget" title="Permalink to this headline">¶</a></h2>
 <p>This widget expects a comma separated value and converts it into a list of
 string values. It is expected that the field class handle a list of values as
 well as type conversion.</p>
 </div>
 <div class="section" id="rangewidget">
-<span id="range-widget"></span><h2><code class="docutils literal"><span class="pre">RangeWidget</span></code><a class="headerlink" href="#rangewidget" title="Permalink to this headline">¶</a></h2>
-<p>This widget is used with <code class="docutils literal"><span class="pre">RangeFilter</span></code> and its subclasses. It generates two
+<span id="range-widget"></span><h2><code class="docutils literal notranslate"><span class="pre">RangeWidget</span></code><a class="headerlink" href="#rangewidget" title="Permalink to this headline">¶</a></h2>
+<p>This widget is used with <code class="docutils literal notranslate"><span class="pre">RangeFilter</span></code> and its subclasses. It generates two
 form input elements which generally act as start/end values in a range.
-Under the hood, it is django&#8217;s <code class="docutils literal"><span class="pre">forms.TextInput</span></code> widget and excepts
-the same arguments and values. To use it, pass it to <code class="docutils literal"><span class="pre">widget</span></code> argument of
-a <code class="docutils literal"><span class="pre">RangeField</span></code>:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">date_range</span> <span class="o">=</span> <span class="n">DateFromToRangeFilter</span><span class="p">(</span><span class="n">widget</span><span class="o">=</span><span class="n">RangeWidget</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;placeholder&#39;</span><span class="p">:</span> <span class="s1">&#39;YYYY/MM/DD&#39;</span><span class="p">}))</span>
+Under the hood, it is django’s <code class="docutils literal notranslate"><span class="pre">forms.TextInput</span></code> widget and excepts
+the same arguments and values. To use it, pass it to <code class="docutils literal notranslate"><span class="pre">widget</span></code> argument of
+a <code class="docutils literal notranslate"><span class="pre">RangeField</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">date_range</span> <span class="o">=</span> <span class="n">DateFromToRangeFilter</span><span class="p">(</span><span class="n">widget</span><span class="o">=</span><span class="n">RangeWidget</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;placeholder&#39;</span><span class="p">:</span> <span class="s1">&#39;YYYY/MM/DD&#39;</span><span class="p">}))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="suffixedmultiwidget">
+<h2><code class="docutils literal notranslate"><span class="pre">SuffixedMultiWidget</span></code><a class="headerlink" href="#suffixedmultiwidget" title="Permalink to this headline">¶</a></h2>
+<p>Extends Django’s builtin <code class="docutils literal notranslate"><span class="pre">MultiWidget</span></code> to append custom suffixes instead of
+indices. For example, take a range widget that accepts minimum and maximum
+bounds. By default, the resulting query params would look like the following:</p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/products?price_0=10&amp;price_1=25</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+</pre></div>
+</div>
+<p>By using <code class="docutils literal notranslate"><span class="pre">SuffixedMultiWidget</span></code> instead, you can provide human-friendly suffixes.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">RangeWidget</span><span class="p">(</span><span class="n">SuffixedMultiWidget</span><span class="p">):</span>
+    <span class="n">suffixes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;min&#39;</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>The query names are now a little more ergonomic.</p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/products?price_min=10&amp;price_max=25</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
 </pre></div>
 </div>
 </div>
@@ -201,15 +238,16 @@ a <code class="docutils literal"><span class="pre">RangeField</span></code>:</p>
 
 
            </div>
+           
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="settings.html" class="btn btn-neutral float-right" title="Settings Reference" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="settings.html" class="btn btn-neutral float-right" title="Settings Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="fields.html" class="btn btn-neutral" title="Field Reference" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="fields.html" class="btn btn-neutral" title="Field Reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -222,7 +260,7 @@ a <code class="docutils literal"><span class="pre">RangeField</span></code>:</p>
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -240,10 +278,12 @@ a <code class="docutils literal"><span class="pre">RangeField</span></code>:</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'1.0.1',
+            VERSION:'2.0.0',
+            LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -252,19 +292,13 @@ a <code class="docutils literal"><span class="pre">RangeField</span></code>:</p>
 
   
 
-  
-  
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-   
+  </script> 
 
 </body>
 </html>

@@ -8,9 +8,11 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Settings Reference &mdash; django-filter 1.0.1 documentation</title>
+  <title>Settings Reference &mdash; django-filter 2.0.0 documentation</title>
   
 
+  
+  
   
   
 
@@ -22,28 +24,21 @@
 
   
 
-  
-  
-    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-        <link rel="index" title="Index"
-              href="../genindex.html"/>
-        <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="django-filter 1.0.1 documentation" href="../index.html"/>
-        <link rel="next" title="Running the Test Suite" href="../dev/tests.html"/>
-        <link rel="prev" title="Widget Reference" href="widgets.html"/> 
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Running the Test Suite" href="../dev/tests.html" />
+    <link rel="prev" title="Widget Reference" href="widgets.html" /> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -63,7 +58,7 @@
             
             
               <div class="version">
-                1.0.1
+                2.0.0
               </div>
             
           
@@ -84,13 +79,16 @@
           
             
             
-                <p class="caption"><span class="caption-text">User Guide</span></p>
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../guide/install.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guide/usage.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guide/rest_framework.html">Integration with DRF</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guide/tips.html">Tips and Solutions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../guide/migration.html">Migrating to 1.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guide/migration.html">Migration Guide</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Reference Documentation</span></p>
 <ul class="current">
@@ -104,7 +102,6 @@
 <li class="toctree-l2"><a class="reference internal" href="#filters-null-choice-value">FILTERS_NULL_CHOICE_VALUE</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#filters-disable-help-text">FILTERS_DISABLE_HELP_TEXT</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#filters-verbose-lookups">FILTERS_VERBOSE_LOOKUPS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#filters-strictness">FILTERS_STRICTNESS</a></li>
 </ul>
 </li>
 </ul>
@@ -122,34 +119,54 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../index.html">django-filter</a>
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">django-filter</a>
+        
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="../index.html">Docs</a> &raquo;</li>
-      
-    <li>Settings Reference</li>
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Settings Reference</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
+            
             <a href="../_sources/ref/settings.txt" rel="nofollow"> View page source</a>
           
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -158,31 +175,31 @@
   <div class="section" id="settings-reference">
 <h1>Settings Reference<a class="headerlink" href="#settings-reference" title="Permalink to this headline">¶</a></h1>
 <p>Here is a list of all available settings of django-filters and their
-default values. All settings are prefixed with <code class="docutils literal"><span class="pre">FILTERS_</span></code>, although this
+default values. All settings are prefixed with <code class="docutils literal notranslate"><span class="pre">FILTERS_</span></code>, although this
 is a bit verbose it helps to make it easy to identify these settings.</p>
 <div class="section" id="filters-empty-choice-label">
 <h2>FILTERS_EMPTY_CHOICE_LABEL<a class="headerlink" href="#filters-empty-choice-label" title="Permalink to this headline">¶</a></h2>
-<p>Default: <code class="docutils literal"><span class="pre">'---------'</span></code></p>
-<p>Set the default value for <code class="docutils literal"><span class="pre">ChoiceFilter.empty_label</span></code>. You may disable the empty choice by setting this to <code class="docutils literal"><span class="pre">None</span></code>.</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">'---------'</span></code></p>
+<p>Set the default value for <code class="docutils literal notranslate"><span class="pre">ChoiceFilter.empty_label</span></code>. You may disable the empty choice by setting this to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
 </div>
 <div class="section" id="filters-null-choice-label">
 <h2>FILTERS_NULL_CHOICE_LABEL<a class="headerlink" href="#filters-null-choice-label" title="Permalink to this headline">¶</a></h2>
-<p>Default: <code class="docutils literal"><span class="pre">None</span></code></p>
-<p>Set the default value for <code class="docutils literal"><span class="pre">ChoiceFilter.null_label</span></code>. You may enable the null choice by setting a non-<code class="docutils literal"><span class="pre">None</span></code> value.</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+<p>Set the default value for <code class="docutils literal notranslate"><span class="pre">ChoiceFilter.null_label</span></code>. You may enable the null choice by setting a non-<code class="docutils literal notranslate"><span class="pre">None</span></code> value.</p>
 </div>
 <div class="section" id="filters-null-choice-value">
 <h2>FILTERS_NULL_CHOICE_VALUE<a class="headerlink" href="#filters-null-choice-value" title="Permalink to this headline">¶</a></h2>
-<p>Default: <code class="docutils literal"><span class="pre">'null'</span></code></p>
-<p>Set the default value for <code class="docutils literal"><span class="pre">ChoiceFilter.null_value</span></code>. You may want to change this value if the default <code class="docutils literal"><span class="pre">'null'</span></code> string conflicts with an actual choice.</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">'null'</span></code></p>
+<p>Set the default value for <code class="docutils literal notranslate"><span class="pre">ChoiceFilter.null_value</span></code>. You may want to change this value if the default <code class="docutils literal notranslate"><span class="pre">'null'</span></code> string conflicts with an actual choice.</p>
 </div>
 <div class="section" id="filters-disable-help-text">
 <h2>FILTERS_DISABLE_HELP_TEXT<a class="headerlink" href="#filters-disable-help-text" title="Permalink to this headline">¶</a></h2>
-<p>Default: <code class="docutils literal"><span class="pre">False</span></code></p>
-<p>Some filters provide informational <code class="docutils literal"><span class="pre">help_text</span></code>. For example, csv-based
-filters (<code class="docutils literal"><span class="pre">filters.BaseCSVFilter</span></code>) inform users that &#8220;Multiple values may
-be separated by commas&#8221;.</p>
-<p>You may set this to <code class="docutils literal"><span class="pre">True</span></code> to disable the <code class="docutils literal"><span class="pre">help_text</span></code> for <strong>all</strong>
-filters, removing the text from the rendered form&#8217;s output.</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+<p>Some filters provide informational <code class="docutils literal notranslate"><span class="pre">help_text</span></code>. For example, csv-based
+filters (<code class="docutils literal notranslate"><span class="pre">filters.BaseCSVFilter</span></code>) inform users that “Multiple values may
+be separated by commas”.</p>
+<p>You may set this to <code class="docutils literal notranslate"><span class="pre">True</span></code> to disable the <code class="docutils literal notranslate"><span class="pre">help_text</span></code> for <strong>all</strong>
+filters, removing the text from the rendered form’s output.</p>
 </div>
 <div class="section" id="filters-verbose-lookups">
 <span id="verbose-lookups-setting"></span><h2>FILTERS_VERBOSE_LOOKUPS<a class="headerlink" href="#filters-verbose-lookups" title="Permalink to this headline">¶</a></h2>
@@ -191,7 +208,7 @@ filters, removing the text from the rendered form&#8217;s output.</p>
 <p class="last">This is considered an advanced setting and is subject to change.</p>
 </div>
 <p>Default:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># refer to &#39;django_filters.conf.DEFAULTS&#39;</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># refer to &#39;django_filters.conf.DEFAULTS&#39;</span>
 <span class="s1">&#39;VERBOSE_LOOKUPS&#39;</span><span class="p">:</span> <span class="p">{</span>
     <span class="s1">&#39;exact&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">),</span>
     <span class="s1">&#39;iexact&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">),</span>
@@ -202,14 +219,14 @@ filters, removing the text from the rendered form&#8217;s output.</p>
 </pre></div>
 </div>
 <p>This setting controls the verbose output for generated filter labels. Instead
-of getting expression parts such as &#8220;lt&#8221; and &#8220;contained_by&#8221;, the verbose label
-would contain &#8220;is less than&#8221; and &#8220;is contained by&#8221;. Verbose output may be
+of getting expression parts such as “lt” and “contained_by”, the verbose label
+would contain “is less than” and “is contained by”. Verbose output may be
 disabled by setting this to a falsy value.</p>
 <p>This setting also accepts callables. The callable should not require arguments
 and should return a dictionary. This is useful for extending or overriding the
 default terms without having to copy the entire set of terms to your settings.
-For example, you could add verbose output for &#8220;exact&#8221; lookups.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># settings.py</span>
+For example, you could add verbose output for “exact” lookups.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># settings.py</span>
 <span class="k">def</span> <span class="nf">FILTERS_VERBOSE_LOOKUPS</span><span class="p">():</span>
     <span class="kn">from</span> <span class="nn">django_filters.conf</span> <span class="kn">import</span> <span class="n">DEFAULTS</span>
 
@@ -221,24 +238,20 @@ For example, you could add verbose output for &#8220;exact&#8221; lookups.</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="filters-strictness">
-<h2>FILTERS_STRICTNESS<a class="headerlink" href="#filters-strictness" title="Permalink to this headline">¶</a></h2>
-<p>Default: <code class="docutils literal"><span class="pre">STRICTNESS.RETURN_NO_RESULTS</span></code></p>
-<p>Set the global default for FilterSet <a class="reference internal" href="filterset.html#strict"><span class="std std-ref">strictness</span></a>.</p>
-</div>
 </div>
 
 
            </div>
+           
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../dev/tests.html" class="btn btn-neutral float-right" title="Running the Test Suite" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../dev/tests.html" class="btn btn-neutral float-right" title="Running the Test Suite" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="widgets.html" class="btn btn-neutral" title="Widget Reference" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="widgets.html" class="btn btn-neutral" title="Widget Reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -251,7 +264,7 @@ For example, you could add verbose output for &#8220;exact&#8221; lookups.</p>
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -269,10 +282,12 @@ For example, you could add verbose output for &#8220;exact&#8221; lookups.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'1.0.1',
+            VERSION:'2.0.0',
+            LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -281,19 +296,13 @@ For example, you could add verbose output for &#8220;exact&#8221; lookups.</p>
 
   
 
-  
-  
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-   
+  </script> 
 
 </body>
 </html>

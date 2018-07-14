@@ -8,9 +8,11 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Running the Test Suite &mdash; django-filter 1.0.1 documentation</title>
+  <title>Running the Test Suite &mdash; django-filter 2.0.0 documentation</title>
   
 
+  
+  
   
   
 
@@ -22,27 +24,20 @@
 
   
 
-  
-  
-    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-        <link rel="index" title="Index"
-              href="../genindex.html"/>
-        <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="django-filter 1.0.1 documentation" href="../index.html"/>
-        <link rel="prev" title="Settings Reference" href="../ref/settings.html"/> 
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Settings Reference" href="../ref/settings.html" /> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -62,7 +57,7 @@
             
             
               <div class="version">
-                1.0.1
+                2.0.0
               </div>
             
           
@@ -83,13 +78,16 @@
           
             
             
-                <p class="caption"><span class="caption-text">User Guide</span></p>
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../guide/install.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guide/usage.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guide/rest_framework.html">Integration with DRF</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guide/tips.html">Tips and Solutions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../guide/migration.html">Migrating to 1.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guide/migration.html">Migration Guide</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Reference Documentation</span></p>
 <ul>
@@ -106,6 +104,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#set-up-the-virtualenv">Set up the virtualenv</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#execute-the-test-runner">Execute the test runner</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#test-all-supported-versions">Test all supported versions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#housekeeping">Housekeeping</a></li>
 </ul>
 </li>
 </ul>
@@ -119,34 +118,54 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../index.html">django-filter</a>
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">django-filter</a>
+        
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="../index.html">Docs</a> &raquo;</li>
-      
-    <li>Running the Test Suite</li>
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Running the Test Suite</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
+            
             <a href="../_sources/dev/tests.txt" rel="nofollow"> View page source</a>
           
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -165,22 +184,22 @@ wrapper script is available to set up and run the test suite.</p>
 <div class="section" id="clone-the-repository">
 <h2>Clone the repository<a class="headerlink" href="#clone-the-repository" title="Permalink to this headline">¶</a></h2>
 <p>Get the source code using the following command:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>$ git clone https://github.com/carltongibson/django-filter.git
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ git clone https://github.com/carltongibson/django-filter.git
 </pre></div>
 </div>
 <p>Switch to the django-filter directory:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> django-filter
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> django-filter
 </pre></div>
 </div>
 </div>
 <div class="section" id="set-up-the-virtualenv">
 <h2>Set up the virtualenv<a class="headerlink" href="#set-up-the-virtualenv" title="Permalink to this headline">¶</a></h2>
 <p>Create a new virtualenv to run the test suite in:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>$ virtualenv venv
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ virtualenv venv
 </pre></div>
 </div>
 <p>Then activate the virtualenv and install the test requirements:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>$ <span class="nb">source</span> venv/bin/activate
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">source</span> venv/bin/activate
 $ pip install -r requirements/test.txt
 </pre></div>
 </div>
@@ -188,7 +207,7 @@ $ pip install -r requirements/test.txt
 <div class="section" id="execute-the-test-runner">
 <h2>Execute the test runner<a class="headerlink" href="#execute-the-test-runner" title="Permalink to this headline">¶</a></h2>
 <p>Run the tests with the runner script:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>$ python runtests.py
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python runtests.py
 </pre></div>
 </div>
 </div>
@@ -196,8 +215,26 @@ $ pip install -r requirements/test.txt
 <h2>Test all supported versions<a class="headerlink" href="#test-all-supported-versions" title="Permalink to this headline">¶</a></h2>
 <p>You can also use the excellent tox testing tool to run the tests against all
 supported versions of Python and Django. Install tox, and then simply run:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>$ pip install tox
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pip install tox
 $ tox
+</pre></div>
+</div>
+</div>
+<div class="section" id="housekeeping">
+<h2>Housekeeping<a class="headerlink" href="#housekeeping" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">isort</span></code> utility is used to maintain module imports. You can either test
+the module imports with the appropriate <cite>tox</cite> env, or with <cite>isort</cite> directly.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pip install tox
+$ tox -e isort
+
+<span class="c1"># or</span>
+
+$ pip install isort
+$ isort --check-only --recursive django_filters tests
+</pre></div>
+</div>
+<p>To sort the imports, simply remove the <code class="docutils literal notranslate"><span class="pre">--check-only</span></code> option.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ isort --recursive django_filters tests
 </pre></div>
 </div>
 </div>
@@ -205,13 +242,14 @@ $ tox
 
 
            </div>
+           
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
       
-        <a href="../ref/settings.html" class="btn btn-neutral" title="Settings Reference" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../ref/settings.html" class="btn btn-neutral" title="Settings Reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -224,7 +262,7 @@ $ tox
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -242,10 +280,12 @@ $ tox
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'1.0.1',
+            VERSION:'2.0.0',
+            LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -254,19 +294,13 @@ $ tox
 
   
 
-  
-  
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-   
+  </script> 
 
 </body>
 </html>

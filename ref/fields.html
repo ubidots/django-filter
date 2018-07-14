@@ -8,9 +8,11 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Field Reference &mdash; django-filter 1.0.1 documentation</title>
+  <title>Field Reference &mdash; django-filter 2.0.0 documentation</title>
   
 
+  
+  
   
   
 
@@ -22,28 +24,21 @@
 
   
 
-  
-  
-    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-        <link rel="index" title="Index"
-              href="../genindex.html"/>
-        <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="django-filter 1.0.1 documentation" href="../index.html"/>
-        <link rel="next" title="Widget Reference" href="widgets.html"/>
-        <link rel="prev" title="Filter Reference" href="filters.html"/> 
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Widget Reference" href="widgets.html" />
+    <link rel="prev" title="Filter Reference" href="filters.html" /> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -63,7 +58,7 @@
             
             
               <div class="version">
-                1.0.1
+                2.0.0
               </div>
             
           
@@ -84,20 +79,23 @@
           
             
             
-                <p class="caption"><span class="caption-text">User Guide</span></p>
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../guide/install.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guide/usage.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guide/rest_framework.html">Integration with DRF</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guide/tips.html">Tips and Solutions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../guide/migration.html">Migrating to 1.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guide/migration.html">Migration Guide</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Reference Documentation</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="filterset.html">FilterSet Options</a></li>
 <li class="toctree-l1"><a class="reference internal" href="filters.html">Filter Reference</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Field Reference</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#isodatetimefield"><code class="docutils literal"><span class="pre">IsoDateTimeField</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#isodatetimefield"><code class="docutils literal notranslate"><span class="pre">IsoDateTimeField</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="widgets.html">Widget Reference</a></li>
@@ -117,34 +115,54 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../index.html">django-filter</a>
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">django-filter</a>
+        
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="../index.html">Docs</a> &raquo;</li>
-      
-    <li>Field Reference</li>
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Field Reference</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
+            
             <a href="../_sources/ref/fields.txt" rel="nofollow"> View page source</a>
           
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -153,12 +171,12 @@
   <div class="section" id="field-reference">
 <h1>Field Reference<a class="headerlink" href="#field-reference" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="isodatetimefield">
-<h2><code class="docutils literal"><span class="pre">IsoDateTimeField</span></code><a class="headerlink" href="#isodatetimefield" title="Permalink to this headline">¶</a></h2>
-<p>Extends <code class="docutils literal"><span class="pre">django.forms.DateTimeField</span></code> to allow parsing ISO 8601 formated dates, in addition to existing formats</p>
-<p>Defines a class level attribute <code class="docutils literal"><span class="pre">ISO_8601</span></code> as constant for the format.</p>
-<p>Sets <code class="docutils literal"><span class="pre">input_formats</span> <span class="pre">=</span> <span class="pre">[ISO_8601]</span></code> — this means that by default <code class="docutils literal"><span class="pre">IsoDateTimeField</span></code> will <strong>only</strong> parse ISO 8601 formated dates.</p>
-<p>You may set <code class="docutils literal"><span class="pre">input_formats</span></code> to your list of required formats as per the <a class="reference external" href="https://docs.djangoproject.com/en/1.8/ref/forms/fields/#django.forms.DateTimeField.input_formats">DateTimeField Docs</a>, using the <code class="docutils literal"><span class="pre">ISO_8601</span></code> class level attribute to specify the  ISO 8601 format.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="n">IsoDateTimeField</span><span class="p">()</span>
+<h2><code class="docutils literal notranslate"><span class="pre">IsoDateTimeField</span></code><a class="headerlink" href="#isodatetimefield" title="Permalink to this headline">¶</a></h2>
+<p>Extends <code class="docutils literal notranslate"><span class="pre">django.forms.DateTimeField</span></code> to allow parsing ISO 8601 formated dates, in addition to existing formats</p>
+<p>Defines a class level attribute <code class="docutils literal notranslate"><span class="pre">ISO_8601</span></code> as constant for the format.</p>
+<p>Sets <code class="docutils literal notranslate"><span class="pre">input_formats</span> <span class="pre">=</span> <span class="pre">[ISO_8601]</span></code> — this means that by default <code class="docutils literal notranslate"><span class="pre">IsoDateTimeField</span></code> will <strong>only</strong> parse ISO 8601 formated dates.</p>
+<p>You may set <code class="docutils literal notranslate"><span class="pre">input_formats</span></code> to your list of required formats as per the <a class="reference external" href="https://docs.djangoproject.com/en/1.8/ref/forms/fields/#django.forms.DateTimeField.input_formats">DateTimeField Docs</a>, using the <code class="docutils literal notranslate"><span class="pre">ISO_8601</span></code> class level attribute to specify the  ISO 8601 format.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="n">IsoDateTimeField</span><span class="p">()</span>
 <span class="n">f</span><span class="o">.</span><span class="n">input_formats</span> <span class="o">=</span> <span class="p">[</span><span class="n">IsoDateTimeField</span><span class="o">.</span><span class="n">ISO_8601</span><span class="p">]</span> <span class="o">+</span> <span class="n">DateTimeField</span><span class="o">.</span><span class="n">input_formats</span>
 </pre></div>
 </div>
@@ -167,15 +185,16 @@
 
 
            </div>
+           
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="widgets.html" class="btn btn-neutral float-right" title="Widget Reference" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="widgets.html" class="btn btn-neutral float-right" title="Widget Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="filters.html" class="btn btn-neutral" title="Filter Reference" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="filters.html" class="btn btn-neutral" title="Filter Reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -188,7 +207,7 @@
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -206,10 +225,12 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'1.0.1',
+            VERSION:'2.0.0',
+            LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -218,19 +239,13 @@
 
   
 
-  
-  
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-   
+  </script> 
 
 </body>
 </html>

@@ -8,9 +8,11 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Integration with DRF &mdash; django-filter 1.0.1 documentation</title>
+  <title>Integration with DRF &mdash; django-filter 2.0.0 documentation</title>
   
 
+  
+  
   
   
 
@@ -22,28 +24,21 @@
 
   
 
-  
-  
-    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-        <link rel="index" title="Index"
-              href="../genindex.html"/>
-        <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="django-filter 1.0.1 documentation" href="../index.html"/>
-        <link rel="next" title="Tips and Solutions" href="tips.html"/>
-        <link rel="prev" title="Getting Started" href="usage.html"/> 
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Tips and Solutions" href="tips.html" />
+    <link rel="prev" title="Getting Started" href="usage.html" /> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -63,7 +58,7 @@
             
             
               <div class="version">
-                1.0.1
+                2.0.0
               </div>
             
           
@@ -84,20 +79,25 @@
           
             
             
-                <p class="caption"><span class="caption-text">User Guide</span></p>
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Guide</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Getting Started</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Integration with DRF</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#quickstart">Quickstart</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#adding-a-filterset-with-filter-class">Adding a FilterSet with <code class="docutils literal"><span class="pre">filter_class</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#using-the-filter-fields-shortcut">Using the <code class="docutils literal"><span class="pre">filter_fields</span></code> shortcut</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#adding-a-filterset-with-filterset-class">Adding a FilterSet with <code class="docutils literal notranslate"><span class="pre">filterset_class</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#using-the-filterset-fields-shortcut">Using the <code class="docutils literal notranslate"><span class="pre">filterset_fields</span></code> shortcut</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#overriding-filterset-creation">Overriding FilterSet creation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#schema-generation-with-core-api">Schema Generation with Core API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#crispy-forms">Crispy Forms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#additional-filterset-features">Additional <code class="docutils literal notranslate"><span class="pre">FilterSet</span></code> Features</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="tips.html">Tips and Solutions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="migration.html">Migrating to 1.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="migration.html">Migration Guide</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Reference Documentation</span></p>
 <ul>
@@ -121,34 +121,54 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../index.html">django-filter</a>
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">django-filter</a>
+        
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="../index.html">Docs</a> &raquo;</li>
-      
-    <li>Integration with DRF</li>
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Integration with DRF</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
+            
             <a href="../_sources/guide/rest_framework.txt" rel="nofollow"> View page source</a>
           
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -156,28 +176,34 @@
             
   <div class="section" id="integration-with-drf">
 <h1>Integration with DRF<a class="headerlink" href="#integration-with-drf" title="Permalink to this headline">¶</a></h1>
-<p>Integration with <a class="reference external" href="http://www.django-rest-framework.org/">Django Rest Framework</a> is provided through a DRF-specific <code class="docutils literal"><span class="pre">FilterSet</span></code> and a <a class="reference external" href="http://www.django-rest-framework.org/api-guide/filtering/">filter backend</a>. These may be found in the <code class="docutils literal"><span class="pre">rest_framework</span></code> sub-package.</p>
+<p>Integration with <a class="reference external" href="http://www.django-rest-framework.org/">Django Rest Framework</a> is provided through a DRF-specific <code class="docutils literal notranslate"><span class="pre">FilterSet</span></code> and a <a class="reference external" href="http://www.django-rest-framework.org/api-guide/filtering/">filter backend</a>. These may be found in the <code class="docutils literal notranslate"><span class="pre">rest_framework</span></code> sub-package.</p>
 <div class="section" id="quickstart">
 <h2>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this headline">¶</a></h2>
-<p>Using the new <code class="docutils literal"><span class="pre">FilterSet</span></code> simply requires changing the import path. Instead of importing from <code class="docutils literal"><span class="pre">django_filters</span></code>, import from the <code class="docutils literal"><span class="pre">rest_framework</span></code> sub-package.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django_filters</span> <span class="kn">import</span> <span class="n">rest_framework</span> <span class="k">as</span> <span class="n">filters</span>
+<p>Using the new <code class="docutils literal notranslate"><span class="pre">FilterSet</span></code> simply requires changing the import path. Instead of importing from <code class="docutils literal notranslate"><span class="pre">django_filters</span></code>, import from the <code class="docutils literal notranslate"><span class="pre">rest_framework</span></code> sub-package.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django_filters</span> <span class="kn">import</span> <span class="n">rest_framework</span> <span class="k">as</span> <span class="n">filters</span>
 
 <span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
     <span class="o">...</span>
 </pre></div>
 </div>
-<p>Your view class will also need to add <code class="docutils literal"><span class="pre">DjangoFilterBackend</span></code> to the <code class="docutils literal"><span class="pre">filter_backends</span></code>.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django_filters</span> <span class="kn">import</span> <span class="n">rest_framework</span> <span class="k">as</span> <span class="n">filters</span>
+<p>Your view class will also need to add <code class="docutils literal notranslate"><span class="pre">DjangoFilterBackend</span></code> to the <code class="docutils literal notranslate"><span class="pre">filter_backends</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django_filters</span> <span class="kn">import</span> <span class="n">rest_framework</span> <span class="k">as</span> <span class="n">filters</span>
 
 <span class="k">class</span> <span class="nc">ProductList</span><span class="p">(</span><span class="n">generics</span><span class="o">.</span><span class="n">ListAPIView</span><span class="p">):</span>
     <span class="n">queryset</span> <span class="o">=</span> <span class="n">Product</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
     <span class="n">serializer_class</span> <span class="o">=</span> <span class="n">ProductSerializer</span>
     <span class="n">filter_backends</span> <span class="o">=</span> <span class="p">(</span><span class="n">filters</span><span class="o">.</span><span class="n">DjangoFilterBackend</span><span class="p">,)</span>
-    <span class="n">filter_fields</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="s1">&#39;in_stock&#39;</span><span class="p">)</span>
+    <span class="n">filterset_fields</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="s1">&#39;in_stock&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>If you want to use the django-filter backend by default, add it to the <code class="docutils literal"><span class="pre">DEFAULT_FILTER_BACKENDS</span></code> setting.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># settings.py</span>
+<p>If you want to use the django-filter backend by default, add it to the <code class="docutils literal notranslate"><span class="pre">DEFAULT_FILTER_BACKENDS</span></code> setting.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># settings.py</span>
+<span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="o">...</span>
+    <span class="s1">&#39;rest_framework&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;django_filters&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+
 <span class="n">REST_FRAMEWORK</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s1">&#39;DEFAULT_FILTER_BACKENDS&#39;</span><span class="p">:</span> <span class="p">(</span>
         <span class="s1">&#39;django_filters.rest_framework.DjangoFilterBackend&#39;</span><span class="p">,</span>
@@ -187,17 +213,17 @@
 </pre></div>
 </div>
 </div>
-<div class="section" id="adding-a-filterset-with-filter-class">
-<h2>Adding a FilterSet with <code class="docutils literal"><span class="pre">filter_class</span></code><a class="headerlink" href="#adding-a-filterset-with-filter-class" title="Permalink to this headline">¶</a></h2>
-<p>To enable filtering with a <code class="docutils literal"><span class="pre">FilterSet</span></code>, add it to the <code class="docutils literal"><span class="pre">filter_class</span></code> parameter on your view class.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rest_framework</span> <span class="kn">import</span> <span class="n">generics</span>
+<div class="section" id="adding-a-filterset-with-filterset-class">
+<h2>Adding a FilterSet with <code class="docutils literal notranslate"><span class="pre">filterset_class</span></code><a class="headerlink" href="#adding-a-filterset-with-filterset-class" title="Permalink to this headline">¶</a></h2>
+<p>To enable filtering with a <code class="docutils literal notranslate"><span class="pre">FilterSet</span></code>, add it to the <code class="docutils literal notranslate"><span class="pre">filterset_class</span></code> parameter on your view class.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rest_framework</span> <span class="kn">import</span> <span class="n">generics</span>
 <span class="kn">from</span> <span class="nn">django_filters</span> <span class="kn">import</span> <span class="n">rest_framework</span> <span class="k">as</span> <span class="n">filters</span>
 <span class="kn">from</span> <span class="nn">myapp</span> <span class="kn">import</span> <span class="n">Product</span>
 
 
 <span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
-    <span class="n">min_price</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">NumberFilter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;price&quot;</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s1">&#39;gte&#39;</span><span class="p">)</span>
-    <span class="n">max_price</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">NumberFilter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;price&quot;</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s1">&#39;lte&#39;</span><span class="p">)</span>
+    <span class="n">min_price</span> <span class="o">=</span> <span class="n">filters</span><span class="o">.</span><span class="n">NumberFilter</span><span class="p">(</span><span class="n">field_name</span><span class="o">=</span><span class="s2">&quot;price&quot;</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s1">&#39;gte&#39;</span><span class="p">)</span>
+    <span class="n">max_price</span> <span class="o">=</span> <span class="n">filters</span><span class="o">.</span><span class="n">NumberFilter</span><span class="p">(</span><span class="n">field_name</span><span class="o">=</span><span class="s2">&quot;price&quot;</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s1">&#39;lte&#39;</span><span class="p">)</span>
 
     <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">Product</span>
@@ -208,14 +234,14 @@
     <span class="n">queryset</span> <span class="o">=</span> <span class="n">Product</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
     <span class="n">serializer_class</span> <span class="o">=</span> <span class="n">ProductSerializer</span>
     <span class="n">filter_backends</span> <span class="o">=</span> <span class="p">(</span><span class="n">filters</span><span class="o">.</span><span class="n">DjangoFilterBackend</span><span class="p">,)</span>
-    <span class="n">filter_class</span> <span class="o">=</span> <span class="n">ProductFilter</span>
+    <span class="n">filterset_class</span> <span class="o">=</span> <span class="n">ProductFilter</span>
 </pre></div>
 </div>
 </div>
-<div class="section" id="using-the-filter-fields-shortcut">
-<h2>Using the <code class="docutils literal"><span class="pre">filter_fields</span></code> shortcut<a class="headerlink" href="#using-the-filter-fields-shortcut" title="Permalink to this headline">¶</a></h2>
-<p>You may bypass creating a <code class="docutils literal"><span class="pre">FilterSet</span></code> by instead adding <code class="docutils literal"><span class="pre">filter_fields</span></code> to your view class. This is equivalent to creating a FilterSet with just <a class="reference internal" href="../ref/filterset.html#fields"><span class="std std-ref">Meta.fields</span></a>.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rest_framework</span> <span class="kn">import</span> <span class="n">generics</span>
+<div class="section" id="using-the-filterset-fields-shortcut">
+<h2>Using the <code class="docutils literal notranslate"><span class="pre">filterset_fields</span></code> shortcut<a class="headerlink" href="#using-the-filterset-fields-shortcut" title="Permalink to this headline">¶</a></h2>
+<p>You may bypass creating a <code class="docutils literal notranslate"><span class="pre">FilterSet</span></code> by instead adding <code class="docutils literal notranslate"><span class="pre">filterset_fields</span></code> to your view class. This is equivalent to creating a FilterSet with just <a class="reference internal" href="../ref/filterset.html#fields"><span class="std std-ref">Meta.fields</span></a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rest_framework</span> <span class="kn">import</span> <span class="n">generics</span>
 <span class="kn">from</span> <span class="nn">django_filters</span> <span class="kn">import</span> <span class="n">rest_framework</span> <span class="k">as</span> <span class="n">filters</span>
 <span class="kn">from</span> <span class="nn">myapp</span> <span class="kn">import</span> <span class="n">Product</span>
 
@@ -223,7 +249,7 @@
 <span class="k">class</span> <span class="nc">ProductList</span><span class="p">(</span><span class="n">generics</span><span class="o">.</span><span class="n">ListAPIView</span><span class="p">):</span>
     <span class="n">queryset</span> <span class="o">=</span> <span class="n">Product</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
     <span class="n">filter_backends</span> <span class="o">=</span> <span class="p">(</span><span class="n">filters</span><span class="o">.</span><span class="n">DjangoFilterBackend</span><span class="p">,)</span>
-    <span class="n">filter_fields</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="s1">&#39;in_stock&#39;</span><span class="p">)</span>
+    <span class="n">filterset_fields</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="s1">&#39;in_stock&#39;</span><span class="p">)</span>
 
 
 <span class="c1"># Equivalent FilterSet:</span>
@@ -233,12 +259,51 @@
         <span class="n">fields</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="s1">&#39;in_stock&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>Note that using <code class="docutils literal notranslate"><span class="pre">filterset_fields</span></code> and <code class="docutils literal notranslate"><span class="pre">filterset_class</span></code> together is not
+supported.</p>
+</div>
+<div class="section" id="overriding-filterset-creation">
+<h2>Overriding FilterSet creation<a class="headerlink" href="#overriding-filterset-creation" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">FilterSet</span></code> creation can be customized by overriding the following methods on the backend class:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">.get_filterset(self,</span> <span class="pre">request,</span> <span class="pre">queryset,</span> <span class="pre">view)</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">.get_filterset_class(self,</span> <span class="pre">view,</span> <span class="pre">queryset=None)</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">.get_filterset_kwargs(self,</span> <span class="pre">request,</span> <span class="pre">queryset,</span> <span class="pre">view)</span></code></li>
+</ul>
+<p>You can override these methods on a case-by-case basis for each view, creating unique backends, or these methods can be used to write your own hooks to the view class.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyFilterBackend</span><span class="p">(</span><span class="n">filters</span><span class="o">.</span><span class="n">DjangoFilterBackend</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_filterset_kwargs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">queryset</span><span class="p">,</span> <span class="n">view</span><span class="p">):</span>
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_filterset_kwargs</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">queryset</span><span class="p">,</span> <span class="n">view</span><span class="p">)</span>
+
+        <span class="c1"># merge filterset kwargs provided by view class</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">view</span><span class="p">,</span> <span class="s1">&#39;get_filterset_kwargs&#39;</span><span class="p">):</span>
+            <span class="n">kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">view</span><span class="o">.</span><span class="n">get_filterset_kwargs</span><span class="p">())</span>
+
+        <span class="k">return</span> <span class="n">kwargs</span>
+
+
+<span class="k">class</span> <span class="nc">BooksFilter</span><span class="p">(</span><span class="n">filters</span><span class="o">.</span><span class="n">FitlerSet</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">author</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="c1"># do something w/ author</span>
+
+
+<span class="k">class</span> <span class="nc">BookViewSet</span><span class="p">(</span><span class="n">viewsets</span><span class="o">.</span><span class="n">ModelViewSet</span><span class="p">):</span>
+    <span class="n">filter_backends</span> <span class="o">=</span> <span class="p">[</span><span class="n">MyFilterBackend</span><span class="p">]</span>
+    <span class="n">filterset_class</span> <span class="o">=</span> <span class="n">BookFilter</span>
+
+    <span class="k">def</span> <span class="nf">get_filteset_kwargs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s1">&#39;author&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_author</span><span class="p">(),</span>
+        <span class="p">}</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="schema-generation-with-core-api">
 <h2>Schema Generation with Core API<a class="headerlink" href="#schema-generation-with-core-api" title="Permalink to this headline">¶</a></h2>
-<p>The backend class integrates with DRF&#8217;s schema generation by implementing <code class="docutils literal"><span class="pre">get_schema_fields()</span></code>. This is automatically enabled when Core API is installed. Schema generation usually functions seamlessly, however the implementation does expect to invoke the view&#8217;s <code class="docutils literal"><span class="pre">get_queryset()</span></code> method. There is a caveat in that views are artificially constructed during schema generation, so the <code class="docutils literal"><span class="pre">args</span></code> and <code class="docutils literal"><span class="pre">kwargs</span></code> attributes will be empty. If you depend on arguments parsed from the URL, you will need to handle their absence in <code class="docutils literal"><span class="pre">get_queryset()</span></code>.</p>
+<p>The backend class integrates with DRF’s schema generation by implementing <code class="docutils literal notranslate"><span class="pre">get_schema_fields()</span></code>. This is automatically enabled when Core API is installed. Schema generation usually functions seamlessly, however the implementation does expect to invoke the view’s <code class="docutils literal notranslate"><span class="pre">get_queryset()</span></code> method. There is a caveat in that views are artificially constructed during schema generation, so the <code class="docutils literal notranslate"><span class="pre">args</span></code> and <code class="docutils literal notranslate"><span class="pre">kwargs</span></code> attributes will be empty. If you depend on arguments parsed from the URL, you will need to handle their absence in <code class="docutils literal notranslate"><span class="pre">get_queryset()</span></code>.</p>
 <p>For example, your get queryset method may look like this:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">IssueViewSet</span><span class="p">(</span><span class="n">views</span><span class="o">.</span><span class="n">ModelViewSet</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">IssueViewSet</span><span class="p">(</span><span class="n">views</span><span class="o">.</span><span class="n">ModelViewSet</span><span class="p">):</span>
     <span class="n">queryset</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">Issue</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">get_project</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -253,7 +318,7 @@
 </pre></div>
 </div>
 <p>This could be rewritten like so:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">IssueViewSet</span><span class="p">(</span><span class="n">views</span><span class="o">.</span><span class="n">ModelViewSet</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">IssueViewSet</span><span class="p">(</span><span class="n">views</span><span class="o">.</span><span class="n">ModelViewSet</span><span class="p">):</span>
     <span class="n">queryset</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">Issue</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">get_project</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -274,7 +339,7 @@
 </pre></div>
 </div>
 <p>Or more simply as:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">IssueViewSet</span><span class="p">(</span><span class="n">views</span><span class="o">.</span><span class="n">ModelViewSet</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">IssueViewSet</span><span class="p">(</span><span class="n">views</span><span class="o">.</span><span class="n">ModelViewSet</span><span class="p">):</span>
     <span class="n">queryset</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">Issue</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">get_queryset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -287,26 +352,36 @@
 </div>
 <div class="section" id="crispy-forms">
 <h2>Crispy Forms<a class="headerlink" href="#crispy-forms" title="Permalink to this headline">¶</a></h2>
-<p>If you are using DRF&#8217;s browsable API or admin API you may also want to install <code class="docutils literal"><span class="pre">django-crispy-forms</span></code>, which will enhance the presentation of the filter forms in HTML views, by allowing them to render Bootstrap 3 HTML. Note that this isn&#8217;t actively supported, although pull requests for bug fixes are welcome.</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pip install django-crispy-forms
+<p>If you are using DRF’s browsable API or admin API you may also want to install <code class="docutils literal notranslate"><span class="pre">django-crispy-forms</span></code>, which will enhance the presentation of the filter forms in HTML views, by allowing them to render Bootstrap 3 HTML. Note that this isn’t actively supported, although pull requests for bug fixes are welcome.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install django-crispy-forms
 </pre></div>
 </div>
-<p>With crispy forms installed and added to Django&#8217;s <code class="docutils literal"><span class="pre">INSTALLED_APPS</span></code>, the browsable API will present a filtering control for <code class="docutils literal"><span class="pre">DjangoFilterBackend</span></code>, like so:</p>
+<p>With crispy forms installed and added to Django’s <code class="docutils literal notranslate"><span class="pre">INSTALLED_APPS</span></code>, the browsable API will present a filtering control for <code class="docutils literal notranslate"><span class="pre">DjangoFilterBackend</span></code>, like so:</p>
 <img alt="../_images/form.png" src="../_images/form.png" />
+</div>
+<div class="section" id="additional-filterset-features">
+<h2>Additional <code class="docutils literal notranslate"><span class="pre">FilterSet</span></code> Features<a class="headerlink" href="#additional-filterset-features" title="Permalink to this headline">¶</a></h2>
+<p>The following features are specific to the rest framework FilterSet:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">BooleanFilter</span></code>’s use the API-friendly <code class="docutils literal notranslate"><span class="pre">BooleanWidget</span></code>, which accepts lowercase <code class="docutils literal notranslate"><span class="pre">true</span></code>/<code class="docutils literal notranslate"><span class="pre">false</span></code>.</li>
+<li>Filter generation uses <code class="docutils literal notranslate"><span class="pre">IsoDateTimeFilter</span></code> for datetime model fields.</li>
+<li>Raised <code class="docutils literal notranslate"><span class="pre">ValidationError</span></code>’s are reraised as their DRF equivalent.</li>
+</ul>
 </div>
 </div>
 
 
            </div>
+           
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="tips.html" class="btn btn-neutral float-right" title="Tips and Solutions" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="tips.html" class="btn btn-neutral float-right" title="Tips and Solutions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="usage.html" class="btn btn-neutral" title="Getting Started" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="usage.html" class="btn btn-neutral" title="Getting Started" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -319,7 +394,7 @@
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -337,10 +412,12 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'1.0.1',
+            VERSION:'2.0.0',
+            LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -349,19 +426,13 @@
 
   
 
-  
-  
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-   
+  </script> 
 
 </body>
 </html>

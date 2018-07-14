@@ -8,9 +8,11 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Tips and Solutions &mdash; django-filter 1.0.1 documentation</title>
+  <title>Tips and Solutions &mdash; django-filter 2.0.0 documentation</title>
   
 
+  
+  
   
   
 
@@ -22,28 +24,21 @@
 
   
 
-  
-  
-    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-        <link rel="index" title="Index"
-              href="../genindex.html"/>
-        <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="django-filter 1.0.1 documentation" href="../index.html"/>
-        <link rel="next" title="Migrating to 1.0" href="migration.html"/>
-        <link rel="prev" title="Integration with DRF" href="rest_framework.html"/> 
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Migration Guide" href="migration.html" />
+    <link rel="prev" title="Integration with DRF" href="rest_framework.html" /> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -63,7 +58,7 @@
             
             
               <div class="version">
-                1.0.1
+                2.0.0
               </div>
             
           
@@ -84,23 +79,26 @@
           
             
             
-                <p class="caption"><span class="caption-text">User Guide</span></p>
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Guide</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rest_framework.html">Integration with DRF</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Tips and Solutions</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#common-problems-for-declared-filters">Common problems for declared filters</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#filter-name-and-lookup-expr-not-configured">Filter <code class="docutils literal"><span class="pre">name</span></code> and <code class="docutils literal"><span class="pre">lookup_expr</span></code> not configured</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#missing-lookup-expr-for-text-search-filters">Missing <code class="docutils literal"><span class="pre">lookup_expr</span></code> for text search filters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#filter-name-and-lookup-expr-not-configured">Filter <code class="docutils literal notranslate"><span class="pre">name</span></code> and <code class="docutils literal notranslate"><span class="pre">lookup_expr</span></code> not configured</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#missing-lookup-expr-for-text-search-filters">Missing <code class="docutils literal notranslate"><span class="pre">lookup_expr</span></code> for text search filters</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#filter-and-lookup-expression-mismatch-in-range-isnull">Filter and lookup expression mismatch (in, range, isnull)</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#filtering-by-empty-values">Filtering by empty values</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#filtering-by-null-values">Filtering by null values</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#solution-1-using-a-booleanfilter-with-isnull">Solution 1: Using a <code class="docutils literal"><span class="pre">BooleanFilter</span></code> with <code class="docutils literal"><span class="pre">isnull</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#solution-2-using-choicefilter-s-null-choice">Solution 2: Using <code class="docutils literal"><span class="pre">ChoiceFilter</span></code>&#8216;s null choice</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#solution-3-combining-fields-w-multivaluefield">Solution 3: Combining fields w/ <code class="docutils literal"><span class="pre">MultiValueField</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#solution-1-using-a-booleanfilter-with-isnull">Solution 1: Using a <code class="docutils literal notranslate"><span class="pre">BooleanFilter</span></code> with <code class="docutils literal notranslate"><span class="pre">isnull</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#solution-2-using-choicefilter-s-null-choice">Solution 2: Using <code class="docutils literal notranslate"><span class="pre">ChoiceFilter</span></code>’s null choice</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#solution-3-combining-fields-w-multivaluefield">Solution 3: Combining fields w/ <code class="docutils literal notranslate"><span class="pre">MultiValueField</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#filtering-by-an-empty-string">Filtering by an empty string</a><ul>
@@ -110,9 +108,10 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#using-initial-values-as-defaults">Using <code class="docutils literal notranslate"><span class="pre">initial</span></code> values as defaults</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="migration.html">Migrating to 1.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="migration.html">Migration Guide</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Reference Documentation</span></p>
 <ul>
@@ -136,34 +135,54 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../index.html">django-filter</a>
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">django-filter</a>
+        
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="../index.html">Docs</a> &raquo;</li>
-      
-    <li>Tips and Solutions</li>
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Tips and Solutions</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
+            
             <a href="../_sources/guide/tips.txt" rel="nofollow"> View page source</a>
           
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -177,59 +196,59 @@
 recommended that you read this as it provides a more complete understanding of
 how filters work.</p>
 <div class="section" id="filter-name-and-lookup-expr-not-configured">
-<h3>Filter <code class="docutils literal"><span class="pre">name</span></code> and <code class="docutils literal"><span class="pre">lookup_expr</span></code> not configured<a class="headerlink" href="#filter-name-and-lookup-expr-not-configured" title="Permalink to this headline">¶</a></h3>
-<p>While <code class="docutils literal"><span class="pre">name</span></code> and <code class="docutils literal"><span class="pre">lookup_expr</span></code> are optional, it is recommended that you specify
-them. By default, if <code class="docutils literal"><span class="pre">name</span></code> is not specified, the filter&#8217;s name on the
-filterset class will be used. Additionally, <code class="docutils literal"><span class="pre">lookup_expr</span></code> defaults to
-<code class="docutils literal"><span class="pre">exact</span></code>. The following is an example of a misconfigured price filter:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
+<h3>Filter <code class="docutils literal notranslate"><span class="pre">name</span></code> and <code class="docutils literal notranslate"><span class="pre">lookup_expr</span></code> not configured<a class="headerlink" href="#filter-name-and-lookup-expr-not-configured" title="Permalink to this headline">¶</a></h3>
+<p>While <code class="docutils literal notranslate"><span class="pre">name</span></code> and <code class="docutils literal notranslate"><span class="pre">lookup_expr</span></code> are optional, it is recommended that you specify
+them. By default, if <code class="docutils literal notranslate"><span class="pre">name</span></code> is not specified, the filter’s name on the
+filterset class will be used. Additionally, <code class="docutils literal notranslate"><span class="pre">lookup_expr</span></code> defaults to
+<code class="docutils literal notranslate"><span class="pre">exact</span></code>. The following is an example of a misconfigured price filter:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
     <span class="n">price__gt</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">NumberFilter</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>The filter instance will have a field name of <code class="docutils literal"><span class="pre">price__gt</span></code> and an <code class="docutils literal"><span class="pre">exact</span></code>
+<p>The filter instance will have a field name of <code class="docutils literal notranslate"><span class="pre">price__gt</span></code> and an <code class="docutils literal notranslate"><span class="pre">exact</span></code>
 lookup type. Under the hood, this will incorrectly be resolved as:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">Produce</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">price__gt__exact</span><span class="o">=</span><span class="n">value</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Produce</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">price__gt__exact</span><span class="o">=</span><span class="n">value</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>The above will most likely generate a <code class="docutils literal"><span class="pre">FieldError</span></code>. The correct configuration
+<p>The above will most likely generate a <code class="docutils literal notranslate"><span class="pre">FieldError</span></code>. The correct configuration
 would be:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
     <span class="n">price__gt</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">NumberFilter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;price&#39;</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s1">&#39;gt&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="missing-lookup-expr-for-text-search-filters">
-<h3>Missing <code class="docutils literal"><span class="pre">lookup_expr</span></code> for text search filters<a class="headerlink" href="#missing-lookup-expr-for-text-search-filters" title="Permalink to this headline">¶</a></h3>
-<p>It&#8217;s quite common to forget to set the lookup expression for <code class="code docutils literal"><span class="pre">CharField</span></code>
-and <code class="code docutils literal"><span class="pre">TextField</span></code> and wonder why a search for &#8220;foo&#8221; does not return results
-for &#8220;foobar&#8221;. This is because the default lookup type is <code class="docutils literal"><span class="pre">exact</span></code>, but you
-probably want to perform  an <code class="docutils literal"><span class="pre">icontains</span></code> lookup.</p>
+<h3>Missing <code class="docutils literal notranslate"><span class="pre">lookup_expr</span></code> for text search filters<a class="headerlink" href="#missing-lookup-expr-for-text-search-filters" title="Permalink to this headline">¶</a></h3>
+<p>It’s quite common to forget to set the lookup expression for <code class="code docutils literal notranslate"><span class="pre">CharField</span></code>
+and <code class="code docutils literal notranslate"><span class="pre">TextField</span></code> and wonder why a search for “foo” does not return results
+for “foobar”. This is because the default lookup type is <code class="docutils literal notranslate"><span class="pre">exact</span></code>, but you
+probably want to perform  an <code class="docutils literal notranslate"><span class="pre">icontains</span></code> lookup.</p>
 </div>
 <div class="section" id="filter-and-lookup-expression-mismatch-in-range-isnull">
 <h3>Filter and lookup expression mismatch (in, range, isnull)<a class="headerlink" href="#filter-and-lookup-expression-mismatch-in-range-isnull" title="Permalink to this headline">¶</a></h3>
-<p>It&#8217;s not always appropriate to directly match a filter to its model field&#8217;s
+<p>It’s not always appropriate to directly match a filter to its model field’s
 type, as some lookups expect different types of values. This is a commonly
-found issue with <code class="docutils literal"><span class="pre">in</span></code>, <code class="docutils literal"><span class="pre">range</span></code>, and <code class="docutils literal"><span class="pre">isnull</span></code> lookups. Let&#8217;s look
+found issue with <code class="docutils literal notranslate"><span class="pre">in</span></code>, <code class="docutils literal notranslate"><span class="pre">range</span></code>, and <code class="docutils literal notranslate"><span class="pre">isnull</span></code> lookups. Let’s look
 at the following product model:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Product</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Product</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="n">category</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Category</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Given that <code class="docutils literal"><span class="pre">category</span></code> is optional, it&#8217;s reasonable to want to enable a search
+<p>Given that <code class="docutils literal notranslate"><span class="pre">category</span></code> is optional, it’s reasonable to want to enable a search
 for uncategorized products. The following is an incorrectly configured
-<code class="docutils literal"><span class="pre">isnull</span></code> filter:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
+<code class="docutils literal notranslate"><span class="pre">isnull</span></code> filter:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
     <span class="n">uncategorized</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">NumberFilter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s1">&#39;isnull&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>So what&#8217;s the issue? While the underlying column type for <code class="docutils literal"><span class="pre">category</span></code> is an
-integer, <code class="docutils literal"><span class="pre">isnull</span></code> lookups expect a boolean value. A <code class="docutils literal"><span class="pre">NumberFilter</span></code> however
-only validates numbers. Filters are not <cite>&#8216;expression aware&#8217;</cite> and won&#8217;t change
-behavior based on their <code class="docutils literal"><span class="pre">lookup_expr</span></code>. You should use filters that match the
+<p>So what’s the issue? While the underlying column type for <code class="docutils literal notranslate"><span class="pre">category</span></code> is an
+integer, <code class="docutils literal notranslate"><span class="pre">isnull</span></code> lookups expect a boolean value. A <code class="docutils literal notranslate"><span class="pre">NumberFilter</span></code> however
+only validates numbers. Filters are not <cite>‘expression aware’</cite> and won’t change
+behavior based on their <code class="docutils literal notranslate"><span class="pre">lookup_expr</span></code>. You should use filters that match the
 data type of the lookup expression <cite>instead</cite> of the data type underlying the
 model field. The following would correctly allow you to search for both
 uncategorized products and products for a set of categories:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">NumberInFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">BaseInFilter</span><span class="p">,</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">NumberFilter</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">NumberInFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">BaseInFilter</span><span class="p">,</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">NumberFilter</span><span class="p">):</span>
     <span class="k">pass</span>
 
 <span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
@@ -237,7 +256,7 @@ uncategorized products and products for a set of categories:</p>
     <span class="n">uncategorized</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">BooleanFilter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s1">&#39;isnull&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>More info on constructing <code class="docutils literal"><span class="pre">in</span></code> and <code class="docutils literal"><span class="pre">range</span></code> csv <a class="reference internal" href="../ref/filters.html#base-in-filter"><span class="std std-ref">filters</span></a>.</p>
+<p>More info on constructing <code class="docutils literal notranslate"><span class="pre">in</span></code> and <code class="docutils literal notranslate"><span class="pre">range</span></code> csv <a class="reference internal" href="../ref/filters.html#base-in-filter"><span class="std std-ref">filters</span></a>.</p>
 </div>
 </div>
 <div class="section" id="filtering-by-empty-values">
@@ -246,13 +265,13 @@ uncategorized products and products for a set of categories:</p>
 values. The following are some common solutions to these problems:</p>
 <div class="section" id="filtering-by-null-values">
 <h3>Filtering by null values<a class="headerlink" href="#filtering-by-null-values" title="Permalink to this headline">¶</a></h3>
-<p>As explained in the above &#8220;Filter and lookup expression mismatch&#8221; section, a
+<p>As explained in the above “Filter and lookup expression mismatch” section, a
 common problem is how to correctly filter by null values on a field.</p>
 <div class="section" id="solution-1-using-a-booleanfilter-with-isnull">
-<h4>Solution 1: Using a <code class="docutils literal"><span class="pre">BooleanFilter</span></code> with <code class="docutils literal"><span class="pre">isnull</span></code><a class="headerlink" href="#solution-1-using-a-booleanfilter-with-isnull" title="Permalink to this headline">¶</a></h4>
-<p>Using <code class="docutils literal"><span class="pre">BooleanFilter</span></code> with an <code class="docutils literal"><span class="pre">isnull</span></code> lookup is a builtin solution used by
-the FilterSet&#8217;s automatic filter generation. To do this manually, simply add:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
+<h4>Solution 1: Using a <code class="docutils literal notranslate"><span class="pre">BooleanFilter</span></code> with <code class="docutils literal notranslate"><span class="pre">isnull</span></code><a class="headerlink" href="#solution-1-using-a-booleanfilter-with-isnull" title="Permalink to this headline">¶</a></h4>
+<p>Using <code class="docutils literal notranslate"><span class="pre">BooleanFilter</span></code> with an <code class="docutils literal notranslate"><span class="pre">isnull</span></code> lookup is a builtin solution used by
+the FilterSet’s automatic filter generation. To do this manually, simply add:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
     <span class="n">uncategorized</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">BooleanFilter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s1">&#39;isnull&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -261,18 +280,18 @@ the FilterSet&#8217;s automatic filter generation. To do this manually, simply a
 <p class="last">Remember that the filter class is validating the input value. The underlying
 type of the mode field is not relevant here.</p>
 </div>
-<p>You may also reverse the logic with the <code class="docutils literal"><span class="pre">exclude</span></code> parameter.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
+<p>You may also reverse the logic with the <code class="docutils literal notranslate"><span class="pre">exclude</span></code> parameter.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
     <span class="n">has_category</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">BooleanFilter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s1">&#39;isnull&#39;</span><span class="p">,</span> <span class="n">exclude</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="solution-2-using-choicefilter-s-null-choice">
-<h4>Solution 2: Using <code class="docutils literal"><span class="pre">ChoiceFilter</span></code>&#8216;s null choice<a class="headerlink" href="#solution-2-using-choicefilter-s-null-choice" title="Permalink to this headline">¶</a></h4>
-<p>If you&#8217;re using a ChoiceFilter, you may also filter by null values by enabling
-the <code class="docutils literal"><span class="pre">null_label</span></code> parameter. More details in the <code class="docutils literal"><span class="pre">ChoiceFilter</span></code> reference
+<h4>Solution 2: Using <code class="docutils literal notranslate"><span class="pre">ChoiceFilter</span></code>’s null choice<a class="headerlink" href="#solution-2-using-choicefilter-s-null-choice" title="Permalink to this headline">¶</a></h4>
+<p>If you’re using a ChoiceFilter, you may also filter by null values by enabling
+the <code class="docutils literal notranslate"><span class="pre">null_label</span></code> parameter. More details in the <code class="docutils literal notranslate"><span class="pre">ChoiceFilter</span></code> reference
 <a class="reference internal" href="../ref/filters.html#choice-filter"><span class="std std-ref">docs</span></a>.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
     <span class="n">category</span> <span class="o">=</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">ModelChoiceFilter</span><span class="p">(</span>
         <span class="n">name</span><span class="o">=</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="n">lookup_expr</span><span class="o">=</span><span class="s1">&#39;isnull&#39;</span><span class="p">,</span>
         <span class="n">null_label</span><span class="o">=</span><span class="s1">&#39;Uncategorized&#39;</span><span class="p">,</span>
@@ -282,27 +301,25 @@ the <code class="docutils literal"><span class="pre">null_label</span></code> pa
 </div>
 </div>
 <div class="section" id="solution-3-combining-fields-w-multivaluefield">
-<h4>Solution 3: Combining fields w/ <code class="docutils literal"><span class="pre">MultiValueField</span></code><a class="headerlink" href="#solution-3-combining-fields-w-multivaluefield" title="Permalink to this headline">¶</a></h4>
-<p>An alternative approach is to use Django&#8217;s <code class="docutils literal"><span class="pre">MultiValueField</span></code> to manually add
-in a <code class="docutils literal"><span class="pre">BooleanField</span></code> to handle null values. Proof of concept:
+<h4>Solution 3: Combining fields w/ <code class="docutils literal notranslate"><span class="pre">MultiValueField</span></code><a class="headerlink" href="#solution-3-combining-fields-w-multivaluefield" title="Permalink to this headline">¶</a></h4>
+<p>An alternative approach is to use Django’s <code class="docutils literal notranslate"><span class="pre">MultiValueField</span></code> to manually add
+in a <code class="docutils literal notranslate"><span class="pre">BooleanField</span></code> to handle null values. Proof of concept:
 <a class="reference external" href="https://github.com/carltongibson/django-filter/issues/446">https://github.com/carltongibson/django-filter/issues/446</a></p>
 </div>
 </div>
 <div class="section" id="filtering-by-an-empty-string">
 <h3>Filtering by an empty string<a class="headerlink" href="#filtering-by-an-empty-string" title="Permalink to this headline">¶</a></h3>
-<p>It&#8217;s not currently possible to filter by an empty string, since empty values are
+<p>It’s not currently possible to filter by an empty string, since empty values are
 interpreted as a skipped filter.</p>
-<div class="highlight-http"><div class="highlight"><pre><span></span>GET http://localhost/api/my-model?myfield=
-</pre></div>
-</div>
+<blockquote>
+<div>GET <a class="reference external" href="http://localhost/api/my-model?myfield=">http://localhost/api/my-model?myfield=</a></div></blockquote>
 <div class="section" id="solution-1-magic-values">
 <h4>Solution 1: Magic values<a class="headerlink" href="#solution-1-magic-values" title="Permalink to this headline">¶</a></h4>
-<p>You can override the <code class="docutils literal"><span class="pre">filter()</span></code> method of a filter class to specifically check
-for magic values. This is similar to the <code class="docutils literal"><span class="pre">ChoiceFilter</span></code>&#8216;s null value handling.</p>
-<div class="highlight-http"><div class="highlight"><pre><span></span>GET http://localhost/api/my-model?myfield=EMPTY
-</pre></div>
-</div>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyCharFilter</span><span class="p">(</span><span class="n">filters</span><span class="o">.</span><span class="n">CharFilter</span><span class="p">):</span>
+<p>You can override the <code class="docutils literal notranslate"><span class="pre">filter()</span></code> method of a filter class to specifically check
+for magic values. This is similar to the <code class="docutils literal notranslate"><span class="pre">ChoiceFilter</span></code>’s null value handling.</p>
+<blockquote>
+<div>GET <a class="reference external" href="http://localhost/api/my-model?myfield=EMPTY">http://localhost/api/my-model?myfield=EMPTY</a></div></blockquote>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyCharFilter</span><span class="p">(</span><span class="n">filters</span><span class="o">.</span><span class="n">CharFilter</span><span class="p">):</span>
     <span class="n">empty_value</span> <span class="o">=</span> <span class="s1">&#39;EMPTY&#39;</span>
 
     <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qs</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
@@ -317,11 +334,10 @@ for magic values. This is similar to the <code class="docutils literal"><span cl
 <div class="section" id="solution-2-empty-string-filter">
 <h4>Solution 2: Empty string filter<a class="headerlink" href="#solution-2-empty-string-filter" title="Permalink to this headline">¶</a></h4>
 <p>It would also be possible to create an empty value filter that exhibits the same
-behavior as an <code class="docutils literal"><span class="pre">isnull</span></code> filter.</p>
-<div class="highlight-http"><div class="highlight"><pre><span></span>GET http://localhost/api/my-model?myfield__isempty=false
-</pre></div>
-</div>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.core.validators</span> <span class="kn">import</span> <span class="n">EMPTY_VALUES</span>
+behavior as an <code class="docutils literal notranslate"><span class="pre">isnull</span></code> filter.</p>
+<blockquote>
+<div>GET <a class="reference external" href="http://localhost/api/my-model?myfield__isempty=false">http://localhost/api/my-model?myfield__isempty=false</a></div></blockquote>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.core.validators</span> <span class="kn">import</span> <span class="n">EMPTY_VALUES</span>
 
 <span class="k">class</span> <span class="nc">EmptyStringFilter</span><span class="p">(</span><span class="n">filters</span><span class="o">.</span><span class="n">BooleanFilter</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qs</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
@@ -344,19 +360,55 @@ behavior as an <code class="docutils literal"><span class="pre">isnull</span></c
 </div>
 </div>
 </div>
+<div class="section" id="using-initial-values-as-defaults">
+<h2>Using <code class="docutils literal notranslate"><span class="pre">initial</span></code> values as defaults<a class="headerlink" href="#using-initial-values-as-defaults" title="Permalink to this headline">¶</a></h2>
+<p>In pre-1.0 versions of django-filter, a filter field’s <code class="docutils literal notranslate"><span class="pre">initial</span></code> value was used as a
+default when no value was submitted. This behavior was not officially supported and has
+since been removed.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>It is recommended that you do <strong>NOT</strong> implement the below as it adversely
+affects usability. Django forms don’t provide this behavior for a reason.</p>
+<ul class="last simple">
+<li>Using initial values as defaults is inconsistent with the behavior of Django forms.</li>
+<li>Default values prevent users from filtering by empty values.</li>
+<li>Default values prevent users from skipping that filter.</li>
+</ul>
+</div>
+<p>If defaults are necessary though, the following should mimic the pre-1.0 behavior:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">BaseFilterSet</span><span class="p">(</span><span class="n">FilterSet</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="c1"># if filterset is bound, use initial values as defaults</span>
+        <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="c1"># get a mutable copy of the QueryDict</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+            <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_filters</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">initial</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">extra</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;initial&#39;</span><span class="p">)</span>
+
+                <span class="c1"># filter param is either missing or empty, use initial as default</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="ow">and</span> <span class="n">initial</span><span class="p">:</span>
+                    <span class="n">data</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">initial</span>
+
+        <span class="nb">super</span><span class="p">(</span><span class="n">BaseFilterSet</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
 </div>
 
 
            </div>
+           
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="migration.html" class="btn btn-neutral float-right" title="Migrating to 1.0" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="migration.html" class="btn btn-neutral float-right" title="Migration Guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="rest_framework.html" class="btn btn-neutral" title="Integration with DRF" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="rest_framework.html" class="btn btn-neutral" title="Integration with DRF" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -369,7 +421,7 @@ behavior as an <code class="docutils literal"><span class="pre">isnull</span></c
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -387,10 +439,12 @@ behavior as an <code class="docutils literal"><span class="pre">isnull</span></c
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'1.0.1',
+            VERSION:'2.0.0',
+            LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -399,19 +453,13 @@ behavior as an <code class="docutils literal"><span class="pre">isnull</span></c
 
   
 
-  
-  
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-   
+  </script> 
 
 </body>
 </html>

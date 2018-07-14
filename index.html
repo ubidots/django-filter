@@ -8,9 +8,11 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>django-filter &mdash; django-filter 1.0.1 documentation</title>
+  <title>django-filter &mdash; django-filter 2.0.0 documentation</title>
   
 
+  
+  
   
   
 
@@ -22,27 +24,20 @@
 
   
 
-  
-  
-    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-        <link rel="index" title="Index"
-              href="genindex.html"/>
-        <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="django-filter 1.0.1 documentation" href="#"/>
-        <link rel="next" title="Installation" href="guide/install.html"/> 
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Installation" href="guide/install.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -62,7 +57,7 @@
             
             
               <div class="version">
-                1.0.1
+                2.0.0
               </div>
             
           
@@ -83,13 +78,16 @@
           
             
             
-                <p class="caption"><span class="caption-text">User Guide</span></p>
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="guide/install.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guide/usage.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guide/rest_framework.html">Integration with DRF</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guide/tips.html">Tips and Solutions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="guide/migration.html">Migrating to 1.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guide/migration.html">Migration Guide</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Reference Documentation</span></p>
 <ul>
@@ -113,34 +111,54 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="#">django-filter</a>
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">django-filter</a>
+        
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="#">Docs</a> &raquo;</li>
-      
-    <li>django-filter</li>
+    
+      <li><a href="#">Docs</a> &raquo;</li>
+        
+      <li>django-filter</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
+            
             <a href="_sources/index.txt" rel="nofollow"> View page source</a>
           
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -150,7 +168,7 @@
 <h1>django-filter<a class="headerlink" href="#django-filter" title="Permalink to this headline">¶</a></h1>
 <p>Django-filter is a generic, reusable application to alleviate writing some of
 the more mundane bits of view code. Specifically, it allows users to filter
-down a queryset based on a model&#8217;s fields, displaying the form to let them
+down a queryset based on a model’s fields, displaying the form to let them
 do this.</p>
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">User Guide</span></p>
@@ -170,25 +188,24 @@ do this.</p>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="guide/rest_framework.html">Integration with DRF</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="guide/rest_framework.html#quickstart">Quickstart</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/rest_framework.html#adding-a-filterset-with-filter-class">Adding a FilterSet with <code class="docutils literal"><span class="pre">filter_class</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/rest_framework.html#using-the-filter-fields-shortcut">Using the <code class="docutils literal"><span class="pre">filter_fields</span></code> shortcut</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/rest_framework.html#adding-a-filterset-with-filterset-class">Adding a FilterSet with <code class="docutils literal notranslate"><span class="pre">filterset_class</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/rest_framework.html#using-the-filterset-fields-shortcut">Using the <code class="docutils literal notranslate"><span class="pre">filterset_fields</span></code> shortcut</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/rest_framework.html#overriding-filterset-creation">Overriding FilterSet creation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="guide/rest_framework.html#schema-generation-with-core-api">Schema Generation with Core API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="guide/rest_framework.html#crispy-forms">Crispy Forms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/rest_framework.html#additional-filterset-features">Additional <code class="docutils literal notranslate"><span class="pre">FilterSet</span></code> Features</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="guide/tips.html">Tips and Solutions</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="guide/tips.html#common-problems-for-declared-filters">Common problems for declared filters</a></li>
 <li class="toctree-l2"><a class="reference internal" href="guide/tips.html#filtering-by-empty-values">Filtering by empty values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/tips.html#using-initial-values-as-defaults">Using <code class="docutils literal notranslate"><span class="pre">initial</span></code> values as defaults</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="guide/migration.html">Migrating to 1.0</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="guide/migration.html">Migration Guide</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="guide/migration.html#enabling-warnings">Enabling warnings</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/migration.html#methodfilter-and-filter-action-replaced-by-filter-method">MethodFilter and Filter.action replaced by Filter.method</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/migration.html#queryset-methods-are-no-longer-proxied">QuerySet methods are no longer proxied</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/migration.html#filters-no-longer-autogenerated-when-meta-fields-is-not-specified">Filters no longer autogenerated when Meta.fields is not specified</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/migration.html#move-filterset-options-to-meta-class">Move FilterSet options to Meta class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/migration.html#filterset-ordering-replaced-by-orderingfilter">FilterSet ordering replaced by OrderingFilter</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/migration.html#deprecated-filters-help-text-filter-and-filters-help-text-exclude">Deprecated <code class="docutils literal"><span class="pre">FILTERS_HELP_TEXT_FILTER</span></code> and <code class="docutils literal"><span class="pre">FILTERS_HELP_TEXT_EXCLUDE</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/migration.html#migrating-to-2-0">Migrating to 2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/migration.html#migrating-to-1-0">Migrating to 1.0</a></li>
 </ul>
 </li>
 </ul>
@@ -213,12 +230,13 @@ do this.</p>
 
 
            </div>
+           
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="guide/install.html" class="btn btn-neutral float-right" title="Installation" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="guide/install.html" class="btn btn-neutral float-right" title="Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
     </div>
@@ -232,7 +250,7 @@ do this.</p>
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -250,10 +268,12 @@ do this.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'1.0.1',
+            VERSION:'2.0.0',
+            LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="_static/jquery.js"></script>
@@ -262,19 +282,13 @@ do this.</p>
 
   
 
-  
-  
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="_static/js/theme.js"></script>
 
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-   
+  </script> 
 
 </body>
 </html>

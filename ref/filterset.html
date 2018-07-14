@@ -8,9 +8,11 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>FilterSet Options &mdash; django-filter 1.0.1 documentation</title>
+  <title>FilterSet Options &mdash; django-filter 2.0.0 documentation</title>
   
 
+  
+  
   
   
 
@@ -22,28 +24,21 @@
 
   
 
-  
-  
-    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-        <link rel="index" title="Index"
-              href="../genindex.html"/>
-        <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="django-filter 1.0.1 documentation" href="../index.html"/>
-        <link rel="next" title="Filter Reference" href="filters.html"/>
-        <link rel="prev" title="Migrating to 1.0" href="../guide/migration.html"/> 
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Filter Reference" href="filters.html" />
+    <link rel="prev" title="Migration Guide" href="../guide/migration.html" /> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -63,7 +58,7 @@
             
             
               <div class="version">
-                1.0.1
+                2.0.0
               </div>
             
           
@@ -84,29 +79,30 @@
           
             
             
-                <p class="caption"><span class="caption-text">User Guide</span></p>
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../guide/install.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guide/usage.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guide/rest_framework.html">Integration with DRF</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guide/tips.html">Tips and Solutions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../guide/migration.html">Migrating to 1.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guide/migration.html">Migration Guide</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Reference Documentation</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">FilterSet Options</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#meta-options">Meta options</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#automatic-filter-generation-with-model">Automatic filter generation with <code class="docutils literal"><span class="pre">model</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#declaring-filterable-fields">Declaring filterable <code class="docutils literal"><span class="pre">fields</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#disable-filter-fields-with-exclude">Disable filter fields with <code class="docutils literal"><span class="pre">exclude</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#custom-forms-using-form">Custom Forms using <code class="docutils literal"><span class="pre">form</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#group-fields-with-together">Group fields with <code class="docutils literal"><span class="pre">together</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#customise-filter-generation-with-filter-overrides">Customise filter generation with <code class="docutils literal"><span class="pre">filter_overrides</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#strict"><code class="docutils literal"><span class="pre">strict</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#automatic-filter-generation-with-model">Automatic filter generation with <code class="docutils literal notranslate"><span class="pre">model</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#declaring-filterable-fields">Declaring filterable <code class="docutils literal notranslate"><span class="pre">fields</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#disable-filter-fields-with-exclude">Disable filter fields with <code class="docutils literal notranslate"><span class="pre">exclude</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#custom-forms-using-form">Custom Forms using <code class="docutils literal notranslate"><span class="pre">form</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#customise-filter-generation-with-filter-overrides">Customise filter generation with <code class="docutils literal notranslate"><span class="pre">filter_overrides</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#overriding-filterset-methods">Overriding <code class="docutils literal"><span class="pre">FilterSet</span></code> methods</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#filter-for-lookup"><code class="docutils literal"><span class="pre">filter_for_lookup()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#overriding-filterset-methods">Overriding <code class="docutils literal notranslate"><span class="pre">FilterSet</span></code> methods</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#filter-for-lookup"><code class="docutils literal notranslate"><span class="pre">filter_for_lookup()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -130,34 +126,54 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../index.html">django-filter</a>
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">django-filter</a>
+        
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="../index.html">Docs</a> &raquo;</li>
-      
-    <li>FilterSet Options</li>
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>FilterSet Options</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
+            
             <a href="../_sources/ref/filterset.txt" rel="nofollow"> View page source</a>
           
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -173,18 +189,16 @@
 <li><a class="reference internal" href="#fields"><span class="std std-ref">fields</span></a></li>
 <li><a class="reference internal" href="#exclude"><span class="std std-ref">exclude</span></a></li>
 <li><a class="reference internal" href="#form"><span class="std std-ref">form</span></a></li>
-<li><a class="reference internal" href="#together"><span class="std std-ref">together</span></a></li>
 <li><a class="reference internal" href="#filter-overrides"><span class="std std-ref">filter_overrides</span></a></li>
-<li><a class="reference internal" href="#strict"><span class="std std-ref">strict</span></a></li>
 </ul>
 <div class="section" id="automatic-filter-generation-with-model">
-<span id="model"></span><h3>Automatic filter generation with <code class="docutils literal"><span class="pre">model</span></code><a class="headerlink" href="#automatic-filter-generation-with-model" title="Permalink to this headline">¶</a></h3>
-<p>The <code class="docutils literal"><span class="pre">FilterSet</span></code> is capable of automatically generating filters for a given
-<code class="docutils literal"><span class="pre">model</span></code>&#8216;s fields. Similar to Django&#8217;s <code class="docutils literal"><span class="pre">ModelForm</span></code>, filters are created
-based on the underlying model field&#8217;s type. This option must be combined with
-either the <code class="docutils literal"><span class="pre">fields</span></code> or <code class="docutils literal"><span class="pre">exclude</span></code> option, which is the same requirement for
-Django&#8217;s <code class="docutils literal"><span class="pre">ModelForm</span></code> class, detailed <a class="reference external" href="https://docs.djangoproject.com/en/dev/topics/forms/modelforms/#selecting-the-fields-to-use">here</a>.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">UserFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
+<span id="model"></span><h3>Automatic filter generation with <code class="docutils literal notranslate"><span class="pre">model</span></code><a class="headerlink" href="#automatic-filter-generation-with-model" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">FilterSet</span></code> is capable of automatically generating filters for a given
+<code class="docutils literal notranslate"><span class="pre">model</span></code>’s fields. Similar to Django’s <code class="docutils literal notranslate"><span class="pre">ModelForm</span></code>, filters are created
+based on the underlying model field’s type. This option must be combined with
+either the <code class="docutils literal notranslate"><span class="pre">fields</span></code> or <code class="docutils literal notranslate"><span class="pre">exclude</span></code> option, which is the same requirement for
+Django’s <code class="docutils literal notranslate"><span class="pre">ModelForm</span></code> class, detailed <a class="reference external" href="https://docs.djangoproject.com/en/dev/topics/forms/modelforms/#selecting-the-fields-to-use">here</a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">UserFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
     <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">User</span>
         <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;last_login&#39;</span><span class="p">]</span>
@@ -192,15 +206,15 @@ Django&#8217;s <code class="docutils literal"><span class="pre">ModelForm</span>
 </div>
 </div>
 <div class="section" id="declaring-filterable-fields">
-<span id="fields"></span><h3>Declaring filterable <code class="docutils literal"><span class="pre">fields</span></code><a class="headerlink" href="#declaring-filterable-fields" title="Permalink to this headline">¶</a></h3>
-<p>The <code class="docutils literal"><span class="pre">fields</span></code> option is combined with <code class="docutils literal"><span class="pre">model</span></code> to automatically generate
+<span id="fields"></span><h3>Declaring filterable <code class="docutils literal notranslate"><span class="pre">fields</span></code><a class="headerlink" href="#declaring-filterable-fields" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">fields</span></code> option is combined with <code class="docutils literal notranslate"><span class="pre">model</span></code> to automatically generate
 filters. Note that generated filters will not overwrite filters declared on
-the <code class="docutils literal"><span class="pre">FilterSet</span></code>. The <code class="docutils literal"><span class="pre">fields</span></code> option accepts two syntaxes:</p>
+the <code class="docutils literal notranslate"><span class="pre">FilterSet</span></code>. The <code class="docutils literal notranslate"><span class="pre">fields</span></code> option accepts two syntaxes:</p>
 <ul class="simple">
 <li>a list of field names</li>
 <li>a dictionary of field names mapped to a list of lookups</li>
 </ul>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">UserFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">UserFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
     <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">User</span>
         <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;last_login&#39;</span><span class="p">]</span>
@@ -216,17 +230,17 @@ the <code class="docutils literal"><span class="pre">FilterSet</span></code>. Th
         <span class="p">}</span>
 </pre></div>
 </div>
-<p>The list syntax will create an <code class="docutils literal"><span class="pre">exact</span></code> lookup filter for each field included
-in <code class="docutils literal"><span class="pre">fields</span></code>. The dictionary syntax will create a filter for each lookup
+<p>The list syntax will create an <code class="docutils literal notranslate"><span class="pre">exact</span></code> lookup filter for each field included
+in <code class="docutils literal notranslate"><span class="pre">fields</span></code>. The dictionary syntax will create a filter for each lookup
 expression declared for its corresponding model field. These expressions may
 include both transforms and lookups, as detailed in the <a class="reference external" href="https://docs.djangoproject.com/en/dev/ref/models/lookups/#module-django.db.models.lookups">lookup reference</a>.</p>
 </div>
 <div class="section" id="disable-filter-fields-with-exclude">
-<span id="exclude"></span><h3>Disable filter fields with <code class="docutils literal"><span class="pre">exclude</span></code><a class="headerlink" href="#disable-filter-fields-with-exclude" title="Permalink to this headline">¶</a></h3>
-<p>The <code class="docutils literal"><span class="pre">exclude</span></code> option accepts a blacklist of field names to exclude from
+<span id="exclude"></span><h3>Disable filter fields with <code class="docutils literal notranslate"><span class="pre">exclude</span></code><a class="headerlink" href="#disable-filter-fields-with-exclude" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">exclude</span></code> option accepts a blacklist of field names to exclude from
 automatic filter generation. Note that this option will not disable filters
-declared directly  on the <code class="docutils literal"><span class="pre">FilterSet</span></code>.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">UserFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
+declared directly  on the <code class="docutils literal notranslate"><span class="pre">FilterSet</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">UserFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
     <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">User</span>
         <span class="n">exclude</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">]</span>
@@ -234,33 +248,16 @@ declared directly  on the <code class="docutils literal"><span class="pre">Filte
 </div>
 </div>
 <div class="section" id="custom-forms-using-form">
-<span id="form"></span><h3>Custom Forms using <code class="docutils literal"><span class="pre">form</span></code><a class="headerlink" href="#custom-forms-using-form" title="Permalink to this headline">¶</a></h3>
-<p>The inner <code class="docutils literal"><span class="pre">Meta</span></code> class also takes an optional <code class="docutils literal"><span class="pre">form</span></code> argument.  This is a
-form class from which <code class="docutils literal"><span class="pre">FilterSet.form</span></code> will subclass.  This works similar to
-the <code class="docutils literal"><span class="pre">form</span></code> option on a <code class="docutils literal"><span class="pre">ModelAdmin.</span></code></p>
-</div>
-<div class="section" id="group-fields-with-together">
-<span id="together"></span><h3>Group fields with <code class="docutils literal"><span class="pre">together</span></code><a class="headerlink" href="#group-fields-with-together" title="Permalink to this headline">¶</a></h3>
-<p>The inner <code class="docutils literal"><span class="pre">Meta</span></code> class also takes an optional <code class="docutils literal"><span class="pre">together</span></code> argument.  This
-is a list of lists, each containing field names. For convenience can be a
-single list/tuple when dealing with a single set of fields. Fields within a
-field set must either be all or none present in the request for
-<code class="docutils literal"><span class="pre">FilterSet.form</span></code> to be valid:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">django_filters</span>
-
-<span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
-    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
-        <span class="n">model</span> <span class="o">=</span> <span class="n">Product</span>
-        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;price&#39;</span><span class="p">,</span> <span class="s1">&#39;release_date&#39;</span><span class="p">,</span> <span class="s1">&#39;rating&#39;</span><span class="p">]</span>
-        <span class="n">together</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;rating&#39;</span><span class="p">,</span> <span class="s1">&#39;price&#39;</span><span class="p">]</span>
-</pre></div>
-</div>
+<span id="form"></span><h3>Custom Forms using <code class="docutils literal notranslate"><span class="pre">form</span></code><a class="headerlink" href="#custom-forms-using-form" title="Permalink to this headline">¶</a></h3>
+<p>The inner <code class="docutils literal notranslate"><span class="pre">Meta</span></code> class also takes an optional <code class="docutils literal notranslate"><span class="pre">form</span></code> argument.  This is a
+form class from which <code class="docutils literal notranslate"><span class="pre">FilterSet.form</span></code> will subclass.  This works similar to
+the <code class="docutils literal notranslate"><span class="pre">form</span></code> option on a <code class="docutils literal notranslate"><span class="pre">ModelAdmin.</span></code></p>
 </div>
 <div class="section" id="customise-filter-generation-with-filter-overrides">
-<span id="filter-overrides"></span><h3>Customise filter generation with <code class="docutils literal"><span class="pre">filter_overrides</span></code><a class="headerlink" href="#customise-filter-generation-with-filter-overrides" title="Permalink to this headline">¶</a></h3>
-<p>The inner <code class="docutils literal"><span class="pre">Meta</span></code> class also takes an optional <code class="docutils literal"><span class="pre">filter_overrides</span></code> argument.
+<span id="filter-overrides"></span><h3>Customise filter generation with <code class="docutils literal notranslate"><span class="pre">filter_overrides</span></code><a class="headerlink" href="#customise-filter-generation-with-filter-overrides" title="Permalink to this headline">¶</a></h3>
+<p>The inner <code class="docutils literal notranslate"><span class="pre">Meta</span></code> class also takes an optional <code class="docutils literal notranslate"><span class="pre">filter_overrides</span></code> argument.
 This is a map of model fields to filter classes with options:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
 
      <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
          <span class="n">model</span> <span class="o">=</span> <span class="n">Product</span>
@@ -282,34 +279,46 @@ This is a map of model fields to filter classes with options:</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="strict">
-<span id="id3"></span><h3><code class="docutils literal"><span class="pre">strict</span></code><a class="headerlink" href="#strict" title="Permalink to this headline">¶</a></h3>
-<p>The <code class="docutils literal"><span class="pre">strict</span></code> option controls whether results are returned when an invalid
-value is specified by the user for any filter field. By default, <code class="docutils literal"><span class="pre">strict</span></code> is
-set to <code class="docutils literal"><span class="pre">STRICTNESS.RETURN_NO_RESULTS</span></code> meaning that an empty queryset is
-returned if any field contains an invalid value. You can loosen this behavior
-by setting <code class="docutils literal"><span class="pre">strict</span></code> to <code class="docutils literal"><span class="pre">STRICTNESS.IGNORE</span></code> which will effectively ignore a
-filter field if its value is invalid. A third option of
-<code class="docutils literal"><span class="pre">STRICTNESS.RAISE_VALIDATION_ERROR</span></code> will cause a <code class="docutils literal"><span class="pre">ValidationError</span></code> to be
-raised if any field contains an invalid value.</p>
-</div>
 </div>
 <div class="section" id="overriding-filterset-methods">
-<h2>Overriding <code class="docutils literal"><span class="pre">FilterSet</span></code> methods<a class="headerlink" href="#overriding-filterset-methods" title="Permalink to this headline">¶</a></h2>
+<h2>Overriding <code class="docutils literal notranslate"><span class="pre">FilterSet</span></code> methods<a class="headerlink" href="#overriding-filterset-methods" title="Permalink to this headline">¶</a></h2>
+<p>When overriding classmethods, calling <code class="docutils literal notranslate"><span class="pre">super(MyFilterSet,</span> <span class="pre">cls)</span></code> may result
+in a <code class="docutils literal notranslate"><span class="pre">NameError</span></code> exception. This is due to the <code class="docutils literal notranslate"><span class="pre">FilterSetMetaclass</span></code> calling
+these classmethods before the <code class="docutils literal notranslate"><span class="pre">FilterSet</span></code> class has been fully created.
+There are two recommmended workarounds:</p>
+<ol class="arabic">
+<li><p class="first">If using python 3.6 or newer, use the argumentless <code class="docutils literal notranslate"><span class="pre">super()</span></code> syntax.</p>
+</li>
+<li><p class="first">For older versions of python, use an intermediate class. Ex:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Intermediate</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">method</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">arg</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Intermediate</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span><span class="o">.</span><span class="n">method</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+        <span class="o">...</span>
+
+<span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">Intermediate</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">Product</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;...&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</li>
+</ol>
 <div class="section" id="filter-for-lookup">
-<h3><code class="docutils literal"><span class="pre">filter_for_lookup()</span></code><a class="headerlink" href="#filter-for-lookup" title="Permalink to this headline">¶</a></h3>
+<h3><code class="docutils literal notranslate"><span class="pre">filter_for_lookup()</span></code><a class="headerlink" href="#filter-for-lookup" title="Permalink to this headline">¶</a></h3>
 <p>Prior to version 0.13.0, filter generation did not take into account the
-<code class="docutils literal"><span class="pre">lookup_expr</span></code> used. This commonly caused malformed filters to be generated
-for &#8216;isnull&#8217;, &#8216;in&#8217;, and &#8216;range&#8217; lookups (as well as transformed lookups). The
+<code class="docutils literal notranslate"><span class="pre">lookup_expr</span></code> used. This commonly caused malformed filters to be generated
+for ‘isnull’, ‘in’, and ‘range’ lookups (as well as transformed lookups). The
 current implementation provides the following behavior:</p>
 <ul class="simple">
-<li>&#8216;isnull&#8217; lookups return a <code class="docutils literal"><span class="pre">BooleanFilter</span></code></li>
-<li>&#8216;in&#8217; lookups return a filter derived from the CSV-based <code class="docutils literal"><span class="pre">BaseInFilter</span></code>.</li>
-<li>&#8216;range&#8217; lookups return a filter derived from the CSV-based <code class="docutils literal"><span class="pre">BaseRangeFilter</span></code>.</li>
+<li>‘isnull’ lookups return a <code class="docutils literal notranslate"><span class="pre">BooleanFilter</span></code></li>
+<li>‘in’ lookups return a filter derived from the CSV-based <code class="docutils literal notranslate"><span class="pre">BaseInFilter</span></code>.</li>
+<li>‘range’ lookups return a filter derived from the CSV-based <code class="docutils literal notranslate"><span class="pre">BaseRangeFilter</span></code>.</li>
 </ul>
-<p>If you want to override the <code class="docutils literal"><span class="pre">filter_class</span></code> and <code class="docutils literal"><span class="pre">params</span></code> used to instantiate
-filters for a model field, you can override <code class="docutils literal"><span class="pre">filter_for_lookup()</span></code>. Ex:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
+<p>If you want to override the <code class="docutils literal notranslate"><span class="pre">filter_class</span></code> and <code class="docutils literal notranslate"><span class="pre">params</span></code> used to instantiate
+filters for a model field, you can override <code class="docutils literal notranslate"><span class="pre">filter_for_lookup()</span></code>. Ex:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ProductFilter</span><span class="p">(</span><span class="n">django_filters</span><span class="o">.</span><span class="n">FilterSet</span><span class="p">):</span>
     <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">Product</span>
         <span class="n">fields</span> <span class="o">=</span> <span class="p">{</span>
@@ -317,13 +326,13 @@ filters for a model field, you can override <code class="docutils literal"><span
         <span class="p">}</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">filter_for_lookup</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">lookup_type</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">filter_for_lookup</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">lookup_type</span><span class="p">):</span>
         <span class="c1"># override date range lookups</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">models</span><span class="o">.</span><span class="n">DateField</span><span class="p">)</span> <span class="ow">and</span> <span class="n">lookup_type</span> <span class="o">==</span> <span class="s1">&#39;range&#39;</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">django_filters</span><span class="o">.</span><span class="n">DateRangeFilter</span><span class="p">,</span> <span class="p">{}</span>
 
         <span class="c1"># use default behavior otherwise</span>
-        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">ProductFilter</span><span class="p">,</span> <span class="n">cls</span><span class="p">)</span><span class="o">.</span><span class="n">filter_for_lookup</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">lookup_type</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">filter_for_lookup</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">lookup_type</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -332,15 +341,16 @@ filters for a model field, you can override <code class="docutils literal"><span
 
 
            </div>
+           
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="filters.html" class="btn btn-neutral float-right" title="Filter Reference" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="filters.html" class="btn btn-neutral float-right" title="Filter Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../guide/migration.html" class="btn btn-neutral" title="Migrating to 1.0" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../guide/migration.html" class="btn btn-neutral" title="Migration Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -353,7 +363,7 @@ filters for a model field, you can override <code class="docutils literal"><span
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -371,10 +381,12 @@ filters for a model field, you can override <code class="docutils literal"><span
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'1.0.1',
+            VERSION:'2.0.0',
+            LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -383,19 +395,13 @@ filters for a model field, you can override <code class="docutils literal"><span
 
   
 
-  
-  
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-   
+  </script> 
 
 </body>
 </html>
