@@ -442,8 +442,8 @@ class FilterSetClassCreationTests(TestCase):
         self.assertTrue(checkItemsEqual(list(F.base_filters), expected_list))
 
     def test_meta_fields_list_containing_unknown_fields(self):
-        msg = ("'Meta.fields' contains fields that are not defined on this "
-               "FilterSet: other, another")
+        msg = ("'Meta.fields' must not contain non-model field names: "
+               "other, another")
 
         with self.assertRaisesMessage(TypeError, msg):
             class F(FilterSet):
@@ -454,8 +454,7 @@ class FilterSetClassCreationTests(TestCase):
                     fields = ('username', 'price', 'other', 'another')
 
     def test_meta_fields_dict_containing_unknown_fields(self):
-        msg = ("'Meta.fields' contains fields that are not defined on this "
-               "FilterSet: other")
+        msg = "'Meta.fields' must not contain non-model field names: other"
 
         with self.assertRaisesMessage(TypeError, msg):
             class F(FilterSet):
@@ -470,8 +469,7 @@ class FilterSetClassCreationTests(TestCase):
 
     def test_meta_fields_dict_containing_declarative_alias(self):
         # Meta.fields dict cannot generate lookups for an *aliased* field
-        msg = ("'Meta.fields' contains fields that are not defined on this "
-               "FilterSet: other")
+        msg = "'Meta.fields' must not contain non-model field names: other"
 
         with self.assertRaisesMessage(TypeError, msg):
             class F(FilterSet):
