@@ -467,6 +467,23 @@ class FilterSetClassCreationTests(TestCase):
                         'other': ['exact'],
                     }
 
+    def test_meta_fields_dict_containing_declarative_alias(self):
+        # Meta.fields dict cannot generate lookups for an *aliased* field
+        msg = ("'Meta.fields' contains fields that are not defined on this "
+               "FilterSet: other")
+
+        with self.assertRaisesMessage(TypeError, msg):
+            class F(FilterSet):
+                other = CharFilter()
+
+                class Meta:
+                    model = Book
+                    fields = {
+                        'id': ['exact'],
+                        'title': ['exact'],
+                        'other': ['exact'],
+                    }
+
     def test_meta_fields_invalid_lookup(self):
         # We want to ensure that non existent lookups (or just simple misspellings)
         # throw a useful exception containg the field and lookup expr.
