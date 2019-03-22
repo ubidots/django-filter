@@ -429,10 +429,11 @@ class FilterSetClassCreationTests(TestCase):
             username = CharFilter()
 
             class Meta:
-                model = Book
-                fields = {'id': ['exact'],
-                          'username': ['exact'],
-                          }
+                model = User
+                fields = {
+                    'id': ['exact'],
+                    'username': ['exact'],
+                }
 
         self.assertEqual(len(F.declared_filters), 1)
         self.assertEqual(len(F.base_filters), 2)
