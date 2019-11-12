@@ -765,6 +765,7 @@ class FilterMethod(object):
     This helper is used to override Filter.filter() when a 'method' argument
     is passed. It proxies the call to the actual method on the filter's parent.
     """
+
     def __init__(self, filter_instance):
         self.f = filter_instance
 
@@ -772,7 +773,7 @@ class FilterMethod(object):
         if value in EMPTY_VALUES:
             return qs
 
-        return self.method(qs, self.f.field_name, value)
+        return self.method(self.f, qs, value)
 
     @property
     def method(self):
