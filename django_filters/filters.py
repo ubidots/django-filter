@@ -87,6 +87,16 @@ class Filter(object):
             "expressions. Use the `LookupChoiceFilter` instead. See: " \
             "https://django-filter.readthedocs.io/en/master/guide/migration.html"
 
+    def bind(self, attr, parent):
+        """Bind the filter to its parent filterset.
+
+        Provides both the filter's attribute name on the filterset and the
+        parent filterset instance. Called when the parent is initialized.
+        """
+        self.attr = attr
+        self.parent = parent
+        self.model = parent.queryset.model
+
     def get_method(self, qs):
         """Return filter method based on whether we're excluding
            or simply filtering.
