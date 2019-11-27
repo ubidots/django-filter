@@ -87,6 +87,16 @@ class Filter(object):
             "expressions. Use the `LookupChoiceFilter` instead. See: " \
             "https://django-filter.readthedocs.io/en/master/guide/migration.html"
 
+    def bind(self, attr, parent):
+        """Bind the filter to its parent filterset.
+
+        Provides both the filter's attribute name on the filterset and the
+        parent filterset instance. Called when the parent is initialized.
+        """
+        self.attr = attr
+        self.parent = parent
+        self.model = parent.queryset.model
+
     def get_method(self, qs):
         """Return filter method based on whether we're excluding
            or simply filtering.
@@ -755,6 +765,7 @@ class FilterMethod(object):
     This helper is used to override Filter.filter() when a 'method' argument
     is passed. It proxies the call to the actual method on the filter's parent.
     """
+
     def __init__(self, filter_instance):
         self.f = filter_instance
 
@@ -762,7 +773,7 @@ class FilterMethod(object):
         if value in EMPTY_VALUES:
             return qs
 
-        return self.method(qs, self.f.field_name, value)
+        return self.method(self.f, qs, value)
 
     @property
     def method(self):
@@ -777,7 +788,7 @@ class FilterMethod(object):
 
         # otherwise, method is the name of a method on the parent FilterSet.
         assert hasattr(instance, 'parent'), \
-            "Filter '%s' must have a parent FilterSet to find '.%s()'" %  \
+            "Filter '%s' must have a parent FilterSet to find '.%s()'." %  \
             (instance.field_name, instance.method)
 
         parent = instance.parent

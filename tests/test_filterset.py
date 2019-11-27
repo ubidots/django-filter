@@ -732,7 +732,7 @@ class FilterMethodTests(TestCase):
         class F(FilterSet):
             f = Filter(method='filter_f')
 
-            def filter_f(self, qs, name, value):
+            def filter_f(self, f, qs, value):
                 pass
 
         f = F({}, queryset=User.objects.all())
@@ -741,7 +741,7 @@ class FilterMethodTests(TestCase):
         self.assertIsInstance(f.filters['f'].filter, FilterMethod)
 
     def test_method_callable(self):
-        def filter_f(qs, name, value):
+        def filter_f(f, qs, value):
             pass
 
         class F(FilterSet):
@@ -756,7 +756,7 @@ class FilterMethodTests(TestCase):
         class F(FilterSet):
             f = Filter(method='filter_f')
 
-            def filter_f(self, qs, name, value):
+            def filter_f(self, f, qs, value):
                 # call mock request object to prove self.request can be accessed
                 self.request()
 
@@ -772,7 +772,7 @@ class FilterMethodTests(TestCase):
         class F(FilterSet):
             f = DateRangeFilter(method='filter_f')
 
-            def filter_f(self, qs, name, value):
+            def filter_f(self, f, qs, value):
                 pass
 
         f = F({}, queryset=User.objects.all())
@@ -784,9 +784,8 @@ class FilterMethodTests(TestCase):
         with self.assertRaises(AssertionError) as w:
             f.filter(User.objects.all(), 0)
 
-        self.assertIn("'None'", str(w.exception))
-        self.assertIn('parent', str(w.exception))
-        self.assertIn('filter_f', str(w.exception))
+        msg = "Filter 'None' must have a parent FilterSet to find '.filter_f()'."
+        self.assertEqual(str(w.exception), msg)
 
     def test_method_self_is_parent(self):
         # Ensure the method isn't 're-parented' on the `FilterMethod` helper class.
@@ -800,7 +799,7 @@ class FilterMethodTests(TestCase):
                 model = User
                 fields = []
 
-            def filter_f(inner_self, qs, name, value):
+            def filter_f(inner_self, f, qs, value):
                 self.assertIsInstance(inner_self, F)
                 self.assertIs(inner_self.request, request)
                 return qs
@@ -816,8 +815,9 @@ class FilterMethodTests(TestCase):
         with self.assertRaises(AssertionError) as w:
             f.filters['f'].filter(User.objects.all(), 0)
 
-        self.assertIn('%s.%s' % (F.__module__, F.__name__), str(w.exception))
-        self.assertIn('.filter_f()', str(w.exception))
+        msg = ("Expected parent FilterSet 'tests.test_filterset.F' to have "
+               "a '.filter_f()' method.")
+        self.assertEqual(str(w.exception), msg)
 
     def test_method_uncallable(self):
         class F(FilterSet):
@@ -829,8 +829,9 @@ class FilterMethodTests(TestCase):
         with self.assertRaises(AssertionError) as w:
             f.filters['f'].filter(User.objects.all(), 0)
 
-        self.assertIn('%s.%s' % (F.__module__, F.__name__), str(w.exception))
-        self.assertIn('.filter_f()', str(w.exception))
+        msg = ("Expected parent FilterSet 'tests.test_filterset.F' to have "
+               "a '.filter_f()' method.")
+        self.assertEqual(str(w.exception), msg)
 
     def test_method_set_unset(self):
         # use a mock to bypass bound/unbound method equality
