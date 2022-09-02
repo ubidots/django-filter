@@ -1,5 +1,7 @@
 # Publish
 
+Configure the publish servers
+
 ```bash
 > cat ~/.pypirc
 [distutils]
@@ -12,6 +14,8 @@ username = ubidots_dev
 password = <password>
 ```
 
+Install dependencies, build and publish
+
 ```
 pip install -U setuptools twine build
 python -m build
@@ -19,6 +23,8 @@ python -m twine upload --repository ubidots dist/*
 ```
 
 # Remote Branch
+
+Remote branch of the fork
 
 ```bash
 git remote add rpkilby https://github.com/rpkilby/django-filter.git
