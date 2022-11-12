@@ -9,3 +9,8 @@ test:
 clean:
 	rm -r build dist django_filter.egg-info
 
+build:
+	python -m build
+
+publish: build
+	python -m twine upload --repository ubidots dist/*
