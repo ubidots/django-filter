@@ -12,5 +12,9 @@ clean:
 build:
 	python -m build
 
-publish: build
-	python -m twine upload --repository ubidots dist/*
+code_artifact_login:
+	./twine_aws_login.sh
+
+publish: build code_artifact_login
+	python -m twine upload --repository codeartifact dist/*
+
