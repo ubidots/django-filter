@@ -6,7 +6,7 @@ from setuptools import find_packages, setup
 # FIXME: Main module requires django to be present, so cannot run setup.py in
 # clean environment.
 # from django_filters import __version__
-__version__ = "22.3.0"
+__version__ = "23.0.1"
 
 f = open("README.rst")
 readme = f.read()
@@ -58,6 +58,7 @@ setup(
         "Framework :: Django :: 3.2",
         "Framework :: Django :: 4.0",
         "Framework :: Django :: 4.1",
+        "Framework :: Django :: 5.0",
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.7",
